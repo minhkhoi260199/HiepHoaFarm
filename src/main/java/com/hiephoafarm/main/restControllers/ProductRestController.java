@@ -1,4 +1,4 @@
-package com.main.hiephoafarm.restControllers;
+package com.hiephoafarm.main.restControllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

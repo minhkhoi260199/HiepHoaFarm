@@ -1,4 +1,4 @@
-package com.main.hiephoafarm;
+package com.hiephoafarm.main;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

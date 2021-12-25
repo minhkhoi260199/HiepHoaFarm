@@ -1,4 +1,4 @@
-<%@ tag language="java" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ tag display-name="adminTemplate" language="java" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ attribute name="title" type="java.lang.String" required="true" rtexprvalue="true"%>
 <%@ attribute name="content" fragment="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -198,8 +198,22 @@
         <!-- END HEADER DESKTOP-->
 
         <!-- MAIN CONTENT-->
-        <jsp:invoke fragment="content"></jsp:invoke>
-<%--        ${content}--%>
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <!-- DYNAMIC CONTENT-->
+                    <jsp:invoke fragment="content" />
+                    <!-- END DYNAMIC CONTENT-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>HIỆP HOÀ FARM MANAGER</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -210,20 +224,16 @@
 <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
 <!-- Vendor JS       -->
-<script src="${pageContext.request.contextPath }/resources/vendor/slick/slick.min.js">
-</script>
+<script src="${pageContext.request.contextPath }/resources/vendor/slick/slick.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/wow/wow.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-</script>
+<script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/counter-up/jquery.waypoints.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/counter-up/jquery.counterup.min.js">
-</script>
+<script src="${pageContext.request.contextPath }/resources/vendor/counter-up/jquery.counterup.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/circle-progress/circle-progress.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/select2/select2.min.js">
-</script>
+<script src="${pageContext.request.contextPath }/resources/vendor/select2/select2.min.js"></script>
 
 <!-- Main JS-->
 <script src="${pageContext.request.contextPath }/resources/js/main.js"></script>

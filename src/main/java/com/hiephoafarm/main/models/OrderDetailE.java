@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order_detail", schema = "hiephoafarm", catalog = "")
-public class OrderDetail {
+@Table(name = "order_detail", schema = "hiephoafarm", catalog = "hiephoafarm")
+public class OrderDetailE {
     private int idOrderDetail;
     private Integer quantity;
-    private Order orderByOrderId;
-    private Product productByProductId;
+    private OrderE orderByOrderId;
+    private ProductE productByProductId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -36,7 +36,7 @@ public class OrderDetail {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderDetail that = (OrderDetail) o;
+        OrderDetailE that = (OrderDetailE) o;
         return idOrderDetail == that.idOrderDetail && Objects.equals(quantity, that.quantity);
     }
 
@@ -47,21 +47,21 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id_order", nullable = false)
-    public Order getOrderByOrderId() {
+    public OrderE getOrderByOrderId() {
         return orderByOrderId;
     }
 
-    public void setOrderByOrderId(Order orderByOrderId) {
+    public void setOrderByOrderId(OrderE orderByOrderId) {
         this.orderByOrderId = orderByOrderId;
     }
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id_product", nullable = false)
-    public Product getProductByProductId() {
+    public ProductE getProductByProductId() {
         return productByProductId;
     }
 
-    public void setProductByProductId(Product productByProductId) {
+    public void setProductByProductId(ProductE productByProductId) {
         this.productByProductId = productByProductId;
     }
 }

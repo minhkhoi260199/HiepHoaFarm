@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Ads {
+@Table(name = "ads", catalog = "hiephoafarm")
+public class AdsE {
     private int idAds;
     private String adsname;
     private String adscontent;
@@ -44,8 +45,8 @@ public class Ads {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ads ads = (Ads) o;
-        return idAds == ads.idAds && Objects.equals(adsname, ads.adsname) && Objects.equals(adscontent, ads.adscontent);
+        AdsE adsE = (AdsE) o;
+        return idAds == adsE.idAds && Objects.equals(adsname, adsE.adsname) && Objects.equals(adscontent, adsE.adscontent);
     }
 
     @Override

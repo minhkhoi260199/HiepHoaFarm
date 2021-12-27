@@ -5,11 +5,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Status {
+@Table(name = "status", schema = "hiephoafarm", catalog = "hiephoafarm")
+public class StatusE {
     private int idStatus;
     private String statusName;
     private String statusColor;
-    private Collection<Order> ordersByIdStatus;
+    private Collection<OrderE> ordersByIdStatus;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -46,8 +47,8 @@ public class Status {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Status status = (Status) o;
-        return idStatus == status.idStatus && Objects.equals(statusName, status.statusName) && Objects.equals(statusColor, status.statusColor);
+        StatusE statusE = (StatusE) o;
+        return idStatus == statusE.idStatus && Objects.equals(statusName, statusE.statusName) && Objects.equals(statusColor, statusE.statusColor);
     }
 
     @Override
@@ -56,11 +57,11 @@ public class Status {
     }
 
     @OneToMany(mappedBy = "statusByStatusId")
-    public Collection<Order> getOrdersByIdStatus() {
+    public Collection<OrderE> getOrdersByIdStatus() {
         return ordersByIdStatus;
     }
 
-    public void setOrdersByIdStatus(Collection<Order> ordersByIdStatus) {
+    public void setOrdersByIdStatus(Collection<OrderE> ordersByIdStatus) {
         this.ordersByIdStatus = ordersByIdStatus;
     }
 }

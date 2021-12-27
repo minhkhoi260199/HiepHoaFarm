@@ -5,12 +5,13 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class User {
+@Table(name = "user", schema = "hiephoafarm", catalog = "hiephoafarm")
+public class UserE {
     private int idUser;
     private String username;
     private String password;
-    private Collection<Order> ordersByIdUser;
-    private Role roleByRoleId;
+    private Collection<OrderE> ordersByIdUser;
+    private RoleE roleByRoleId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -47,8 +48,8 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return idUser == user.idUser && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+        UserE userE = (UserE) o;
+        return idUser == userE.idUser && Objects.equals(username, userE.username) && Objects.equals(password, userE.password);
     }
 
     @Override
@@ -57,21 +58,21 @@ public class User {
     }
 
     @OneToMany(mappedBy = "userByUserId")
-    public Collection<Order> getOrdersByIdUser() {
+    public Collection<OrderE> getOrdersByIdUser() {
         return ordersByIdUser;
     }
 
-    public void setOrdersByIdUser(Collection<Order> ordersByIdUser) {
+    public void setOrdersByIdUser(Collection<OrderE> ordersByIdUser) {
         this.ordersByIdUser = ordersByIdUser;
     }
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id_role", nullable = false)
-    public Role getRoleByRoleId() {
+    public RoleE getRoleByRoleId() {
         return roleByRoleId;
     }
 
-    public void setRoleByRoleId(Role roleByRoleId) {
+    public void setRoleByRoleId(RoleE roleByRoleId) {
         this.roleByRoleId = roleByRoleId;
     }
 }

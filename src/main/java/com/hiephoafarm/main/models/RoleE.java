@@ -5,10 +5,11 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Role {
+@Table(name = "role", schema = "hiephoafarm", catalog = "hiephoafarm")
+public class RoleE {
     private int idRole;
     private String roleName;
-    private Collection<User> usersByIdRole;
+    private Collection<UserE> usersByIdRole;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -35,8 +36,8 @@ public class Role {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return idRole == role.idRole && Objects.equals(roleName, role.roleName);
+        RoleE roleE = (RoleE) o;
+        return idRole == roleE.idRole && Objects.equals(roleName, roleE.roleName);
     }
 
     @Override
@@ -45,11 +46,11 @@ public class Role {
     }
 
     @OneToMany(mappedBy = "roleByRoleId")
-    public Collection<User> getUsersByIdRole() {
+    public Collection<UserE> getUsersByIdRole() {
         return usersByIdRole;
     }
 
-    public void setUsersByIdRole(Collection<User> usersByIdRole) {
+    public void setUsersByIdRole(Collection<UserE> usersByIdRole) {
         this.usersByIdRole = usersByIdRole;
     }
 }

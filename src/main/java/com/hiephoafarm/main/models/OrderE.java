@@ -1,25 +1,23 @@
 package com.hiephoafarm.main.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Order {
+@Table(name = "order", schema = "hiephoafarm", catalog = "hiephoafarm")
+public class OrderE {
     private int idOrder;
     private String customerPhone;
     private String customerName;
     private String address;
     private Integer shippingFee;
     private Integer orderAmouth;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date createdTime;
-    private User userByUserId;
-    private Status statusByStatusId;
-    private Collection<OrderDetail> orderDetailsByIdOrder;
+    private UserE userByUserId;
+    private StatusE statusByStatusId;
+    private Collection<OrderDetailE> orderDetailsByIdOrder;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -96,8 +94,8 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return idOrder == order.idOrder && Objects.equals(customerPhone, order.customerPhone) && Objects.equals(customerName, order.customerName) && Objects.equals(address, order.address) && Objects.equals(shippingFee, order.shippingFee) && Objects.equals(orderAmouth, order.orderAmouth) && Objects.equals(createdTime, order.createdTime);
+        OrderE orderE = (OrderE) o;
+        return idOrder == orderE.idOrder && Objects.equals(customerPhone, orderE.customerPhone) && Objects.equals(customerName, orderE.customerName) && Objects.equals(address, orderE.address) && Objects.equals(shippingFee, orderE.shippingFee) && Objects.equals(orderAmouth, orderE.orderAmouth) && Objects.equals(createdTime, orderE.createdTime);
     }
 
     @Override
@@ -107,30 +105,30 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id_user", nullable = false)
-    public User getUserByUserId() {
+    public UserE getUserByUserId() {
         return userByUserId;
     }
 
-    public void setUserByUserId(User userByUserId) {
+    public void setUserByUserId(UserE userByUserId) {
         this.userByUserId = userByUserId;
     }
 
     @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id_status", nullable = false)
-    public Status getStatusByStatusId() {
+    public StatusE getStatusByStatusId() {
         return statusByStatusId;
     }
 
-    public void setStatusByStatusId(Status statusByStatusId) {
+    public void setStatusByStatusId(StatusE statusByStatusId) {
         this.statusByStatusId = statusByStatusId;
     }
 
     @OneToMany(mappedBy = "orderByOrderId")
-    public Collection<OrderDetail> getOrderDetailsByIdOrder() {
+    public Collection<OrderDetailE> getOrderDetailsByIdOrder() {
         return orderDetailsByIdOrder;
     }
 
-    public void setOrderDetailsByIdOrder(Collection<OrderDetail> orderDetailsByIdOrder) {
+    public void setOrderDetailsByIdOrder(Collection<OrderDetailE> orderDetailsByIdOrder) {
         this.orderDetailsByIdOrder = orderDetailsByIdOrder;
     }
 }

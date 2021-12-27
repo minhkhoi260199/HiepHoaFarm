@@ -5,14 +5,15 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Product {
+@Table(name = "product", schema = "hiephoafarm", catalog = "hiephoafarm")
+public class ProductE {
     private int idProduct;
     private String productName;
     private String description;
     private Integer productPrice;
-    private Collection<Gallery> galleriesByIdProduct;
-    private Collection<OrderDetail> orderDetailsByIdProduct;
-    private Category categoryByCategoryId;
+    private Collection<GalleryE> galleriesByIdProduct;
+    private Collection<OrderDetailE> orderDetailsByIdProduct;
+    private CategoryE categoryByCategoryId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -59,8 +60,8 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return idProduct == product.idProduct && Objects.equals(productName, product.productName) && Objects.equals(description, product.description) && Objects.equals(productPrice, product.productPrice);
+        ProductE productE = (ProductE) o;
+        return idProduct == productE.idProduct && Objects.equals(productName, productE.productName) && Objects.equals(description, productE.description) && Objects.equals(productPrice, productE.productPrice);
     }
 
     @Override
@@ -69,30 +70,30 @@ public class Product {
     }
 
     @OneToMany(mappedBy = "productByProductId")
-    public Collection<Gallery> getGalleriesByIdProduct() {
+    public Collection<GalleryE> getGalleriesByIdProduct() {
         return galleriesByIdProduct;
     }
 
-    public void setGalleriesByIdProduct(Collection<Gallery> galleriesByIdProduct) {
+    public void setGalleriesByIdProduct(Collection<GalleryE> galleriesByIdProduct) {
         this.galleriesByIdProduct = galleriesByIdProduct;
     }
 
     @OneToMany(mappedBy = "productByProductId")
-    public Collection<OrderDetail> getOrderDetailsByIdProduct() {
+    public Collection<OrderDetailE> getOrderDetailsByIdProduct() {
         return orderDetailsByIdProduct;
     }
 
-    public void setOrderDetailsByIdProduct(Collection<OrderDetail> orderDetailsByIdProduct) {
+    public void setOrderDetailsByIdProduct(Collection<OrderDetailE> orderDetailsByIdProduct) {
         this.orderDetailsByIdProduct = orderDetailsByIdProduct;
     }
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id_category", nullable = false)
-    public Category getCategoryByCategoryId() {
+    public CategoryE getCategoryByCategoryId() {
         return categoryByCategoryId;
     }
 
-    public void setCategoryByCategoryId(Category categoryByCategoryId) {
+    public void setCategoryByCategoryId(CategoryE categoryByCategoryId) {
         this.categoryByCategoryId = categoryByCategoryId;
     }
 }

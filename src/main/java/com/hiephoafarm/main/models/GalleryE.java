@@ -4,10 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Gallery {
+@Table(name = "gallery", schema = "hiephoafarm", catalog = "hiephoafarm")
+public class GalleryE {
     private int idGallery;
     private String photo;
-    private Product productByProductId;
+    private ProductE productByProductId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -34,8 +35,8 @@ public class Gallery {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Gallery gallery = (Gallery) o;
-        return idGallery == gallery.idGallery && Objects.equals(photo, gallery.photo);
+        GalleryE galleryE = (GalleryE) o;
+        return idGallery == galleryE.idGallery && Objects.equals(photo, galleryE.photo);
     }
 
     @Override
@@ -45,11 +46,11 @@ public class Gallery {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id_product", nullable = false)
-    public Product getProductByProductId() {
+    public ProductE getProductByProductId() {
         return productByProductId;
     }
 
-    public void setProductByProductId(Product productByProductId) {
+    public void setProductByProductId(ProductE productByProductId) {
         this.productByProductId = productByProductId;
     }
 }

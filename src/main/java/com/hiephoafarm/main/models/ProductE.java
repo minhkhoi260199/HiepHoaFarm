@@ -5,12 +5,11 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product", schema = "hiephoafarm", catalog = "hiephoafarm")
+@Table(name = "product", schema = "hiephoafarm")
 public class ProductE {
     private int idProduct;
     private String productName;
     private String description;
-    private Integer productPrice;
     private Collection<GalleryE> galleriesByIdProduct;
     private Collection<OrderDetailE> orderDetailsByIdProduct;
     private CategoryE categoryByCategoryId;
@@ -27,7 +26,7 @@ public class ProductE {
     }
 
     @Basic
-    @Column(name = "product_name", nullable = true, length = 45)
+    @Column(name = "product_name", nullable = false, length = 45)
     public String getProductName() {
         return productName;
     }
@@ -37,7 +36,7 @@ public class ProductE {
     }
 
     @Basic
-    @Column(name = "description", nullable = true, length = 45)
+    @Column(name = "description", nullable = false, length = -1)
     public String getDescription() {
         return description;
     }
@@ -46,27 +45,17 @@ public class ProductE {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "product_price", nullable = true)
-    public Integer getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(Integer productPrice) {
-        this.productPrice = productPrice;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductE productE = (ProductE) o;
-        return idProduct == productE.idProduct && Objects.equals(productName, productE.productName) && Objects.equals(description, productE.description) && Objects.equals(productPrice, productE.productPrice);
+        return idProduct == productE.idProduct && Objects.equals(productName, productE.productName) && Objects.equals(description, productE.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProduct, productName, description, productPrice);
+        return Objects.hash(idProduct, productName, description);
     }
 
     @OneToMany(mappedBy = "productByProductId")

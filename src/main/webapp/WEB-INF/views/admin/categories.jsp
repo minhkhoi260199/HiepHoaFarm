@@ -10,78 +10,56 @@
                     <!-- DYNAMIC CONTENT-->
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- NEW ORDER -->
-                            <div class="table-data__tool">
-                                <div class="table-data__tool-left">
-                                    <h3 class="title-5 m-t-10">ĐƠN MỚI</h3>
-                                </div>
-                            </div>
-                            <div class="table-responsive m-b-40">
-                                <table class="table table-borderless table-data3">
-                                    <thead>
-                                    <tr>
-                                        <th>ThoiGianNhanDon</th>
-                                        <th>type</th>
-                                        <th>description</th>
-                                        <th>status</th>
-                                        <th>mmmmmmmmmmmmmmmmm</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>2018</td>
-                                        <td>Mobile</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td class="process">Processed</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- END NEW ORDER-->
-                            <hr/>
                             <!-- ORDER TABLE -->
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                    <h3 class="title-5 m-t-10">ĐƠN HÀNG BẠN ĐANG XỬ LÝ</h3>
+                                    <h3 class="title-5 m-t-10">QUẢN LÝ DANH MỤC SẢN PHẨM</h3>
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
                                             data-toggle="modal" data-target="#scrollmodal">
-                                        <i class="zmdi zmdi-plus"></i>Thêm đơn mới
+                                        <i class="zmdi zmdi-plus"></i>Thêm danh mục mới
                                     </button>
                                 </div>
                             </div>
-                            <div class="table-responsive m-b-40">
+                        </div>
+                        <div class="col-md-8">
+                        <div class="table-responsive m-b-40">
                                 <table class="table table-borderless table-data3">
                                     <thead>
                                     <tr>
-                                        <th>ThoiGianNhanDon</th>
-                                        <th>type</th>
-                                        <th>description</th>
-                                        <th>status</th>
-                                        <th>mmmmmmmmmmmmmmmmm</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                        <th>price</th>
+                                        <th>Tên danh mục</th>
+                                        <th>Sửa danh mục</th>
+                                        <th>Xoá danh mục</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td>2018</td>
-                                        <td>Mobile</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td class="process">Processed</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
+                                        <td>Trái cây</td>
+<%--                                        <td>--%>
+<%--                                            <div class="table-data-feature">--%>
+<%--                                                <button class="item" onClick="edit(${category.id},'${category.name }')" title="Edit">--%>
+<%--                                                    <i class="zmdi zmdi-edit"></i>--%>
+<%--                                                </button>--%>
+<%--                                                <button class="item" onClick="remove(${category.id})" title="Delete">--%>
+<%--                                                    <i class="zmdi zmdi-delete"></i>--%>
+<%--                                                </button>--%>
+<%--                                            </div>--%>
+<%--                                        </td>--%>
+                                        <td>
+                                            <div class="table-data-feature justify-content-center">
+                                                <button class="item" title="Edit">
+                                                    <i class="zmdi zmdi-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="table-data-feature justify-content-center">
+                                            <button class="item" title="Delete">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

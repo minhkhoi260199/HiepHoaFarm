@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "gallery", schema = "hiephoafarm", catalog = "hiephoafarm")
+@Table(name = "gallery", schema = "hiephoafarm")
 public class GalleryE {
     private int idGallery;
     private String photo;
@@ -22,7 +22,7 @@ public class GalleryE {
     }
 
     @Basic
-    @Column(name = "photo", nullable = true, length = 45)
+    @Column(name = "photo", nullable = false, length = 45)
     public String getPhoto() {
         return photo;
     }

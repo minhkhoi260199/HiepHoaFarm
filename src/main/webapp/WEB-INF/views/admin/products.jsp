@@ -10,51 +10,15 @@
                     <!-- DYNAMIC CONTENT-->
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- NEW ORDER -->
-                            <div class="table-data__tool">
-                                <div class="table-data__tool-left">
-                                    <h3 class="title-5 m-t-10">ĐƠN MỚI</h3>
-                                </div>
-                            </div>
-                            <div class="table-responsive m-b-40">
-                                <table class="table table-borderless table-data3">
-                                    <thead>
-                                    <tr>
-                                        <th>ThoiGianNhanDon</th>
-                                        <th>type</th>
-                                        <th>description</th>
-                                        <th>status</th>
-                                        <th>mmmmmmmmmmmmmmmmm</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>2018</td>
-                                        <td>Mobile</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td class="process">Processed</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- END NEW ORDER-->
-                            <hr/>
                             <!-- ORDER TABLE -->
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                    <h3 class="title-5 m-t-10">ĐƠN HÀNG BẠN ĐANG XỬ LÝ</h3>
+                                    <h3 class="title-5 m-t-10">QUẢN LÝ SẢN PHẨM</h3>
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
                                             data-toggle="modal" data-target="#scrollmodal">
-                                        <i class="zmdi zmdi-plus"></i>Thêm đơn mới
+                                        <i class="zmdi zmdi-plus"></i>Thêm sản phẩm mới
                                     </button>
                                 </div>
                             </div>

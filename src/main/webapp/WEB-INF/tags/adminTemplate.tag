@@ -13,7 +13,7 @@
 
     <!-- Title Page-->
     <title>${title}</title>
-
+    <link rel="icon" href="${pageContext.request.contextPath }/resources/favicon.ico" type="image/x-icon"/>
     <!-- Fontfaces CSS-->
     <link href="${pageContext.request.contextPath }/resources/css/font-face.css" rel="stylesheet" media="all">
     <link href="${pageContext.request.contextPath }/resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -25,12 +25,6 @@
 
     <!-- Vendor CSS-->
     <link href="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/wow/animate.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/slick/slick.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
     <link href="${pageContext.request.contextPath }/resources/css/theme.css" rel="stylesheet" media="all">
@@ -50,88 +44,43 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <li class="active">
-                        <a href="chart.html">
+                    <li>
+                        <a href="${pageContext.request.contextPath }/admin/index">
                             <i class="fas fa-chart-bar"></i>Đơn mới</a>
                     </li>
                     <li>
-                        <a href="form.html">
+                        <a href="${pageContext.request.contextPath }/admin/retail">
                             <i class="far fa-check-square"></i>Đơn lẻ</a>
                     </li>
                     <li>
-                        <a href="table.html">
+                        <a href="${pageContext.request.contextPath }/admin/wholeSale">
                             <i class="fas fa-table"></i>Đơn sỉ</a>
                     </li>
-                    <hr>
+                    <hr style="border: 1px solid red;"/>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            <i class="fas fa-tachometer-alt"></i>Quản lí kho</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="index.html">Dashboard 1</a>
+                                <a href="${pageContext.request.contextPath }/admin/product">Về sản phẩm</a>
                             </li>
                             <li>
-                                <a href="index2.html">Dashboard 2</a>
-                            </li>
-                            <li>
-                                <a href="index3.html">Dashboard 3</a>
-                            </li>
-                            <li>
-                                <a href="index4.html">Dashboard 4</a>
+                                <a href="${pageContext.request.contextPath }/admin/category">Về danh mục</a>
                             </li>
                         </ul>
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-copy"></i>Pages</a>
+                            <i class="fas fa-desktop"></i>Về giao diện</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="login.html">Login</a>
+                                <a href="${pageContext.request.contextPath }/admin/ads">Dòng thông báo</a>
                             </li>
                             <li>
-                                <a href="register.html">Register</a>
+                                <a href="${pageContext.request.contextPath }/admin/about">Trang giới thiệu</a>
                             </li>
                             <li>
-                                <a href="forget-pass.html">Forget Password</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-desktop"></i>UI Elements</a>
-                        <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li>
-                                <a href="button.html">Button</a>
-                            </li>
-                            <li>
-                                <a href="badge.html">Badges</a>
-                            </li>
-                            <li>
-                                <a href="tab.html">Tabs</a>
-                            </li>
-                            <li>
-                                <a href="card.html">Cards</a>
-                            </li>
-                            <li>
-                                <a href="alert.html">Alerts</a>
-                            </li>
-                            <li>
-                                <a href="progress-bar.html">Progress Bars</a>
-                            </li>
-                            <li>
-                                <a href="modal.html">Modals</a>
-                            </li>
-                            <li>
-                                <a href="switch.html">Switchs</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grids</a>
-                            </li>
-                            <li>
-                                <a href="fontawesome.html">Fontawesome Icon</a>
-                            </li>
-                            <li>
-                                <a href="typo.html">Typography</a>
+                                <a href="${pageContext.request.contextPath }/admin/contact">Về doanh nghiệp</a>
                             </li>
                         </ul>
                     </li>
@@ -198,22 +147,10 @@
         <!-- END HEADER DESKTOP-->
 
         <!-- MAIN CONTENT-->
-        <div class="main-content">
-            <div class="section__content section__content--p30">
-                <div class="container-fluid">
-                    <!-- DYNAMIC CONTENT-->
                     <jsp:invoke fragment="content" />
-                    <!-- END DYNAMIC CONTENT-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="copyright">
-                                <p>HIỆP HOÀ FARM MANAGER</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
     </div>
 
 </div>
@@ -224,16 +161,7 @@
 <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
 <!-- Vendor JS       -->
-<script src="${pageContext.request.contextPath }/resources/vendor/slick/slick.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/wow/wow.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/counter-up/jquery.waypoints.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/counter-up/jquery.counterup.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/circle-progress/circle-progress.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/select2/select2.min.js"></script>
 
 <!-- Main JS-->
 <script src="${pageContext.request.contextPath }/resources/js/main.js"></script>

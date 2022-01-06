@@ -6,18 +6,18 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order", schema = "hiephoafarm", catalog = "hiephoafarm")
-public class OrderE {
+@Table(name = "orders", schema = "hiephoafarm")
+public class OrdersE {
     private int idOrder;
     private String customerPhone;
     private String customerName;
     private String address;
-    private Integer shippingFee;
-    private Integer orderAmouth;
+    private int shippingFee;
+    private int orderAmouth;
     private Date createdTime;
+    private Collection<OrderDetailE> orderDetailsByIdOrder;
     private UserE userByUserId;
     private StatusE statusByStatusId;
-    private Collection<OrderDetailE> orderDetailsByIdOrder;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -31,7 +31,7 @@ public class OrderE {
     }
 
     @Basic
-    @Column(name = "customer_phone", nullable = true, length = 45)
+    @Column(name = "customer_phone", nullable = false, length = 10)
     public String getCustomerPhone() {
         return customerPhone;
     }
@@ -41,7 +41,7 @@ public class OrderE {
     }
 
     @Basic
-    @Column(name = "customer_name", nullable = true, length = 45)
+    @Column(name = "customer_name", nullable = false, length = 45)
     public String getCustomerName() {
         return customerName;
     }
@@ -51,7 +51,7 @@ public class OrderE {
     }
 
     @Basic
-    @Column(name = "address", nullable = true, length = 45)
+    @Column(name = "address", nullable = false, length = 45)
     public String getAddress() {
         return address;
     }
@@ -61,27 +61,27 @@ public class OrderE {
     }
 
     @Basic
-    @Column(name = "shipping_fee", nullable = true)
-    public Integer getShippingFee() {
+    @Column(name = "shipping_fee", nullable = false)
+    public int getShippingFee() {
         return shippingFee;
     }
 
-    public void setShippingFee(Integer shippingFee) {
+    public void setShippingFee(int shippingFee) {
         this.shippingFee = shippingFee;
     }
 
     @Basic
-    @Column(name = "order_amouth", nullable = true)
-    public Integer getOrderAmouth() {
+    @Column(name = "order_amouth", nullable = false)
+    public int getOrderAmouth() {
         return orderAmouth;
     }
 
-    public void setOrderAmouth(Integer orderAmouth) {
+    public void setOrderAmouth(int orderAmouth) {
         this.orderAmouth = orderAmouth;
     }
 
     @Basic
-    @Column(name = "created_time", nullable = true)
+    @Column(name = "created_time", nullable = false)
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -94,13 +94,22 @@ public class OrderE {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderE orderE = (OrderE) o;
-        return idOrder == orderE.idOrder && Objects.equals(customerPhone, orderE.customerPhone) && Objects.equals(customerName, orderE.customerName) && Objects.equals(address, orderE.address) && Objects.equals(shippingFee, orderE.shippingFee) && Objects.equals(orderAmouth, orderE.orderAmouth) && Objects.equals(createdTime, orderE.createdTime);
+        OrdersE ordersE = (OrdersE) o;
+        return idOrder == ordersE.idOrder && shippingFee == ordersE.shippingFee && orderAmouth == ordersE.orderAmouth && Objects.equals(customerPhone, ordersE.customerPhone) && Objects.equals(customerName, ordersE.customerName) && Objects.equals(address, ordersE.address) && Objects.equals(createdTime, ordersE.createdTime);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(idOrder, customerPhone, customerName, address, shippingFee, orderAmouth, createdTime);
+    }
+
+    @OneToMany(mappedBy = "ordersByOrderId")
+    public Collection<OrderDetailE> getOrderDetailsByIdOrder() {
+        return orderDetailsByIdOrder;
+    }
+
+    public void setOrderDetailsByIdOrder(Collection<OrderDetailE> orderDetailsByIdOrder) {
+        this.orderDetailsByIdOrder = orderDetailsByIdOrder;
     }
 
     @ManyToOne
@@ -121,14 +130,5 @@ public class OrderE {
 
     public void setStatusByStatusId(StatusE statusByStatusId) {
         this.statusByStatusId = statusByStatusId;
-    }
-
-    @OneToMany(mappedBy = "orderByOrderId")
-    public Collection<OrderDetailE> getOrderDetailsByIdOrder() {
-        return orderDetailsByIdOrder;
-    }
-
-    public void setOrderDetailsByIdOrder(Collection<OrderDetailE> orderDetailsByIdOrder) {
-        this.orderDetailsByIdOrder = orderDetailsByIdOrder;
     }
 }

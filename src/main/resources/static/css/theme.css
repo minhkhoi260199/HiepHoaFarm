@@ -57,7 +57,7 @@ p {
 
 /* ----- Typography ----- */
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: sans-serif, Arial;
     font-weight: 400;
     font-size: 16px;
     line-height: 1.625;
@@ -1583,7 +1583,8 @@ section {
 }
 
 .navbar-sidebar {
-    padding: 35px;
+    padding: 15px;
+    padding-right: 5px;
     padding-bottom: 0;
 }
 
@@ -4640,6 +4641,7 @@ section {
     padding-right: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+    text-align: center;
 }
 
 .table-data3 thead tr th:first-child {
@@ -4655,13 +4657,12 @@ section {
 }
 
 .table-data3 thead tr th:last-child {
-    text-align: right;
-    padding-right: 50px;
+    padding-right: 20px;
 }
 
 .table-data3 tbody tr td:last-child {
     text-align: right;
-    padding-right: 50px;
+    padding-right: 20px;
 }
 
 .table-data3 tbody tr {
@@ -4686,7 +4687,7 @@ section {
     border-right: 1px solid yellow;
     background: #fff;
     font-size: 14px;
-    color: #808080;
+    color: black;
     /* padding: 12px 40px;
     padding-right: 10px; */
 }

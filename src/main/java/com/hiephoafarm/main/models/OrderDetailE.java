@@ -4,16 +4,16 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order_detail", schema = "hiephoafarm", catalog = "hiephoafarm")
+@Table(name = "order_detail", schema = "hiephoafarm")
 public class OrderDetailE {
     private int idOrderDetail;
-    private Integer quantity;
-    private OrderE orderByOrderId;
+    private int quantity;
     private ProductE productByProductId;
+    private OrdersE ordersByOrderId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_order_detail", nullable = false)
+    @Column(name = "Id_order_detail", nullable = false)
     public int getIdOrderDetail() {
         return idOrderDetail;
     }
@@ -23,12 +23,12 @@ public class OrderDetailE {
     }
 
     @Basic
-    @Column(name = "quantity", nullable = true)
-    public Integer getQuantity() {
+    @Column(name = "quantity", nullable = false)
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -37,22 +37,12 @@ public class OrderDetailE {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDetailE that = (OrderDetailE) o;
-        return idOrderDetail == that.idOrderDetail && Objects.equals(quantity, that.quantity);
+        return idOrderDetail == that.idOrderDetail && quantity == that.quantity;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(idOrderDetail, quantity);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id_order", nullable = false)
-    public OrderE getOrderByOrderId() {
-        return orderByOrderId;
-    }
-
-    public void setOrderByOrderId(OrderE orderByOrderId) {
-        this.orderByOrderId = orderByOrderId;
     }
 
     @ManyToOne
@@ -63,5 +53,15 @@ public class OrderDetailE {
 
     public void setProductByProductId(ProductE productByProductId) {
         this.productByProductId = productByProductId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id_order", nullable = false)
+    public OrdersE getOrdersByOrderId() {
+        return ordersByOrderId;
+    }
+
+    public void setOrdersByOrderId(OrdersE ordersByOrderId) {
+        this.ordersByOrderId = ordersByOrderId;
     }
 }

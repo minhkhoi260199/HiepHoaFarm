@@ -5,12 +5,11 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "status", schema = "hiephoafarm", catalog = "hiephoafarm")
+@Table(name = "status", schema = "hiephoafarm")
 public class StatusE {
     private int idStatus;
     private String statusName;
-    private String statusColor;
-    private Collection<OrderE> ordersByIdStatus;
+    private Collection<OrdersE> ordersByIdStatus;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -24,7 +23,7 @@ public class StatusE {
     }
 
     @Basic
-    @Column(name = "status_name", nullable = true, length = 45)
+    @Column(name = "status_name", nullable = false, length = 45)
     public String getStatusName() {
         return statusName;
     }
@@ -33,35 +32,25 @@ public class StatusE {
         this.statusName = statusName;
     }
 
-    @Basic
-    @Column(name = "status_color", nullable = true, length = 45)
-    public String getStatusColor() {
-        return statusColor;
-    }
-
-    public void setStatusColor(String statusColor) {
-        this.statusColor = statusColor;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StatusE statusE = (StatusE) o;
-        return idStatus == statusE.idStatus && Objects.equals(statusName, statusE.statusName) && Objects.equals(statusColor, statusE.statusColor);
+        return idStatus == statusE.idStatus && Objects.equals(statusName, statusE.statusName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idStatus, statusName, statusColor);
+        return Objects.hash(idStatus, statusName);
     }
 
     @OneToMany(mappedBy = "statusByStatusId")
-    public Collection<OrderE> getOrdersByIdStatus() {
+    public Collection<OrdersE> getOrdersByIdStatus() {
         return ordersByIdStatus;
     }
 
-    public void setOrdersByIdStatus(Collection<OrderE> ordersByIdStatus) {
+    public void setOrdersByIdStatus(Collection<OrdersE> ordersByIdStatus) {
         this.ordersByIdStatus = ordersByIdStatus;
     }
 }

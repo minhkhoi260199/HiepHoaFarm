@@ -7,8 +7,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping({"","admin"})
 public class AdminController {
-    @RequestMapping(value = {"", "index"} ,method = RequestMethod.GET)
+    @RequestMapping(value = {"index"} ,method = RequestMethod.GET)
     public String index() {
         return "admin/index";
     }
+
+    @RequestMapping(value = {"retail"} ,method = RequestMethod.GET)
+    public String retail() {
+        return "admin/comingSoon";
+    }
+
+    @RequestMapping(value = {"wholeSale"} ,method = RequestMethod.GET)
+    public String wholeSale() {
+        return "admin/comingSoon";
+    }
+
+    @RequestMapping(value = {"","product"} ,method = RequestMethod.GET)
+    public String product() {
+        return "admin/products";
+    }
+
+    @RequestMapping(value = {"category"} ,method = RequestMethod.GET)
+    public String category() {
+        return "admin/categories";
+    }
+
+    @RequestMapping(value = {"about"} ,method = RequestMethod.GET)
+    public String about() {
+        return "admin/comingSoon";
+    }
+
+    @RequestMapping(value = {"contact"} ,method = RequestMethod.GET)
+    public String contact() {
+        return "admin/comingSoon";
+    }
+
+    @RequestMapping(value = {"ads"} ,method = RequestMethod.GET)
+    public String ads() {
+        return "admin/comingSoon";
+    }
+
 }

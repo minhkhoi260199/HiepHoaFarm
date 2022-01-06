@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user", schema = "hiephoafarm", catalog = "hiephoafarm")
+@Table(name = "user", schema = "hiephoafarm")
 public class UserE {
     private int idUser;
     private String username;
     private String password;
-    private Collection<OrderE> ordersByIdUser;
+    private Collection<OrdersE> ordersByIdUser;
     private RoleE roleByRoleId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,11 +58,11 @@ public class UserE {
     }
 
     @OneToMany(mappedBy = "userByUserId")
-    public Collection<OrderE> getOrdersByIdUser() {
+    public Collection<OrdersE> getOrdersByIdUser() {
         return ordersByIdUser;
     }
 
-    public void setOrdersByIdUser(Collection<OrderE> ordersByIdUser) {
+    public void setOrdersByIdUser(Collection<OrdersE> ordersByIdUser) {
         this.ordersByIdUser = ordersByIdUser;
     }
 

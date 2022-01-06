@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
-                                            data-toggle="modal" data-target="#scrollmodal">
+                                            data-toggle="modal" data-target="#staticModal">
                                         <i class="zmdi zmdi-plus"></i>Thêm danh mục mới
                                     </button>
                                 </div>
@@ -34,33 +34,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <c:forEach var="category" items="${categories}">
                                     <tr>
-                                        <td>Trái cây</td>
-<%--                                        <td>--%>
-<%--                                            <div class="table-data-feature">--%>
-<%--                                                <button class="item" onClick="edit(${category.id},'${category.name }')" title="Edit">--%>
-<%--                                                    <i class="zmdi zmdi-edit"></i>--%>
-<%--                                                </button>--%>
-<%--                                                <button class="item" onClick="remove(${category.id})" title="Delete">--%>
-<%--                                                    <i class="zmdi zmdi-delete"></i>--%>
-<%--                                                </button>--%>
-<%--                                            </div>--%>
-<%--                                        </td>--%>
+                                        <td id="categoryName_${category.idCategory}">${category.categoryName}</td>
+                                            <td>
+                                                <div class="table-data-feature justify-content-center">
+                                                    <button class="item" onClick="edit(${category.idCategory},'${category.categoryName }')" title="Edit">
+                                                        <i class="zmdi zmdi-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
                                         <td>
                                             <div class="table-data-feature justify-content-center">
-                                                <button class="item" title="Edit">
-                                                    <i class="zmdi zmdi-edit"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="table-data-feature justify-content-center">
-                                            <button class="item" title="Delete">
+                                                <button class="item" onClick="remove(${category.idCategory})"  title="Delete">
                                                     <i class="zmdi zmdi-delete"></i>
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -81,30 +73,130 @@
         </div>
 
         <!-- modal scroll -->
-        <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="scrollmodalLabel">Scrolling Long Content Modal</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            <br> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                            scelerisque nisl consectetur et.
-                            Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Confirm</button>
+			<div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
+                 data-backdrop="static">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">THÊM DANH MỤC</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <input id="inputNewCate" type="text" placeholder="Nhập tên danh mục" />
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+<%--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>--%>
+                            <button type="button" onclick="create()" class="btn btn-primary">Tạo mới</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         <!-- end modal scroll -->
+        <script type="text/javascript">
+            function create(){
+                let newValue = $(`#inputNewCate`).val();
+                let data = {
+                    "categoryName": newValue,
+                };
+                $.ajax({
+                    url: "${pageContext.request.contextPath }/api/category/save",
+                    method: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(res) {
+                    }
+                })
+                swal({
+                    title: "Successfull",
+                    text: "Category '"+newValue+"' have been created !",
+                    icon: "success",
+                    buttons: "OK",
+                }).then(() => {
+                        location.reload();
+                    });
+            }
+            function remove(id){
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to undo this!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            if ( id != "") {
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath }/api/category/delete?id="+id,
+                                    method: "POST",
+                                    success: function(res) {
+                                    }
+                                })
+                                swal("Category has been deleted!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        } else {
+                            swal("Canceled !");
+                        }
+                    });
+            }
+            function edit(id, name){
+                let contentId = `#categoryName_`+ id;
+                $(contentId).html(`<div style="float: left; padding: 2px; border: 1px solid grey; width: 100%"><input style="width: 82%" id="edit_`+ id +`" type="text" value="`+ name +`"/>`
+                    + `<button type="button" title="Submit" onClick="submit(`+id+`)" class="btn btn-success btn-sm"><i class="zmdi zmdi-check"></i></button>`
+                    + `<button type="button" title="Cancel" onClick="cancel(`+id+`,'`+name+`')" class="btn btn-danger btn-sm"><i class="zmdi zmdi-close"></i></button></div>`
+                );
+            }
+            function cancel(id, content){
+                let contentId = `#categoryName_`+ id;
+                $(contentId).html(content);
+            }
+
+            function submit(id){
+                let editId = `#edit_`+ id;
+                let newValue = $(editId).val();
+
+                if ( id != "" && newValue != "") {
+                    let data = {
+                        "idCategory": id,
+                        "categoryName": newValue,
+                    };
+                    $.ajax({
+                        url: "${pageContext.request.contextPath }/api/category/save",
+                        method: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: 'json',
+                        success: function(res) {
+                        }
+                    })
+                    swal({
+                        title: "Successfull",
+                        text: "Thông tin đã được cập nhật thành công !",
+                        icon: "success",
+                        buttons: "OK",
+                    }).then(() => {
+                        cancel(id, newValue);
+                    });
+                } else {
+                    swal({
+                        title: "Fail",
+                        text: "Không thể để thông tin trống !!",
+                        icon: "error",
+                        buttons: "OK",
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
+            }
+        </script>
 	</jsp:attribute>
 </tmp:adminTemplate>

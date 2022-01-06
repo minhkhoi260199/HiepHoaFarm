@@ -162,6 +162,7 @@
 <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
 <!-- Vendor JS       -->
 <script src="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/vendor/sweetalert/sweetalert.min.js"></script>
 
 <!-- Main JS-->
 <script src="${pageContext.request.contextPath }/resources/js/main.js"></script>

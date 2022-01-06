@@ -5,22 +5,18 @@
              version="3.0">
   <persistence-unit name="default">
 
+    <class>com.hiephoafarm.main.models.AdsE</class>
+    <class>com.hiephoafarm.main.models.CategoryE</class>
+    <class>com.hiephoafarm.main.models.GalleryE</class>
+    <class>com.hiephoafarm.main.models.OrderDetailE</class>
+    <class>com.hiephoafarm.main.models.OrdersE</class>
+    <class>com.hiephoafarm.main.models.ProductE</class>
+    <class>com.hiephoafarm.main.models.RoleE</class>
+    <class>com.hiephoafarm.main.models.StatusE</class>
+    <class>com.hiephoafarm.main.models.UserE</class>
+    <properties>
+      <property name="hibernate.connection.url" value="jdbc:mariadb://localhost:3307/hiephoafarm"/>
+      <property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
+    </properties>
   </persistence-unit>
-    <persistence-unit name="HiepHoaFarmUnit">
-      <class>com.hiephoafarm.main.models.AdsE</class>
-      <class>com.hiephoafarm.main.models.CategoryE</class>
-      <class>com.hiephoafarm.main.models.GalleryE</class>
-      <class>com.hiephoafarm.main.models.OrderE</class>
-      <class>com.hiephoafarm.main.models.OrderDetailE</class>
-      <class>com.hiephoafarm.main.models.ProductE</class>
-      <class>com.hiephoafarm.main.models.RoleE</class>
-      <class>com.hiephoafarm.main.models.StatusE</class>
-      <class>com.hiephoafarm.main.models.UserE</class>
-        <class>com.hiephoafarm.main.models.OrdersE</class>
-        <properties>
-        <property name="hibernate.connection.url"
-                  value="jdbc:mariadb://localhost:3307/hiephoafarm"/>
-        <property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
-      </properties>
-    </persistence-unit>
 </persistence>

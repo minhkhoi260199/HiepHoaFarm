@@ -22,7 +22,7 @@ public class GalleryE {
     }
 
     @Basic
-    @Column(name = "photo", nullable = false, length = 45)
+    @Column(name = "photo", nullable = false, length = 120)
     public String getPhoto() {
         return photo;
     }

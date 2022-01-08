@@ -15,7 +15,6 @@
     <title>${title}</title>
     <link rel="icon" href="${pageContext.request.contextPath }/resources/favicon.ico" type="image/x-icon"/>
     <!-- Fontfaces CSS-->
-    <link href="${pageContext.request.contextPath }/resources/css/font-face.css" rel="stylesheet" media="all">
     <link href="${pageContext.request.contextPath }/resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="${pageContext.request.contextPath }/resources/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link href="${pageContext.request.contextPath }/resources/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -33,7 +32,6 @@
 
 <body class="animsition">
 <div class="page-wrapper">
-
     <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
@@ -146,21 +144,20 @@
         </header>
         <!-- END HEADER DESKTOP-->
 
+        <!-- Jquery JS-->
+        <script src="${pageContext.request.contextPath }/resources/vendor/jquery-3.2.1.min.js"></script>
+
         <!-- MAIN CONTENT-->
-                    <jsp:invoke fragment="content" />
-
-
+        <jsp:invoke fragment="content" />
 
     </div>
 
 </div>
 
-<!-- Jquery JS-->
-<script src="${pageContext.request.contextPath }/resources/vendor/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap JS-->
 <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-<!-- Vendor JS       -->
+<!-- Vendor JS -->
 <script src="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/sweetalert/sweetalert.min.js"></script>
 

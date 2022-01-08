@@ -1,6 +1,8 @@
 package com.hiephoafarm.main.restControllers;
 
 import com.hiephoafarm.main.models.ProductE;
+import com.hiephoafarm.main.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,15 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/product")
 public class ProductRestController {
 
+	@Autowired
+	ProductService productService;
+
 	@RequestMapping(value = "index", method=RequestMethod.GET)
 	public String getDataList(){
 			return "Hello JavaSolutionsGuide Readers";
 	}
 
-	@RequestMapping(value="add", method = RequestMethod.POST)
-	public ResponseEntity<?> createProduct(@Validated @RequestBody ProductE product, BindingResult bindingResult){
+	@RequestMapping(value="save", method = RequestMethod.POST)
+	public ResponseEntity<?> createProduct(@Validated @RequestBody ProductE product){
 		try {
-			return new ResponseEntity<>(product, HttpStatus.OK);
+			ProductE flag = productService.save(product);
+			return new ResponseEntity<>(flag.getProductName(), HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

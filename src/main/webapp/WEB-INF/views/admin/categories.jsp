@@ -37,13 +37,13 @@
                                     <c:forEach var="category" items="${categories}">
                                     <tr>
                                         <td id="categoryName_${category.idCategory}">${category.categoryName}</td>
-                                            <td>
-                                                <div class="table-data-feature justify-content-center">
-                                                    <button class="item" onClick="edit(${category.idCategory},'${category.categoryName }')" title="Edit">
-                                                        <i class="zmdi zmdi-edit"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
+                                        <td>
+                                            <div class="table-data-feature justify-content-center">
+                                                <button class="item" onClick="edit(${category.idCategory},'${category.categoryName }')" title="Edit">
+                                                    <i class="zmdi zmdi-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="remove(${category.idCategory})"  title="Delete">
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <!-- modal scroll -->
+        <!-- modal static -->
 			<div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
                  data-backdrop="static">
                 <div class="modal-dialog modal-sm" role="document">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
             </div>
-        <!-- end modal scroll -->
+        <!-- end modal static -->
         <script type="text/javascript">
             function create(){
                 let newValue = $(`#inputNewCate`).val();
@@ -189,7 +189,7 @@
                 } else {
                     swal({
                         title: "Fail",
-                        text: "Không thể để thông tin trống !!",
+                        text: "Không thể để trống thông tin !!",
                         icon: "error",
                         buttons: "OK",
                     }).then(() => {

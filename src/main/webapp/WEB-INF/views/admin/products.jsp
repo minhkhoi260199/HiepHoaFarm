@@ -96,13 +96,12 @@
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <input type="text" id="productPrice" name="productPrice" placeholder="*Chỉ nhập số* Ví dụ '100000'" class="form-control">
-<%--                                    <small class="form-text text-muted"></small>--%>
                                 </div>
                                 <div class="col col-md-2">
-                                    <label for="disabled-input" class=" form-control-label">Giá khuyến mãi:</label>
+                                    <label for="unit" class=" form-control-label">Đơn vị bán:</label>
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <input type="text" id="disabled-input" name="disabled-input" placeholder="Coming Soon" disabled="" class="form-control">
+                                    <input type="text" id="unit" name="unit" placeholder="Kg/G/Hộp/..." class="form-control">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -110,30 +109,56 @@
                                     <label for="description" class=" form-control-label">Mô tả sản phẩm:</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <textarea name="description" id="description" rows="6" placeholder="Content..." class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="gallery" class=" form-control-label">Ảnh sản phẩm:</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="file" id="gallery" name="gallery" multiple="" class="form-control-file">
-                                    <div id="preview" style="border: 1px solid gray; margin-top: 5px;"></div>
-                                    <small class="form-text text-muted">*Có thể chọn nhiều file* - Kích thước vuông (Ví dụ 500x500 px)</small>
+                                    <textarea name="description" id="description" rows="7" placeholder="Content..." class="form-control"></textarea>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" onclick="save()" class="btn btn-primary">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                        <button type="button" onclick="save()" class="btn btn-primary">Thêm sản phẩm</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- end modal create product  -->
+        <!-- modal static addGallery -->
+			<div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
+                 data-backdrop="static">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">HÌNH ẢNH SẢN PHẨM</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" id="galleryForm" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <input type="hidden" id="productIdGal" name="productIdGal" value="">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="gallery" class=" form-control-label">Ảnh sản phẩm:</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="file" id="gallery" name="gallery" multiple="" class="form-control-file">
+                                        <div id="preview" style="border: 1px solid gray; margin-top: 5px;"></div>
+                                        <small class="form-text text-muted">*Có thể chọn nhiều file*</small>
+                                        <small class="form-text text-muted">- Kích thước ảnh vuông (Ví dụ 50x50px hoặc 150x150px)</small>
+                                        <small class="form-text text-muted">- Hình đầu tiên sẽ được chọn làm đại diện</small>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="saveGal()" class="btn btn-primary">Thêm ảnh</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- end modal static addGallery-->
         <script type="text/javascript">
+            //Load catagoryList
             $('#addNew').on("click", function() {
                 $.ajax({
                     url: "${pageContext.request.contextPath }/api/category/getAll",
@@ -173,45 +198,90 @@
                 let productName = $('#productName').val();
                 let category = $('#category').val();
                 let price = $('#productPrice').val();
+                let unit = $('#unit').val();
                 let description = $('#description').val();
-                let data = {
-                    "idProduct" : productId,
-                    "productName" : productName,
-                    "categoryByCategoryId" : {
-                        "idCategory" : category,
-                    },
-                    "productPrice" : price,
-                    "description" : description,
-                }
-                console.log(data)
-                $.ajax({
-                    url: "${pageContext.request.contextPath }/api/product/save",
-                    method: "POST",
-                    data: JSON.stringify(data),
-                    contentType: "application/json",
-                    dataType: 'json',
-                    success: function(productName) {
-                        if(productName){
+                if(productName != "" && category != "" && price != "" && description != "" && unit != ""){
+                    let data = {
+                        "idProduct" : productId,
+                        "productName" : productName,
+                        "categoryByCategoryId" : {
+                            "idCategory" : category,
+                        },
+                        "productPrice" : price,
+                        "saleUnit" : unit,
+                        "description" : description,
+                    }
+                    console.log(data)
+                    $.ajax({
+                        url: "${pageContext.request.contextPath }/api/product/save",
+                        method: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: 'json',
+                        success: function(product) {
                             swal({
-                                title: "Successfull",
-                                text: "Product '"+productName+"' have been saved !",
+                                title: "Lưu '"+product.productName+"' thành công",
+                                text: "Tiếp tục thêm hình ảnh cho '"+product.productName+"' chứ ?",
                                 icon: "success",
                                 buttons: "OK",
                             }).then(() => {
-                                location.reload();
+                                $('#productIdGal').val(product.idProduct);
+                                $('#staticModalLabel').html("THÊM HÌNH ẢNH CHO '"+product.productName+"'");
+                                $('#scrollmodal').modal('hide');
+                                $('#staticModal').modal('show');
                             });
-                        } else {
+                        },
+                        error: function() {
                             swal({
                                 title: "Fail",
                                 text: "Đã có lỗi xảy ra !!",
                                 icon: "error",
                                 buttons: "OK",
                             }).then(() => {
-                                location.reload();
+                                $('#scrollmodal').modal('hide');
                             });
                         }
+                    })
+                } else {
+                    swal({
+                        title: "Cảnh báo",
+                        text: "Hãy điền đủ tất cả thông tin !!",
+                        icon: "warning",
+                        buttons: "OK",
+                    })
+                }
+            }
+            function saveGal() {
+                var form = $('#galleryForm')[0]; //get the form containing the files
+                var datas = new FormData(form);
+                $.ajax({
+                    url: "${pageContext.request.contextPath }/api/product/saveGal",
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    data: datas, //pass the form data
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        swal({
+                            title: "Thành công",
+                            text: "Lưu ảnh thành công !!",
+                            icon: "success",
+                            buttons: "OK",
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function (data) {
+                        swal({
+                            title: "Fail",
+                            text: "Đã có lỗi xảy ra !!",
+                            icon: "error",
+                            buttons: "OK",
+                        }).then(() => {
+                            $('#staticModal').modal('hide');
+                        });
                     }
-                })
+                });
             }
         </script>
 	</jsp:attribute>

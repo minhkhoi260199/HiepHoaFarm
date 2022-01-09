@@ -89,7 +89,6 @@
                             </p>
                         </div>
                         <div class="modal-footer">
-<%--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>--%>
                             <button type="button" onclick="create()" class="btn btn-primary">Tạo mới</button>
                         </div>
                     </div>
@@ -112,8 +111,8 @@
                     }
                 })
                 swal({
-                    title: "Successfull",
-                    text: "Category '"+newValue+"' have been created !",
+                    title: "Thành công",
+                    text: "Danh mục '"+newValue+"' đã được tạo !",
                     icon: "success",
                     buttons: "OK",
                 }).then(() => {
@@ -122,8 +121,8 @@
             }
             function remove(id){
                 swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to undo this!",
+                    title: "Chắc chưa ?",
+                    text: "Xoá là mất luôn đó! Khuyến nghị dùng chỉnh sửa nhé.",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -179,7 +178,7 @@
                         }
                     })
                     swal({
-                        title: "Successfull",
+                        title: "Hoàn thành",
                         text: "Thông tin đã được cập nhật thành công !",
                         icon: "success",
                         buttons: "OK",

@@ -11,6 +11,7 @@ public class ProductE {
     private String productName;
     private String description;
     private int productPrice;
+    private String saleUnit;
     private Collection<GalleryE> galleriesByIdProduct;
     private Collection<OrderDetailE> orderDetailsByIdProduct;
     private CategoryE categoryByCategoryId;
@@ -27,7 +28,7 @@ public class ProductE {
     }
 
     @Basic
-    @Column(name = "product_name", nullable = false, length = 120)
+    @Column(name = "product_name", nullable = false, length = 150)
     public String getProductName() {
         return productName;
     }
@@ -56,17 +57,27 @@ public class ProductE {
         this.productPrice = productPrice;
     }
 
+    @Basic
+    @Column(name = "sale_unit", nullable = true, length = 45)
+    public String getSaleUnit() {
+        return saleUnit;
+    }
+
+    public void setSaleUnit(String saleUnit) {
+        this.saleUnit = saleUnit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductE productE = (ProductE) o;
-        return idProduct == productE.idProduct && productPrice == productE.productPrice && Objects.equals(productName, productE.productName) && Objects.equals(description, productE.description);
+        return idProduct == productE.idProduct && productPrice == productE.productPrice && Objects.equals(productName, productE.productName) && Objects.equals(description, productE.description) && Objects.equals(saleUnit, productE.saleUnit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProduct, productName, description, productPrice);
+        return Objects.hash(idProduct, productName, description, productPrice, saleUnit);
     }
 
     @OneToMany(mappedBy = "productByProductId")

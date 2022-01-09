@@ -23,7 +23,7 @@ public class CategoryE {
     }
 
     @Basic
-    @Column(name = "category_name", nullable = false, length = 120)
+    @Column(name = "category_name", nullable = false, length = 150)
     public String getCategoryName() {
         return categoryName;
     }

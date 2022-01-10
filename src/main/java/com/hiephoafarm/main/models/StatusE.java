@@ -9,6 +9,7 @@ import java.util.Objects;
 public class StatusE {
     private int idStatus;
     private String statusName;
+    private String statusNamevie;
     private Collection<OrdersE> ordersByIdStatus;
     private Collection<ProductE> productsByIdStatus;
 
@@ -18,20 +19,23 @@ public class StatusE {
     public int getIdStatus() {
         return idStatus;
     }
-
     public void setIdStatus(int idStatus) {
         this.idStatus = idStatus;
     }
 
     @Basic
-    @Column(name = "status_name", nullable = false, length = 45)
+    @Column(name = "status_name", length = 45)
     public String getStatusName() {
         return statusName;
     }
-
     public void setStatusName(String statusName) {
         this.statusName = statusName;
     }
+
+    @Basic
+    @Column(name = "status_nameVie", length = 45)
+    public String getStatusNamevie() {return statusNamevie; }
+    public void setStatusNamevie(String statusNamevie) {this.statusNamevie = statusNamevie;}
 
     @Override
     public boolean equals(Object o) {

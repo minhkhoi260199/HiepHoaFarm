@@ -13,7 +13,7 @@
 
     <!-- Title Page-->
     <title>${title}</title>
-    <link rel="icon" href="${pageContext.request.contextPath }/resources/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="${pageContext.request.contextPath }/uploads/icon/favicon.ico" type="image/x-icon"/>
     <!-- Fontfaces CSS-->
     <link href="${pageContext.request.contextPath }/resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="${pageContext.request.contextPath }/resources/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">

@@ -33,6 +33,7 @@
                                         <th>Danh mục</th>
                                         <th>Giá</th>
                                         <th>Đơn vị</th>
+                                        <th>Trạng thái</th>
                                         <th>Xoá</th>
                                     </tr>
                                     </thead>
@@ -67,9 +68,10 @@
                                                 <button class="btn btn-outline-secondary btn-sm" onClick="editGal(prData${product.idProduct})" title="Edit">
                                                     <i class="zmdi zmdi-settings"></i>
                                                 </button>
-                                        <td class="process">${product.categoryByCategoryId.categoryName}</td>
+                                        <td>${product.categoryByCategoryId.categoryName}</td>
                                         <td>${product.productPrice}</td>
                                         <td>${product.saleUnit}</td>
+                                        <td class="process">${product.statusByStatusId.statusNamevie}</td>
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="remove(${product.idProduct})"  title="Delete">

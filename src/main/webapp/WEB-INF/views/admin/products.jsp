@@ -34,6 +34,7 @@
                                         <th>Giá</th>
                                         <th>Đơn vị</th>
                                         <th>Trạng thái</th>
+                                        <th>Đổi</th>
                                         <th>Xoá</th>
                                     </tr>
                                     </thead>
@@ -71,7 +72,19 @@
                                         <td>${product.categoryByCategoryId.categoryName}</td>
                                         <td>${product.productPrice}</td>
                                         <td>${product.saleUnit}</td>
-                                        <td class="process">${product.statusByStatusId.statusNamevie}</td>
+                                        <td class="process" id="statusName${product.idProduct}">${product.statusByStatusId.statusNamevie}</td>
+                                        <td id="statusButton${product.idProduct}">
+                                            <c:if test="${product.statusByStatusId.idStatus == 1 }">
+                                            <button class="btn btn-outline-danger btn-sm" onClick="disable(${product.idProduct})" title="Vô hiệu">
+                                                <i class="fa fa-minus-square"></i>
+                                            </button>
+                                            </c:if>
+                                            <c:if test="${product.statusByStatusId.idStatus == 2 }">
+                                            <button class="btn btn-outline-success btn-sm" onClick="enable(${product.idProduct})" title="Kích hoạt">
+                                                <i class="fa fa-check-square"></i>
+                                            </button>
+                                            </c:if>
+                                        </td>
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="remove(${product.idProduct})"  title="Delete">
@@ -436,7 +449,7 @@
                                 });
                             }
                         } else {
-                            swal("Canceled !");
+                            swal({title:"Canceled !"});
                         }
                     });
             }
@@ -499,6 +512,26 @@
                             }
                         });
                 }
+            }
+            function enable(id){
+                console.log("enable: " + id);
+                let button = '#statusButton'+id;
+                $(button).html("");
+                $(button).html('<button class="btn btn-outline-danger btn-sm" onClick="disable('+id+')" title="Vô hiệu"><i class="fa fa-minus-square"></i></button>');
+                let name = '#statusName'+id;
+                $(name).html("Kích hoạt");
+                $(name).removeClass("denied");
+                $(name).addClass("process");
+            }
+            function disable(id){
+                console.log("disable: " + id)
+                let button = '#statusButton'+id;
+                $(button).html("");
+                $(button).html('<button class="btn btn-outline-success btn-sm" onClick="enable('+id+')" title="Kích hoạt"><i class="fa fa-check-square"></i></button>');
+                let name = '#statusName'+id;
+                $(name).html("Vô hiệu");
+                $(name).removeClass("process");
+                $(name).addClass("denied");
             }
         </script>
 	</jsp:attribute>

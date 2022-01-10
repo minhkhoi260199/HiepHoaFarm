@@ -5,11 +5,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "status", schema = "hiephoafarm")
+@Table(name = "status", schema = "hiephoafarm", catalog = "")
 public class StatusE {
     private int idStatus;
     private String statusName;
     private Collection<OrdersE> ordersByIdStatus;
+    private Collection<ProductE> productsByIdStatus;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -52,5 +53,14 @@ public class StatusE {
 
     public void setOrdersByIdStatus(Collection<OrdersE> ordersByIdStatus) {
         this.ordersByIdStatus = ordersByIdStatus;
+    }
+
+    @OneToMany(mappedBy = "statusByStatusId")
+    public Collection<ProductE> getProductsByIdStatus() {
+        return productsByIdStatus;
+    }
+
+    public void setProductsByIdStatus(Collection<ProductE> productsByIdStatus) {
+        this.productsByIdStatus = productsByIdStatus;
     }
 }

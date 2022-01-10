@@ -2,23 +2,16 @@ package com.hiephoafarm.main.restControllers;
 
 import com.hiephoafarm.main.helper.UploadHelper;
 import com.hiephoafarm.main.models.GalleryObj;
-import com.hiephoafarm.main.models.ProductE;
+import com.hiephoafarm.main.models.ProductObj;
 import com.hiephoafarm.main.services.GalleryService;
 import com.hiephoafarm.main.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +31,22 @@ public class ProductRestController {
 	}
 
 	@RequestMapping(value="save", method = RequestMethod.POST)
-	public ResponseEntity<?> createProduct(@Validated @RequestBody ProductE product){
+	public ResponseEntity<?> createProduct(@Validated @RequestBody ProductObj product){
 		try {
-			ProductE flag = productService.save(product);
+			ProductObj flag = productService.save(product);
 			return new ResponseEntity<>(flag, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value="gallery", method = RequestMethod.POST)
+	public ResponseEntity<?> getGalleryByIdProduct(@Validated @RequestParam("id") String id){
+		try {
+			int productId = Integer.parseInt(id);
+			List<GalleryObj> gals = galleryService.findByProductId(productId);
+			return new ResponseEntity<>(gals, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -53,8 +58,11 @@ public class ProductRestController {
 		try {
 			String uploadResult = UploadHelper.saveImages(files);
 			int productId = Integer.parseInt(productIdGal);
+			if(galleryService.countPhotoById(productId) > 0){
+				galleryService.deleteByProductId(productId);
+			}
 			if(uploadResult == "Uploaded fine"){
-				List<GalleryObj> gals = new ArrayList<GalleryObj>();
+				List<GalleryObj> gals = new ArrayList<>();
 				for (MultipartFile file : files) {
 					GalleryObj gallery = new GalleryObj();
 					gallery.setProductId(productId);
@@ -66,6 +74,21 @@ public class ProductRestController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value="delete", method = RequestMethod.POST)
+	public ResponseEntity<?> deleteProduct(@Validated @RequestParam("id") String id){
+		try {
+			int productId = Integer.parseInt(id);
+			if(productService.existsById(productId)){
+				productService.delete(productId);
+				galleryService.deleteByProductId(productId);
+			}
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

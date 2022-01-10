@@ -15,4 +15,7 @@ public class GalleryService {
     public List<GalleryObj> saveAll(List<GalleryObj> gals){
         return galleryObjRepos.saveAll(gals);
     }
+    public List<GalleryObj> findByProductId(int id){ return galleryObjRepos.findByProductId(id); }
+    public int countPhotoById(int id) { return galleryObjRepos.countByProductId(id);}
+    public void deleteByProductId(int id){ galleryObjRepos.deleteByProductId(id);}
 }

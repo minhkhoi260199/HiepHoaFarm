@@ -1,8 +1,12 @@
 package com.hiephoafarm.main.services;
 
 import com.hiephoafarm.main.models.ProductE;
+import com.hiephoafarm.main.models.ProductObj;
+import com.hiephoafarm.main.repositories.ProductObjRepos;
 import com.hiephoafarm.main.repositories.ProductRepos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +15,21 @@ import java.util.List;
 public class ProductService {
     @Autowired
     ProductRepos productRepos;
+    @Autowired
+    ProductObjRepos productObjRepos;
 
     public List<ProductE> findAll(){
         return productRepos.findAll();
     }
-    public ProductE save(ProductE productE){
-        return productRepos.save(productE);
+    public ProductObj save(ProductObj productObj){
+        return productObjRepos.save(productObj);
     }
+    public long countAll(){
+        return productRepos.count();
+    }
+    public Page<ProductE> loadData(Pageable pageable){
+        return productRepos.findAll(pageable);
+    }
+    public boolean existsById(int id){ return productRepos.existsById(id);}
+    public void delete(int id){productRepos.deleteById(id);}
 }

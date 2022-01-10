@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("categoryRepos")
 public interface CategoryRepos extends JpaRepository<CategoryE, Integer> {
-    @Query(nativeQuery = true, value = "select * from category where id=1")
+    @Query(nativeQuery = true, value = "select * from category where id_category=1")
     public CategoryE findFirst();
 }

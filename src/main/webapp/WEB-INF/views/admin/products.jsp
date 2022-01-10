@@ -14,6 +14,7 @@
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
                                     <h3 class="title-5 m-t-10">QUẢN LÝ SẢN PHẨM</h3>
+                                    <input type="hidden" id="countProduct" value="${countProduct}">
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button id="addNew" type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
@@ -26,27 +27,58 @@
                                 <table class="table table-borderless table-data3">
                                     <thead>
                                     <tr>
-                                        <th>ThoiGianNhanDon</th>
-                                        <th>type</th>
-                                        <th>description</th>
-                                        <th>status</th>
-                                        <th>mmmmmmmmmmmmmmmmm</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                        <th>price</th>
+                                        <th>Sửa</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Ảnh</th>
+                                        <th>Danh mục</th>
+                                        <th>Giá</th>
+                                        <th>Đơn vị</th>
+                                        <th>Xoá</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tableBody">
+                                    <c:forEach var="product" items="${products}">
+                                        <script>
+                                            let prData${product.idProduct} = {
+                                                "idProduct" : "${product.idProduct}",
+                                                "productName" : "${product.productName}",
+                                                "categoryId" : "${product.categoryByCategoryId.idCategory}",
+                                                "productPrice" : "${product.productPrice}",
+                                                "saleUnit" : "${product.saleUnit}",
+                                                "description" : "${product.description}"
+                                            }
+                                        </script>
                                     <tr>
-                                        <td>2018</td>
-                                        <td>Mobile</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td class="process">Processed</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
+                                        <td>
+                                            <div class="table-data-feature justify-content-center">
+                                                <button class="item" onClick="edit(prData${product.idProduct})" title="Edit">
+                                                    <i class="zmdi zmdi-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>${product.productName}</td>
+                                        <td>
+                                            <c:forEach begin="0" end="4" var="photo" items="${product.galleriesByIdProduct}">
+                                                <img src="${pageContext.request.contextPath }/uploads/images/${photo.photo}"
+                                                     alt="${photo.photo}"
+                                                     style="width: 50px; height: 50px; padding: 2px"
+                                                >
+                                            </c:forEach>
+                                                <button class="btn btn-outline-secondary btn-sm" onClick="editGal(prData${product.idProduct})" title="Edit">
+                                                    <i class="zmdi zmdi-settings"></i>
+                                                </button>
+                                        <td class="process">${product.categoryByCategoryId.categoryName}</td>
+                                        <td>${product.productPrice}</td>
+                                        <td>${product.saleUnit}</td>
+                                        <td>
+                                            <div class="table-data-feature justify-content-center">
+                                                <button class="item" onClick="remove(${product.idProduct})"  title="Delete">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -54,6 +86,9 @@
                             <hr/>
                         </div>
                     </div>
+                    <!-- Pagination-->
+                    <div id="pagination" class="tui-pagination"></div>
+                    <!-- End Pagination-->
                 </div>
             </div>
         </div>
@@ -86,7 +121,6 @@
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <select name="category" id="category" class="form-control">
-                                        <option value="1" disabled selected>Chọn danh mục...</option>
                                     </select>
                                 </div>
                             </div>
@@ -114,52 +148,93 @@
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                        <button type="button" onclick="save()" class="btn btn-primary">Thêm sản phẩm</button>
+                    <div class="modal-footer" id="productActionButton">
                     </div>
                 </div>
             </div>
         </div>
         <!-- end modal create product  -->
         <!-- modal static addGallery -->
-			<div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
-                 data-backdrop="static">
-                <div class="modal-dialog modal-md" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticModalLabel">HÌNH ẢNH SẢN PHẨM</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" id="galleryForm" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                <input type="hidden" id="productIdGal" name="productIdGal" value="">
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label for="gallery" class=" form-control-label">Ảnh sản phẩm:</label>
-                                    </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="file" id="gallery" name="gallery" multiple="" class="form-control-file">
-                                        <div id="preview" style="border: 1px solid gray; margin-top: 5px;"></div>
-                                        <small class="form-text text-muted">*Có thể chọn nhiều file*</small>
-                                        <small class="form-text text-muted">- Kích thước ảnh vuông (Ví dụ 50x50px hoặc 150x150px)</small>
-                                        <small class="form-text text-muted">- Hình đầu tiên sẽ được chọn làm đại diện</small>
-                                    </div>
+        <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
+             data-backdrop="static">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticModalLabel">HÌNH ẢNH SẢN PHẨM</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" id="galleryForm" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <input type="hidden" id="productIdGal" name="productIdGal" value="">
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="gallery" class=" form-control-label">Ảnh mô tả hiện tại:</label>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" onclick="saveGal()" class="btn btn-primary">Thêm ảnh</button>
-                        </div>
+                                <div class="col-12 col-md-9">
+                                    <div id="preview" style="border: 1px solid gray; margin-bottom: 5px;"></div>
+                                    <input type="file" id="gallery" name="gallery" multiple="" class="form-control-file">
+                                    <small class="form-text text-muted">* jpeg | jpg | png | gif *</small>
+                                    <small class="form-text text-muted">- Chọn ảnh vuông (Ví dụ 50x50px hay 150x150px)</small>
+                                    <small class="form-text text-muted">- Dung lượng ảnh không quá 10MB</small>
+                                    <small class="form-text text-muted">- Ảnh đầu tiên sẽ được chọn làm ảnh đại diện</small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="saveGal()" class="btn btn-primary">Lưu ảnh</button>
                     </div>
                 </div>
             </div>
+        </div>
         <!-- end modal static addGallery-->
         <script type="text/javascript">
+            // Pagination
+            let total = $('#countProduct').val();
+            const pagination = new tui.Pagination('pagination', {
+                totalItems: parseInt(total),
+                itemsPerPage: 5,
+                visiblePages: 5
+            });
+            // Load table
+            pagination.on('afterMove', (event) => {
+                const currentPage = event.page;
+                console.log(currentPage);
+                <%--let datas = {--%>
+                <%--    "page" : currentPage,--%>
+                <%--    "size" : 5,--%>
+                <%--    "sort" : "DESC",--%>
+                <%--}--%>
+                <%--$.ajax({--%>
+                <%--    url: "${pageContext.request.contextPath }/api/product/load",--%>
+                <%--    method: "GET",--%>
+                <%--    data: datas,--%>
+                <%--    success: function(res) {--%>
+                <%--        res.forEach(cat => {--%>
+
+                <%--        })--%>
+                <%--    }--%>
+                <%--});--%>
+            });
+
+            // addNew button clicked
+            $('#addNew').on("click", function(){
+                $('#scrollmodalLabel').html("THÊM SẢN PHẨM MỚI");
+                $('#productId').val("");
+                $('#productName').val("");
+                $('#productPrice').val("");
+                $('#unit').val("");
+                $('#description').val("");
+                $('#productActionButton').html("");
+                $('#productActionButton').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>'
+                                                +'<button type="button" onclick="save()" class="btn btn-primary">Lưu thông tin</button>');
+            })
             //Load catagoryList
-            $('#addNew').on("click", function() {
+            $('#scrollmodal').on("show.bs.modal", function() {
+                $('#category').html('<option disabled selected>Chọn danh mục...</option>');
                 $.ajax({
                     url: "${pageContext.request.contextPath }/api/category/getAll",
                     method: "GET",
@@ -170,118 +245,258 @@
                     }
                 });
             });
-            //Review gallery
+            //Load gallery dal
+            $('#staticModal').on("show.bs.modal", function() {
+                $('#preview').html("");
+                $('#gallery').val("");
+                if($('#productId').val() != ""){
+                    let datas = {
+                        "id" : $('#productIdGal').val()
+                    }
+                    $.ajax({
+                        url: "${pageContext.request.contextPath }/api/product/gallery",
+                        method: "POST",
+                        data: datas,
+                        success: function(res) {
+                            res.forEach(item => {
+                                let image = new Image();
+                                image.style = "padding: 5px; margin: 1px; border: 1px solid gray; width:111px; height:111px";
+                                image.title  = item.photo;
+                                image.src    = "${pageContext.request.contextPath }/uploads/images/"+item.photo;
+                                $('#preview').append(image);
+                            })
+                        }
+                    });
+                }
+            });
+            //Review gallery before upload
             $('#gallery').on("change",function() {
                 $('#preview').html("");
-                var preview = document.querySelector('#preview');
                 if (this.files) {
                     [].forEach.call(this.files, readAndPreview);
                 }
                 function readAndPreview(file) {
                     // Make sure `file.name` matches our extensions criteria
                     if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                        return alert(file.name + " is not an image");
-                    } // else...
-                    var reader = new FileReader();
-                    reader.addEventListener("load", function() {
-                        var image = new Image();
-                        image.style = "padding: 5px; border: 1px solid gray; width:100px; height:100px";
-                        image.title  = file.name;
-                        image.src    = this.result;
-                        preview.appendChild(image);
-                    });
-                    reader.readAsDataURL(file);
+                        swal({
+                            title: "File không được hỗ trợ",
+                            text: file.name + " không phải là hình ảnh",
+                            icon: "warning",
+                            buttons: "OK",
+                        }).then(() => {
+                            $('#preview').html("");
+                            $('#gallery').val("");
+                        });
+                    } else {
+                        let reader = new FileReader();
+                        reader.addEventListener("load", function() {
+                            let image = new Image();
+                            image.style = "padding: 5px; margin: 1px; border: 1px solid gray; width:111px; height:111px";
+                            image.title  = file.name;
+                            image.src    = this.result;
+                            $('#preview').append(image);
+                        });
+                        reader.readAsDataURL(file);
+                    }
                 }
             });
-            function save(){
+
+            function edit(product){
+                console.log(product);
+                $('#scrollmodal').modal('show');
+                $('#scrollmodalLabel').html("CHỈNH SỬA THÔNG TIN SẢN PHẨM '"+product.productName+"'");
+                $('#productActionButton').html("");
+                $('#productActionButton').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>'
+                    +'<button type="button" onclick="save('
+                    +'prData'+product.idProduct
+                    +')" class="btn btn-primary">Lưu thông tin</button>');
+
+                $('#productId').val(product.idProduct);
+                $('#productName').val(product.productName);
+                $('#productPrice').val(product.productPrice);
+                $('#unit').val(product.saleUnit);
+                $('#description').val(product.description);
+                setTimeout(() => {$('#category').val(product.categoryId)}, 350); //Wait for category list to load
+            }
+            function save(clone){
+                console.log("Clone: " + JSON.stringify(clone));
                 let productId = $('#productId').val();
                 let productName = $('#productName').val();
                 let category = $('#category').val();
                 let price = $('#productPrice').val();
                 let unit = $('#unit').val();
                 let description = $('#description').val();
-                if(productName != "" && category != "" && price != "" && description != "" && unit != ""){
-                    let data = {
-                        "idProduct" : productId,
-                        "productName" : productName,
-                        "categoryByCategoryId" : {
-                            "idCategory" : category,
-                        },
-                        "productPrice" : price,
-                        "saleUnit" : unit,
-                        "description" : description,
-                    }
-                    console.log(data)
-                    $.ajax({
-                        url: "${pageContext.request.contextPath }/api/product/save",
-                        method: "POST",
-                        data: JSON.stringify(data),
-                        contentType: "application/json",
-                        dataType: 'json',
-                        success: function(product) {
+                if(productName != "" && price != "" && description != "" && unit != ""){
+                    if(category != null) {
+                        if(!isNaN(price)){
+                            let data = {
+                                "idProduct" : productId,
+                                "productName" : productName,
+                                "categoryId" : category,
+                                "productPrice" : price,
+                                "saleUnit" : unit,
+                                "description" : description,
+                            }
+                            console.log("Data: " + JSON.stringify(data));
+                            if(JSON.stringify(data) !== JSON.stringify(clone)){
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath }/api/product/save",
+                                    method: "POST",
+                                    data: JSON.stringify(data),
+                                    contentType: "application/json",
+                                    dataType: 'json',
+                                    success: function(product) {
+                                        if($('#productId').val() == ""){
+                                            swal({
+                                                title: "Lưu '"+product.productName+"' thành công",
+                                                text: "Tiếp tục thêm hình ảnh cho '"+product.productName+"' chứ ?",
+                                                icon: "success",
+                                                buttons: "OK",
+                                            }).then(() => {
+                                                $('#productIdGal').val(product.idProduct);
+                                                $('#staticModalLabel').html("THÊM HÌNH ẢNH CHO '"+product.productName+"'");
+                                                $('#scrollmodal').modal('hide');
+                                                $('#staticModal').modal('show');
+                                            });
+                                        } else {
+                                            swal({
+                                                title: "Cập nhật '"+product.productName+"' thành công",
+                                                icon: "success",
+                                                buttons: "OK",
+                                            }).then(() => {
+                                                location.reload();
+                                            });
+                                        }
+                                    },
+                                    error: function() {
+                                        swal({
+                                            title: "Fail",
+                                            text: "Đã có lỗi xảy ra !!",
+                                            icon: "error",
+                                            buttons: "OK",
+                                        }).then(() => {
+                                            $('#scrollmodal').modal('hide');
+                                        });
+                                    }
+                                })
+                            } else {
+                                swal({
+                                    title: "Thông tin không đổi",
+                                    icon: "info",
+                                });
+                            }
+                        } else {
                             swal({
-                                title: "Lưu '"+product.productName+"' thành công",
-                                text: "Tiếp tục thêm hình ảnh cho '"+product.productName+"' chứ ?",
-                                icon: "success",
+                                title: "Cảnh báo nhập sai giá",
+                                text: "Giá sản phẩm phải nhập số !!",
+                                icon: "warning",
                                 buttons: "OK",
-                            }).then(() => {
-                                $('#productIdGal').val(product.idProduct);
-                                $('#staticModalLabel').html("THÊM HÌNH ẢNH CHO '"+product.productName+"'");
-                                $('#scrollmodal').modal('hide');
-                                $('#staticModal').modal('show');
-                            });
-                        },
-                        error: function() {
-                            swal({
-                                title: "Fail",
-                                text: "Đã có lỗi xảy ra !!",
-                                icon: "error",
-                                buttons: "OK",
-                            }).then(() => {
-                                $('#scrollmodal').modal('hide');
-                            });
+                            })
                         }
-                    })
+                    } else {
+                        swal({
+                            title: "Cảnh báo thiếu danh mục",
+                            text: "Hãy chọn danh mục !!",
+                            icon: "warning",
+                            buttons: "OK",
+                        })
+                    }
                 } else {
                     swal({
-                        title: "Cảnh báo",
+                        title: "Cảnh báo thiếu thông tin",
                         text: "Hãy điền đủ tất cả thông tin !!",
                         icon: "warning",
                         buttons: "OK",
                     })
                 }
             }
+            function remove(id){
+                swal({
+                    title: "Chắc chưa ?",
+                    text: "Xoá là mất luôn đó! Khuyến nghị dùng chỉnh sửa nhé.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            if ( id != "") {
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath }/api/product/delete?id="+id,
+                                    method: "POST",
+                                    success: function(res) {
+                                    }
+                                })
+                                swal("Đã xoá sản phẩm thành công!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        } else {
+                            swal("Canceled !");
+                        }
+                    });
+            }
+            function editGal(product){
+                $('#staticModalLabel').html("TUỲ CHỈNH ẢNH CHO '"+product.productName+"'");
+                $('#productIdGal').val(product.idProduct);
+                $('#productId').val(product.idProduct);
+                $('#staticModal').modal('show');
+            }
             function saveGal() {
-                var form = $('#galleryForm')[0]; //get the form containing the files
-                var datas = new FormData(form);
-                $.ajax({
-                    url: "${pageContext.request.contextPath }/api/product/saveGal",
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    data: datas, //pass the form data
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        swal({
-                            title: "Thành công",
-                            text: "Lưu ảnh thành công !!",
-                            icon: "success",
-                            buttons: "OK",
-                        }).then(() => {
-                            location.reload();
+                console.log("Gallery: '"+$('#gallery').val()+"'-end");
+                if($('#gallery').val() == ""){
+                    $('#staticModal').modal('hide');
+                    swal({
+                        title: "Hình ảnh không đổi",
+                        icon: "info",
+                    });
+                } else {
+                    swal({
+                        title: "Xác nhận lưu hình ảnh ?",
+                        text: "Những ảnh cũ (nếu có) sẽ được thay thế bằng ảnh mới",
+                        icon: "warning",
+                        buttons: ["Huỷ !", "Xác nhận"],
+                        dangerMode: true,
+                    })
+                        .then((confirmSubmit) => {
+                            if (confirmSubmit) {
+                                let form = $('#galleryForm')[0]; //get the form containing the files
+                                let datas = new FormData(form);
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath }/api/product/saveGal",
+                                    type: "POST",
+                                    enctype: 'multipart/form-data',
+                                    data: datas, //pass the form data
+                                    processData: false,
+                                    contentType: false,
+                                    success: function () {
+                                        swal({
+                                            title: "Thành công",
+                                            text: "Lưu ảnh thành công !!",
+                                            icon: "success",
+                                            buttons: "OK",
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    },
+                                    error: function () {
+                                        swal({
+                                            title: "Fail",
+                                            text: "Đã có lỗi xảy ra !!",
+                                            icon: "error",
+                                            buttons: "OK",
+                                        }).then(() => {
+                                            $('#staticModal').modal('hide');
+                                        });
+                                    }
+                                });
+                            } else {
+                                swal({title: "Đã huỷ !",icon: "success"});
+                            }
                         });
-                    },
-                    error: function (data) {
-                        swal({
-                            title: "Fail",
-                            text: "Đã có lỗi xảy ra !!",
-                            icon: "error",
-                            buttons: "OK",
-                        }).then(() => {
-                            $('#staticModal').modal('hide');
-                        });
-                    }
-                });
+                }
             }
         </script>
 	</jsp:attribute>

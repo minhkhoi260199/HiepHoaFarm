@@ -1,7 +1,11 @@
 package com.hiephoafarm.main.controllers;
 
 import com.hiephoafarm.main.services.CategoryService;
+import com.hiephoafarm.main.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +17,8 @@ public class AdminController {
 
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    ProductService productService;
 
     @RequestMapping(value = {"index"} ,method = RequestMethod.GET)
     public String index() {
@@ -30,13 +36,17 @@ public class AdminController {
     }
 
     @RequestMapping(value = {"","product"} ,method = RequestMethod.GET)
-    public String product() {
+    public String product(ModelMap modelMap) {
+        modelMap.put("countProduct", productService.countAll());
+//        Pageable pageable = PageRequest.of(1, 5, Sort.by("idProduct").descending());
+//        modelMap.put("products", productService.loadData(pageable));
+        modelMap.put("products", productService.findAll());
         return "admin/products";
     }
 
     @RequestMapping(value = {"category"} ,method = RequestMethod.GET)
     public String category(ModelMap modelMap) {
-        modelMap.put("categories", categoryService.findAll());
+        modelMap.put("categories", categoryService.findAll4view());
         return "admin/categories";
     }
     @RequestMapping(value = {"about"} ,method = RequestMethod.GET)

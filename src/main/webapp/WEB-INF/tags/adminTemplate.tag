@@ -24,6 +24,7 @@
 
     <!-- Vendor CSS-->
     <link href="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="${pageContext.request.contextPath }/resources/vendor/tui-pagination/tui-pagination.min.css" rel="stylesheet" />
 
     <!-- Main CSS-->
     <link href="${pageContext.request.contextPath }/resources/css/theme.css" rel="stylesheet" media="all">
@@ -146,6 +147,7 @@
 
         <!-- Jquery JS-->
         <script src="${pageContext.request.contextPath }/resources/vendor/jquery-3.2.1.min.js"></script>
+        <script src="${pageContext.request.contextPath }/resources/vendor/tui-pagination/tui-pagination.min.js"></script>
 
         <!-- MAIN CONTENT-->
         <jsp:invoke fragment="content" />
@@ -160,7 +162,6 @@
 <!-- Vendor JS -->
 <script src="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/sweetalert/sweetalert.min.js"></script>
-
 <!-- Main JS-->
 <script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
 

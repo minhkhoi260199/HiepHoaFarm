@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product", schema = "hiephoafarm")
+@Table(name = "product", schema = "hiephoafarm", catalog = "")
 public class ProductE {
     private int idProduct;
     private String productName;
@@ -15,6 +15,7 @@ public class ProductE {
     private Collection<GalleryE> galleriesByIdProduct;
     private Collection<OrderDetailE> orderDetailsByIdProduct;
     private CategoryE categoryByCategoryId;
+    private StatusE statusByStatusId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -106,5 +107,15 @@ public class ProductE {
 
     public void setCategoryByCategoryId(CategoryE categoryByCategoryId) {
         this.categoryByCategoryId = categoryByCategoryId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "status_id", referencedColumnName = "id_status", nullable = false)
+    public StatusE getStatusByStatusId() {
+        return statusByStatusId;
+    }
+
+    public void setStatusByStatusId(StatusE statusByStatusId) {
+        this.statusByStatusId = statusByStatusId;
     }
 }

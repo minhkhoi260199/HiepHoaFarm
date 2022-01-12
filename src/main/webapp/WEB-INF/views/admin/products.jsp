@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tmp" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <tmp:adminTemplate title="Hiệp Hoà Farm">
 	<jsp:attribute name="content">
         <div class="main-content">
@@ -47,7 +48,8 @@
                                                 "categoryId" : "${product.categoryByCategoryId.idCategory}",
                                                 "productPrice" : "${product.productPrice}",
                                                 "saleUnit" : "${product.saleUnit}",
-                                                "description" : "${product.description}"
+                                                "description" : "${product.description}",
+                                                "statusId" : "${product.statusByStatusId.idStatus}"
                                             }
                                         </script>
                                     <tr>
@@ -72,19 +74,22 @@
                                         <td>${product.categoryByCategoryId.categoryName}</td>
                                         <td>${product.productPrice}</td>
                                         <td>${product.saleUnit}</td>
+                                        <c:if test="${product.statusByStatusId.idStatus == 1 }">
                                         <td class="process" id="statusName${product.idProduct}">${product.statusByStatusId.statusNamevie}</td>
-                                        <td id="statusButton${product.idProduct}">
-                                            <c:if test="${product.statusByStatusId.idStatus == 1 }">
-                                            <button class="btn btn-outline-danger btn-sm" onClick="disable(${product.idProduct})" title="Vô hiệu">
-                                                <i class="fa fa-minus-square"></i>
+                                        <td>
+                                            <button id="statusButton${product.idProduct}" class="btn btn-outline-danger btn-sm" onclick="setStatus(prData${product.idProduct},'disable')" title="Vô hiệu">
+                                                <i class="fa fa-window-close"></i>
                                             </button>
-                                            </c:if>
-                                            <c:if test="${product.statusByStatusId.idStatus == 2 }">
-                                            <button class="btn btn-outline-success btn-sm" onClick="enable(${product.idProduct})" title="Kích hoạt">
-                                                <i class="fa fa-check-square"></i>
-                                            </button>
-                                            </c:if>
                                         </td>
+                                        </c:if>
+                                        <c:if test="${product.statusByStatusId.idStatus == 2 }">
+                                        <td class="denied" id="statusName${product.idProduct}">${product.statusByStatusId.statusNamevie}</td>
+                                        <td>
+                                            <button id="statusButton${product.idProduct}" class="btn btn-outline-success btn-sm" onclick="setStatus(prData${product.idProduct},'enable')" title="Kích hoạt">
+                                                <i class="fa fa-rocket"></i>
+                                            </button>
+                                        </td>
+                                        </c:if>
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="remove(${product.idProduct})"  title="Delete">
@@ -460,7 +465,6 @@
                 $('#staticModal').modal('show');
             }
             function saveGal() {
-                console.log("Gallery: '"+$('#gallery').val()+"'-end");
                 if($('#gallery').val() == ""){
                     $('#staticModal').modal('hide');
                     swal({
@@ -532,6 +536,98 @@
                 $(name).html("Vô hiệu");
                 $(name).removeClass("process");
                 $(name).addClass("denied");
+            }
+            function setStatus(product, action){
+                let comp;
+                let promise = new Promise((resolve, reject) => {
+                    if(action == "enable"){
+                        swal({
+                            title: "Kích hoạt sản phẩm ?",
+                            text: "Thông tin về sản phẩm sẽ xuất hiện lại trên gian hàng !",
+                            icon: "info",
+                            buttons: ["Huỷ !", "Xác nhận"],
+                        }).then((confirmSubmit) => {
+                            if (confirmSubmit) {
+                                comp = {
+                                    "onclick" : "setStatus(prData"+product.idProduct+",'disable')",
+                                    "title" : "Vô hiệu",
+                                    "button" : "<i class='fa fa-window-close'></i>",
+                                    "buttonRemoveClass" : "btn-outline-success",
+                                    "buttonAddClass" : "btn-outline-danger",
+                                    "label" : "kích Hoạt",
+                                    "labelRemoveClass" : "denied",
+                                    "labelAddClass" : "process"
+                                };
+                                product.statusId = 1;
+                                return resolve(true);
+                            }
+                        });
+                    } else if (action == "disable") {
+                        swal({
+                            title: "Xác nhận khoá sản phẩm ?",
+                            text: "Thông tin về sản phẩm sẽ không còn trên gian hàng !",
+                            icon: "warning",
+                            buttons: ["Huỷ !", "Xác nhận"],
+                            dangerMode: true,
+                        }).then((confirmSubmit) => {
+                            if (confirmSubmit) {
+                                comp = {
+                                    "onclick" : "setStatus(prData"+product.idProduct+",'enable')",
+                                    "title" : "Kích hoạt",
+                                    "button" : "<i class='fa fa-rocket'></i>",
+                                    "buttonRemoveClass" : "btn-outline-danger",
+                                    "buttonAddClass" : "btn-outline-success",
+                                    "label" : "vô hiệu",
+                                    "labelRemoveClass" : "process",
+                                    "labelAddClass" : "denied"
+                                }
+                                product.statusId = 2;
+                                return resolve(true);
+                            }
+                        });
+                    } else {
+                        return reject("Lỗi");
+                    }
+                });
+                promise.then((flag) => {
+                    if(flag){
+                        let button = '#statusButton'+product.idProduct;
+                        let label = '#statusName'+product.idProduct;
+                        $.ajax({
+                            url: "${pageContext.request.contextPath }/api/product/save",
+                            method: "POST",
+                            data: JSON.stringify(product),
+                            contentType: "application/json",
+                            dataType: 'json',
+                            success: function(res) {
+                                swal({
+                                    title: "Đã "+comp.label+" '"+res.productName+"' thành công !",
+                                    icon: "success",
+                                    buttons: "OK",
+                                }).then(() => {
+                                    $(button).attr('title', comp.title);
+                                    $(button).attr('onClick', comp.onclick);
+                                    $(button).removeClass(comp.buttonRemoveClass);
+                                    $(button).addClass(comp.buttonAddClass);
+                                    $(button).html(comp.button);
+                                    $(label).html(comp.label);
+                                    $(label).removeClass(comp.labelRemoveClass);
+                                    $(label).addClass(comp.labelAddClass);
+                                });
+                            },
+                            error: function() {
+                                swal({
+                                    title: "Fail",
+                                    text: "Đã có lỗi xảy ra !!",
+                                    icon: "error",
+                                    buttons: "OK",
+                                });
+                            }
+                        });
+                    }
+                }).catch( err => {
+                    console.log(err);
+                });
             }
         </script>
 	</jsp:attribute>

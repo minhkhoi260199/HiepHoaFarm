@@ -12,6 +12,9 @@ public class GalleryService {
     @Autowired
     GalleryObjRepos galleryObjRepos;
 
+    //Repos
+
+    //ObjRepos
     public List<GalleryObj> saveAll(List<GalleryObj> gals){
         return galleryObjRepos.saveAll(gals);
     }

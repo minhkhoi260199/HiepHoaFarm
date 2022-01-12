@@ -18,11 +18,9 @@ public class ProductService {
     @Autowired
     ProductObjRepos productObjRepos;
 
+    //Repos
     public List<ProductE> findAll(){
         return productRepos.findAll();
-    }
-    public ProductObj save(ProductObj productObj){
-        return productObjRepos.save(productObj);
     }
     public long countAll(){
         return productRepos.count();
@@ -32,4 +30,7 @@ public class ProductService {
     }
     public boolean existsById(int id){ return productRepos.existsById(id);}
     public void delete(int id){productRepos.deleteById(id);}
+    //ObjRepos
+    public ProductObj save(ProductObj productObj){return productObjRepos.save(productObj);}
+
 }

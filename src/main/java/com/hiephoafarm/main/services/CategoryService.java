@@ -17,12 +17,9 @@ public class CategoryService {
     @Autowired
     CategoryViewRepos categoryViewRepos;
 
-
+    //Repos
     public List<CategoryE> findAll(){
         return categoryRepos.findAll();
-    }
-    public List<CategoryView> findAll4view(){
-        return categoryViewRepos.findAll();
     }
     public CategoryE save(CategoryE categoryE){
         return categoryRepos.save(categoryE);
@@ -32,5 +29,9 @@ public class CategoryService {
     }
     public void delete(int id){
         categoryRepos.deleteById(id);
+    }
+    //ViewRepos
+    public List<CategoryView> findAll4view(){
+        return categoryViewRepos.findAll();
     }
 }

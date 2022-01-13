@@ -20,7 +20,7 @@
                                 <div class="table-data__tool-right">
                                     <button id="addNew" type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
                                             data-toggle="modal" data-target="#scrollmodal">
-                                        <i class="zmdi zmdi-plus"></i>Thêm sản phẩm mới
+                                        <i class="fa fa-plus"></i>Thêm sản phẩm mới
                                     </button>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="edit(prData${product.idProduct})" title="Edit">
-                                                    <i class="zmdi zmdi-edit"></i>
+                                                    <i class="fa fa-pencil"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -69,7 +69,7 @@
                                                 >
                                             </c:forEach>
                                                 <button class="btn btn-outline-secondary btn-sm" onClick="editGal(prData${product.idProduct})" title="Edit">
-                                                    <i class="zmdi zmdi-settings"></i>
+                                                    <i class="fa fa-gear"></i>
                                                 </button>
                                         <td>${product.categoryByCategoryId.categoryName}</td>
                                         <td>${product.productPrice}</td>
@@ -93,7 +93,7 @@
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="remove(${product.idProduct})"  title="Delete">
-                                                    <i class="zmdi zmdi-delete"></i>
+                                                    <i class="fa fa-trash"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -591,6 +591,7 @@
                 });
                 promise.then((flag) => {
                     if(flag){
+                        console.log("GOGOGOG");
                         let button = '#statusButton'+product.idProduct;
                         let label = '#statusName'+product.idProduct;
                         $.ajax({

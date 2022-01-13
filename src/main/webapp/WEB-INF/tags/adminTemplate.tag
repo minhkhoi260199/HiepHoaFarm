@@ -16,8 +16,6 @@
     <link rel="icon" href="${pageContext.request.contextPath }/uploads/icon/favicon.ico" type="image/x-icon"/>
     <!-- Fontfaces CSS-->
     <link href="${pageContext.request.contextPath }/resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-    <link href="${pageContext.request.contextPath }/resources/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
     <!-- Bootstrap CSS-->
     <link href="${pageContext.request.contextPath }/resources/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
@@ -45,20 +43,20 @@
                 <ul class="list-unstyled navbar__list">
                     <li>
                         <a href="${pageContext.request.contextPath }/admin/index">
-                            <i class="fas fa-chart-bar"></i>Đơn mới</a>
+                            <i class="fa fa-trello"></i>Đơn mới</a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath }/admin/retail">
-                            <i class="far fa-check-square"></i>Đơn lẻ</a>
+                            <i class="fa fa-check-square"></i>Đơn lẻ</a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath }/admin/wholeSale">
-                            <i class="fas fa-table"></i>Đơn sỉ</a>
+                            <i class="fa fa-table"></i>Đơn sỉ</a>
                     </li>
                     <hr style="border: 1px solid red;"/>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Quản lí kho</a>
+                            <i class="fa fa-th"></i>Quản lí kho</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
                                 <a href="${pageContext.request.contextPath }/admin/product">Về sản phẩm</a>
@@ -70,7 +68,7 @@
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-desktop"></i>Về giao diện</a>
+                            <i class="fa fa-desktop"></i>Về giao diện</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
                                 <a href="${pageContext.request.contextPath }/admin/ads">Dòng thông báo</a>
@@ -99,7 +97,7 @@
                         <form class="form-header" action="" method="POST">
                             <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                             <button class="au-btn--submit" type="submit">
-                                <i class="zmdi zmdi-search"></i>
+                                <i class="fa fa-search"></i>
                             </button>
                         </form>
                         <div class="header-button">
@@ -110,6 +108,7 @@
                                     </div>
                                     <div class="content">
                                         <a class="js-acc-btn" href="#">Admin</a>
+                                        <i class="fa fa-angle-down"></i>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
                                         <div class="info clearfix">
@@ -128,12 +127,12 @@
                                         <!-- <div class="account-dropdown__body">
                                             <div class="account-dropdown__item">
                                                 <a href="#">
-                                                    <i class="zmdi zmdi-account"></i>Account</a>
+                                                    <i class="fa fa-account"></i>Account</a>
                                             </div>
                                         </div> -->
                                         <div class="account-dropdown__footer">
                                             <a href="#">
-                                                <i class="zmdi zmdi-power"></i>Logout</a>
+                                                <i class="fa fa-power"></i>Logout</a>
                                         </div>
                                     </div>
                                 </div>

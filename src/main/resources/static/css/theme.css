@@ -1390,12 +1390,7 @@ section {
 }
 
 .account-item > .content > a:after {
-    font-family: "Material-Design-Iconic-Font";
-    font-weight: 500;
-    content: '\f2f9';
     display: inline-block;
-    font-size: 16px;
-    margin-left: 5px;
 }
 
 .account-item > .content > a:hover {

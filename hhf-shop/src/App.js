@@ -1,7 +1,12 @@
+import NavBar from "./layout/navBar/NavBar";
+import PageBody from "./layout/PageBody";
 
 function App() {
   return (
-      <h1>Đây là home page</h1>
+      <>
+          <NavBar/>
+          <PageBody/>
+      </>
   );
 }
 

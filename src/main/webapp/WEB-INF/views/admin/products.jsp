@@ -320,7 +320,6 @@
                     }
                 }
             });
-
             function edit(product){
                 console.log(product);
                 $('#scrollmodal').modal('show');
@@ -517,29 +516,9 @@
                         });
                 }
             }
-            function enable(id){
-                console.log("enable: " + id);
-                let button = '#statusButton'+id;
-                $(button).html("");
-                $(button).html('<button class="btn btn-outline-danger btn-sm" onClick="disable('+id+')" title="Vô hiệu"><i class="fa fa-minus-square"></i></button>');
-                let name = '#statusName'+id;
-                $(name).html("Kích hoạt");
-                $(name).removeClass("denied");
-                $(name).addClass("process");
-            }
-            function disable(id){
-                console.log("disable: " + id)
-                let button = '#statusButton'+id;
-                $(button).html("");
-                $(button).html('<button class="btn btn-outline-success btn-sm" onClick="enable('+id+')" title="Kích hoạt"><i class="fa fa-check-square"></i></button>');
-                let name = '#statusName'+id;
-                $(name).html("Vô hiệu");
-                $(name).removeClass("process");
-                $(name).addClass("denied");
-            }
             function setStatus(product, action){
                 let comp;
-                let promise = new Promise((resolve, reject) => {
+                let confirm = new Promise((resolve, reject) => {
                     if(action == "enable"){
                         swal({
                             title: "Kích hoạt sản phẩm ?",
@@ -589,9 +568,8 @@
                         return reject("Lỗi");
                     }
                 });
-                promise.then((flag) => {
+                confirm.then((flag) => {
                     if(flag){
-                        console.log("GOGOGOG");
                         let button = '#statusButton'+product.idProduct;
                         let label = '#statusName'+product.idProduct;
                         $.ajax({

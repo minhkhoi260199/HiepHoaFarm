@@ -25,7 +25,7 @@ public class UploadHelper {
 			for (MultipartFile file : files) {
 				byte[] bytes = file.getBytes();
 //				Path path = Paths.get(servletContext.getRealPath("/uploads/images/" + file.getOriginalFilename()));
-				Path path = Paths.get("src/main/webapp/uploads/images/" + file.getOriginalFilename());
+				Path path = Paths.get("src/main/webapp/static/uploads/images/" + file.getOriginalFilename());
 				Files.write(path, bytes);
 			}
 			return "Uploaded fine";

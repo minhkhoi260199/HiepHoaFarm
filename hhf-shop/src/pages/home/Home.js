@@ -1,6 +1,11 @@
-import {useEffect, useState} from "react";
 import Item from "./item/Item";
-import {Box, Grid, GridItem} from "@chakra-ui/react";
+import {
+    Box,
+    Grid,
+    GridItem,
+} from "@chakra-ui/react";
+import SearchBar from "../../components/SearchBar";
+import Cart from "./cart/Cart";
 
 const products = [
     {
@@ -9,7 +14,7 @@ const products = [
         "description" : "Siêu ngon bổ rẻ",
         "productPrice" : "100.000",
         "saleUnit" : "KG",
-        "gallery" : "bo.jpg"
+        "gallery" : "bo4.jpg"
     },{
         "idProduct" : "2",
         "productName" : "Bơ bình dân",
@@ -23,29 +28,27 @@ const products = [
         "description" : "Bơ loại một không rẻ nhưng siêu ngon siêu chất lượng không bơ nào sánh bằng. Đảm bảo đáng đồng tiền bát gạo luôn !!",
         "productPrice" : "1.000.000",
         "saleUnit" : "KG",
-        "gallery" : "bo4.jpg"
+        "gallery" : "bo.jpg"
     }
 ]
 
 function Home(){
-
     return(
-        <Grid templateColumns='repeat(3, 1fr)'>
-            <GridItem colSpan={2} p={3}>
+        <Grid templateColumns='repeat(3, 1fr)' gap={4}>
+            <GridItem colSpan={{ base: '3', md:'2'}}>
                 {products.map(item=>{
-                    console.log(item.idProduct)
                     return(
-                        <>
                         <Item key={item.idProduct} product={item}/>
-                        <p>=========</p>
-                        </>
                     )
                 })}
             </GridItem>
-            <GridItem colSpan={1} bg='tomato' m={2}
-                      borderRadius='14'
+            <GridItem colSpan={1}
+                      display={{ base: 'none', md:'block'}}
             >
-                <h1>CART</h1>
+                <Box position="sticky" top={4}>
+                    <SearchBar/>
+                    <Cart/>
+                </Box>
             </GridItem>
         </Grid>
     )

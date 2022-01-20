@@ -91,13 +91,13 @@
                         </div>
                     </div>
                     <!-- END DYNAMIC CONTENT-->
-<%--                    <div class="row">--%>
-<%--                        <div class="col-md-12">--%>
-<%--                            <div class="copyright">--%>
-<%--                                <p>HIỆP HOÀ FARM MANAGER</p>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+                        <%--                    <div class="row">--%>
+                        <%--                        <div class="col-md-12">--%>
+                        <%--                            <div class="copyright">--%>
+                        <%--                                <p>HIỆP HOÀ FARM MANAGER</p>--%>
+                        <%--                            </div>--%>
+                        <%--                        </div>--%>
+                        <%--                    </div>--%>
                 </div>
             </div>
         </div>

@@ -63,7 +63,7 @@
                                         <td>${product.productName}</td>
                                         <td>
                                             <c:forEach begin="0" end="4" var="photo" items="${product.galleriesByIdProduct}">
-                                                <img src="${pageContext.request.contextPath }/uploads/images/${photo.photo}"
+                                                <img src="${pageContext.request.contextPath }/static/uploads/images/${photo.photo}"
                                                      alt="${photo.photo}"
                                                      style="width: 50px; height: 50px; padding: 2px"
                                                 >
@@ -282,7 +282,7 @@
                                 let image = new Image();
                                 image.style = "padding: 5px; margin: 1px; border: 1px solid gray; width:111px; height:111px";
                                 image.title  = item.photo;
-                                image.src    = "${pageContext.request.contextPath }/uploads/images/"+item.photo;
+                                image.src    = "${pageContext.request.contextPath }/static/uploads/images/"+item.photo;
                                 $('#preview').append(image);
                             })
                         }

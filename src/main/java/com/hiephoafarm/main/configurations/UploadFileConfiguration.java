@@ -12,7 +12,7 @@ public class UploadFileConfiguration implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/uploads/**").addResourceLocations("/uploads/");
+		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
 
 	@Bean

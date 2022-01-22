@@ -1,4 +1,16 @@
-import {Box, Button, Flex, Grid, GridItem, Image, Input, Square, Text, useNumberInput} from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Flex,
+    Grid,
+    GridItem,
+    Image,
+    Input,
+    Square,
+    Text, Tooltip,
+    useNumberInput
+} from "@chakra-ui/react";
+import {SmallCloseIcon} from "@chakra-ui/icons";
 
 function CartItem(props){
 
@@ -22,7 +34,15 @@ function CartItem(props){
     const total = Number(item.productPrice)*quantity
 
     return(
-        <Box borderBottom='1px #d7d7d7 solid' p={2} textColor='#595243'>
+        <Box borderBottom='1px #d7d7d7 solid'
+             p={2} textColor='#595243'
+             position='relative'
+        >
+            <Tooltip hasArrow label='Bỏ sản phẩm' bg='pink.400'>
+                <Box p='0' as='button' bottom='0' right='0' position='absolute'>
+                    <SmallCloseIcon fontSize='22px' color='red'/>
+                </Box>
+            </Tooltip>
             <Grid templateColumns='repeat(14, 1fr)'>
                 <GridItem colSpan='3'>
                     <Flex>
@@ -54,9 +74,9 @@ function CartItem(props){
                     </Flex>
                 </GridItem>
                 <GridItem colSpan='3' >
-                    <Text fontSize='sm'>{numberWithCommas(item.productPrice)}đ</Text>
-                    <Text fontSize='sm'>x&nbsp;{quantity}&nbsp;{item.saleUnit}</Text>
-                    <Text fontSize='sm'
+                    <Text fontSize={{base: 'sm', md:'xs', lg:'sm'}}>{numberWithCommas(item.productPrice)}đ</Text>
+                    <Text fontSize={{base: 'sm', md:'xs', lg:'sm'}}>x&nbsp;{quantity}&nbsp;{item.saleUnit}</Text>
+                    <Text fontSize={{base: 'sm', md:'xs', lg:'sm'}}
                           p={1} borderTop='1px solid #d7d7d7'
                     >{numberWithCommas(total)}đ</Text>
                 </GridItem>

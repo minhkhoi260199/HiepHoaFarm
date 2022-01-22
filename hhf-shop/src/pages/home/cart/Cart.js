@@ -24,10 +24,10 @@ function Cart(){
             <Box mb={1} border='1px #d7d7d7 solid' borderRadius='14'>
                 <Flex borderRadius='14px 14px 0px 0px' borderBottom='1px #d7d7d7 solid'
                       p={2} h={12}
-                      bg='#5f5438' textColor='#fdfbe9' >
+                      bg='#5f5438' textColor='#f5f4ed' >
                     <Text paddingLeft={3} fontWeight='bold' fontSize='xl'><EditIcon/>&nbsp;Đơn hàng</Text>
                     &nbsp;
-                    <Text fontSize='lg'>(2 món)</Text>
+                    <Text fontSize='md'>(2 món)</Text>
                 </Flex>
                 {cart.map(item=>{
                     return(<CartItem key={item.idProduct} cartItem={item} />)
@@ -43,7 +43,7 @@ function Cart(){
                 </Flex>
             </Box>
             <Box borderRadius='14' p={2} h={12} bg='#5f5438'
-                 textColor='#fdfbe9' fontWeight='bold'
+                 textColor='#f5f4ed' fontWeight='bold'
                  justifyContent='center' textAlign='center'
             >
                 <Text fontSize='xl'>Thanh Toán</Text>

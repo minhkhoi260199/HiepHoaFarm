@@ -6,6 +6,7 @@ import {
 } from "@chakra-ui/react";
 import SearchBar from "../../components/SearchBar";
 import Cart from "./cart/Cart";
+import CartMobileBar from "./cart/CartMobileBar";
 
 const products = [
     {
@@ -34,23 +35,30 @@ const products = [
 
 function Home(){
     return(
-        <Grid templateColumns='repeat(3, 1fr)' gap={4}>
-            <GridItem colSpan={{ base: '3', md:'2'}}>
-                {products.map(item=>{
-                    return(
-                        <Item key={item.idProduct} product={item}/>
-                    )
-                })}
-            </GridItem>
-            <GridItem colSpan={1}
-                      display={{ base: 'none', md:'block'}}
-            >
-                <Box position="sticky" top={4}>
-                    <SearchBar/>
-                    <Cart/>
-                </Box>
-            </GridItem>
-        </Grid>
+            <Grid templateColumns='repeat(3, 1fr)' gap={4}>
+                <GridItem colSpan={{ base: '3', md:'2'}}>
+                    <Box display={{ base: 'block', md:'none'}}
+                         bg='#f9f9f7' top={0} position='sticky'
+                         zIndex={10}
+                    >
+                        <SearchBar/>
+                    </Box>
+                    {products.map(item=>{
+                        return(
+                            <Item key={item.idProduct} product={item}/>
+                        )
+                    })}
+                </GridItem>
+                <GridItem colSpan={1}
+                          display={{ base: 'none', md:'block'}}
+                >
+                    <Box position="sticky" top={4}>
+                        <SearchBar/>
+                        <Cart/>
+                    </Box>
+                </GridItem>
+                <CartMobileBar />
+            </Grid>
     )
 }
 export default Home;

@@ -91,7 +91,7 @@ function NavBar(){
                                        icon={<HamburgerIcon />}
                                        variant='outline'
                                    />
-                                   <MenuList background="#e8e258">
+                                   <MenuList background="#a6e9ca">
                                        {tabs.map(tab => {
                                            return(
                                                <Link to={tab.path} key={tab.path}>

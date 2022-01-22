@@ -15,7 +15,7 @@ function PageBody(){
                 {/*Side banner 1*/}
             </GridItem>
             <GridItem colSpan={{ base: '10', md:'10', lg: '8' }}
-                      bg="#f9f9f7" p={4}
+                      bg="#f9f9f7" p={4} textColor='#5f5438'
             >
                 <Routes>
                     <Route path="/" element={<Home />} />

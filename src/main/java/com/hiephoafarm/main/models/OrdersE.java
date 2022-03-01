@@ -1,9 +1,11 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 @Table(name = "orders", schema = "hiephoafarm", catalog = "")
@@ -21,7 +23,7 @@ public class OrdersE {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_order", nullable = false)
+    @Column(name = "id_order")
     public int getIdOrder() {
         return idOrder;
     }
@@ -31,7 +33,7 @@ public class OrdersE {
     }
 
     @Basic
-    @Column(name = "customer_phone", nullable = false, length = 10)
+    @Column(name = "customer_phone")
     public String getCustomerPhone() {
         return customerPhone;
     }
@@ -41,7 +43,7 @@ public class OrdersE {
     }
 
     @Basic
-    @Column(name = "customer_name", nullable = false, length = 45)
+    @Column(name = "customer_name")
     public String getCustomerName() {
         return customerName;
     }
@@ -51,7 +53,7 @@ public class OrdersE {
     }
 
     @Basic
-    @Column(name = "address", nullable = false, length = 45)
+    @Column(name = "address")
     public String getAddress() {
         return address;
     }
@@ -61,7 +63,7 @@ public class OrdersE {
     }
 
     @Basic
-    @Column(name = "shipping_fee", nullable = false)
+    @Column(name = "shipping_fee")
     public int getShippingFee() {
         return shippingFee;
     }
@@ -71,7 +73,7 @@ public class OrdersE {
     }
 
     @Basic
-    @Column(name = "order_amouth", nullable = false)
+    @Column(name = "order_amouth")
     public int getOrderAmouth() {
         return orderAmouth;
     }
@@ -81,7 +83,7 @@ public class OrdersE {
     }
 
     @Basic
-    @Column(name = "created_time", nullable = false)
+    @Column(name = "created_time")
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -94,15 +96,35 @@ public class OrdersE {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         OrdersE ordersE = (OrdersE) o;
-        return idOrder == ordersE.idOrder && shippingFee == ordersE.shippingFee && orderAmouth == ordersE.orderAmouth && Objects.equals(customerPhone, ordersE.customerPhone) && Objects.equals(customerName, ordersE.customerName) && Objects.equals(address, ordersE.address) && Objects.equals(createdTime, ordersE.createdTime);
+
+        if (idOrder != ordersE.idOrder) return false;
+        if (shippingFee != ordersE.shippingFee) return false;
+        if (orderAmouth != ordersE.orderAmouth) return false;
+        if (customerPhone != null ? !customerPhone.equals(ordersE.customerPhone) : ordersE.customerPhone != null)
+            return false;
+        if (customerName != null ? !customerName.equals(ordersE.customerName) : ordersE.customerName != null)
+            return false;
+        if (address != null ? !address.equals(ordersE.address) : ordersE.address != null) return false;
+        if (createdTime != null ? !createdTime.equals(ordersE.createdTime) : ordersE.createdTime != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrder, customerPhone, customerName, address, shippingFee, orderAmouth, createdTime);
+        int result = idOrder;
+        result = 31 * result + (customerPhone != null ? customerPhone.hashCode() : 0);
+        result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + shippingFee;
+        result = 31 * result + orderAmouth;
+        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
+        return result;
     }
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "ordersByOrderId")
     public Collection<OrderDetailE> getOrderDetailsByIdOrder() {
         return orderDetailsByIdOrder;
@@ -112,6 +134,7 @@ public class OrdersE {
         this.orderDetailsByIdOrder = orderDetailsByIdOrder;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id_user", nullable = false)
     public UserE getUserByUserId() {
@@ -122,6 +145,7 @@ public class OrdersE {
         this.userByUserId = userByUserId;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id_status", nullable = false)
     public StatusE getStatusByStatusId() {

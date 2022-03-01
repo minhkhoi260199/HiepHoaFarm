@@ -1,5 +1,8 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -81,6 +84,7 @@ public class ProductE {
         return Objects.hash(idProduct, productName, description, productPrice, saleUnit);
     }
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "productByProductId")
     public Collection<GalleryE> getGalleriesByIdProduct() {
         return galleriesByIdProduct;
@@ -90,6 +94,7 @@ public class ProductE {
         this.galleriesByIdProduct = galleriesByIdProduct;
     }
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "productByProductId")
     public Collection<OrderDetailE> getOrderDetailsByIdProduct() {
         return orderDetailsByIdProduct;
@@ -99,6 +104,7 @@ public class ProductE {
         this.orderDetailsByIdProduct = orderDetailsByIdProduct;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id_category", nullable = false)
     public CategoryE getCategoryByCategoryId() {
@@ -109,6 +115,7 @@ public class ProductE {
         this.categoryByCategoryId = categoryByCategoryId;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id_status", nullable = false)
     public StatusE getStatusByStatusId() {

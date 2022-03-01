@@ -2,6 +2,7 @@ package com.hiephoafarm.main.restControllers;
 
 import com.hiephoafarm.main.helper.UploadHelper;
 import com.hiephoafarm.main.models.GalleryObj;
+import com.hiephoafarm.main.models.ProductE;
 import com.hiephoafarm.main.models.ProductObj;
 import com.hiephoafarm.main.services.GalleryService;
 import com.hiephoafarm.main.services.ProductService;
@@ -28,6 +29,17 @@ public class ProductRestController {
 	@RequestMapping(value = "index", method=RequestMethod.GET)
 	public String getDataList(){
 			return "Hello JavaSolutionsGuide Readers";
+	}
+
+	@RequestMapping(value="getItems", method = RequestMethod.GET)
+	public ResponseEntity<?> getItems(){
+		try {
+			List<ProductE> products = productService.findAll();
+			return new ResponseEntity<>(products, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@RequestMapping(value="save", method = RequestMethod.POST)

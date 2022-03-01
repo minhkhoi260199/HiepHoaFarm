@@ -1,7 +1,8 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "gallery", schema = "hiephoafarm", catalog = "")
@@ -12,7 +13,7 @@ public class GalleryE {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_gallery", nullable = false)
+    @Column(name = "id_gallery")
     public int getIdGallery() {
         return idGallery;
     }
@@ -22,7 +23,7 @@ public class GalleryE {
     }
 
     @Basic
-    @Column(name = "photo", nullable = false, length = 150)
+    @Column(name = "photo")
     public String getPhoto() {
         return photo;
     }
@@ -35,15 +36,23 @@ public class GalleryE {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         GalleryE galleryE = (GalleryE) o;
-        return idGallery == galleryE.idGallery && Objects.equals(photo, galleryE.photo);
+
+        if (idGallery != galleryE.idGallery) return false;
+        if (photo != null ? !photo.equals(galleryE.photo) : galleryE.photo != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idGallery, photo);
+        int result = idGallery;
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        return result;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id_product", nullable = false)
     public ProductE getProductByProductId() {

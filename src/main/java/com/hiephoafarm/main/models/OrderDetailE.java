@@ -1,7 +1,8 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "order_detail", schema = "hiephoafarm", catalog = "")
@@ -13,7 +14,7 @@ public class OrderDetailE {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "Id_order_detail", nullable = false)
+    @Column(name = "Id_order_detail")
     public int getIdOrderDetail() {
         return idOrderDetail;
     }
@@ -23,7 +24,7 @@ public class OrderDetailE {
     }
 
     @Basic
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     public int getQuantity() {
         return quantity;
     }
@@ -36,15 +37,23 @@ public class OrderDetailE {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         OrderDetailE that = (OrderDetailE) o;
-        return idOrderDetail == that.idOrderDetail && quantity == that.quantity;
+
+        if (idOrderDetail != that.idOrderDetail) return false;
+        if (quantity != that.quantity) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrderDetail, quantity);
+        int result = idOrderDetail;
+        result = 31 * result + quantity;
+        return result;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id_product", nullable = false)
     public ProductE getProductByProductId() {
@@ -55,6 +64,7 @@ public class OrderDetailE {
         this.productByProductId = productByProductId;
     }
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id_order", nullable = false)
     public OrdersE getOrdersByOrderId() {

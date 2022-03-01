@@ -1,7 +1,6 @@
 package com.hiephoafarm.main.models;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "ads", schema = "hiephoafarm", catalog = "")
@@ -12,7 +11,7 @@ public class AdsE {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_ads", nullable = false)
+    @Column(name = "id_ads")
     public int getIdAds() {
         return idAds;
     }
@@ -22,7 +21,7 @@ public class AdsE {
     }
 
     @Basic
-    @Column(name = "adsname", nullable = false, length = 45)
+    @Column(name = "adsname")
     public String getAdsname() {
         return adsname;
     }
@@ -32,7 +31,7 @@ public class AdsE {
     }
 
     @Basic
-    @Column(name = "adscontent", nullable = false, length = -1)
+    @Column(name = "adscontent")
     public String getAdscontent() {
         return adscontent;
     }
@@ -45,12 +44,21 @@ public class AdsE {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         AdsE adsE = (AdsE) o;
-        return idAds == adsE.idAds && Objects.equals(adsname, adsE.adsname) && Objects.equals(adscontent, adsE.adscontent);
+
+        if (idAds != adsE.idAds) return false;
+        if (adsname != null ? !adsname.equals(adsE.adsname) : adsE.adsname != null) return false;
+        if (adscontent != null ? !adscontent.equals(adsE.adscontent) : adsE.adscontent != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idAds, adsname, adscontent);
+        int result = idAds;
+        result = 31 * result + (adsname != null ? adsname.hashCode() : 0);
+        result = 31 * result + (adscontent != null ? adscontent.hashCode() : 0);
+        return result;
     }
 }

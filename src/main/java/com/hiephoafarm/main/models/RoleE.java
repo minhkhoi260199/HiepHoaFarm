@@ -1,8 +1,9 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 @Table(name = "role", schema = "hiephoafarm", catalog = "")
@@ -13,7 +14,7 @@ public class RoleE {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_role", nullable = false)
+    @Column(name = "id_role")
     public int getIdRole() {
         return idRole;
     }
@@ -23,7 +24,7 @@ public class RoleE {
     }
 
     @Basic
-    @Column(name = "role_name", nullable = false, length = 45)
+    @Column(name = "role_name")
     public String getRoleName() {
         return roleName;
     }
@@ -36,15 +37,23 @@ public class RoleE {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         RoleE roleE = (RoleE) o;
-        return idRole == roleE.idRole && Objects.equals(roleName, roleE.roleName);
+
+        if (idRole != roleE.idRole) return false;
+        if (roleName != null ? !roleName.equals(roleE.roleName) : roleE.roleName != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idRole, roleName);
+        int result = idRole;
+        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
+        return result;
     }
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "roleByRoleId")
     public Collection<UserE> getUsersByIdRole() {
         return usersByIdRole;

@@ -16,7 +16,7 @@
       <class>com.hiephoafarm.main.models.GalleryObj</class>
       <class>com.hiephoafarm.main.models.ProductObj</class>
       <properties>
-      <property name="hibernate.connection.url" value="jdbc:mariadb://localhost:3307/hiephoafarm"/>
+      <property name="hibernate.connection.url" value="jdbc:mariadb://localhost:3306/hiephoafarm"/>
       <property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
     </properties>
   </persistence-unit>

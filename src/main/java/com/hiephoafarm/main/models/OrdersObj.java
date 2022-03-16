@@ -1,15 +1,11 @@
 package com.hiephoafarm.main.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
 
 @Entity
 @Table(name = "orders", schema = "hiephoafarm", catalog = "")
-public class OrdersE {
+public class OrdersObj {
     private int idOrder;
     private String customerPhone;
     private String customerName;
@@ -17,9 +13,8 @@ public class OrdersE {
     private int shippingFee;
     private int orderAmount;
     private Date createdTime;
-    private Collection<OrderDetailE> orderDetailsByIdOrder;
-    private UserE userByUserId;
-    private StatusE statusByStatusId;
+    private Integer userId;
+    private int statusId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -74,11 +69,11 @@ public class OrdersE {
 
     @Basic
     @Column(name = "order_amount")
-    public int getorderAmount() {
+    public int getOrderAmount() {
         return orderAmount;
     }
 
-    public void setorderAmount(int orderAmount) {
+    public void setOrderAmount(int orderAmount) {
         this.orderAmount = orderAmount;
     }
 
@@ -92,22 +87,45 @@ public class OrdersE {
         this.createdTime = createdTime;
     }
 
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "status_id")
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrdersE ordersE = (OrdersE) o;
+        OrdersObj ordersObj = (OrdersObj) o;
 
-        if (idOrder != ordersE.idOrder) return false;
-        if (shippingFee != ordersE.shippingFee) return false;
-        if (orderAmount != ordersE.orderAmount) return false;
-        if (customerPhone != null ? !customerPhone.equals(ordersE.customerPhone) : ordersE.customerPhone != null)
+        if (idOrder != ordersObj.idOrder) return false;
+        if (shippingFee != ordersObj.shippingFee) return false;
+        if (orderAmount != ordersObj.orderAmount) return false;
+        if (statusId != ordersObj.statusId) return false;
+        if (customerPhone != null ? !customerPhone.equals(ordersObj.customerPhone) : ordersObj.customerPhone != null)
             return false;
-        if (customerName != null ? !customerName.equals(ordersE.customerName) : ordersE.customerName != null)
+        if (customerName != null ? !customerName.equals(ordersObj.customerName) : ordersObj.customerName != null)
             return false;
-        if (address != null ? !address.equals(ordersE.address) : ordersE.address != null) return false;
-        if (createdTime != null ? !createdTime.equals(ordersE.createdTime) : ordersE.createdTime != null) return false;
+        if (address != null ? !address.equals(ordersObj.address) : ordersObj.address != null) return false;
+        if (createdTime != null ? !createdTime.equals(ordersObj.createdTime) : ordersObj.createdTime != null)
+            return false;
+        if (userId != null ? !userId.equals(ordersObj.userId) : ordersObj.userId != null) return false;
 
         return true;
     }
@@ -121,38 +139,8 @@ public class OrdersE {
         result = 31 * result + shippingFee;
         result = 31 * result + orderAmount;
         result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + statusId;
         return result;
-    }
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "ordersByOrderId")
-    public Collection<OrderDetailE> getOrderDetailsByIdOrder() {
-        return orderDetailsByIdOrder;
-    }
-
-    public void setOrderDetailsByIdOrder(Collection<OrderDetailE> orderDetailsByIdOrder) {
-        this.orderDetailsByIdOrder = orderDetailsByIdOrder;
-    }
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id_user", nullable = false)
-    public UserE getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserE userByUserId) {
-        this.userByUserId = userByUserId;
-    }
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id_status", nullable = false)
-    public StatusE getStatusByStatusId() {
-        return statusByStatusId;
-    }
-
-    public void setStatusByStatusId(StatusE statusByStatusId) {
-        this.statusByStatusId = statusByStatusId;
     }
 }

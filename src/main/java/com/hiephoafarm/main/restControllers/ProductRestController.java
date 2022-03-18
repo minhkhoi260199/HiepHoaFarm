@@ -31,7 +31,8 @@ public class ProductRestController {
 			return "Hello JavaSolutionsGuide Readers";
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+//	@CrossOrigin(origins = "http://
+	@CrossOrigin
 	@RequestMapping(value="getItems", method = RequestMethod.GET)
 	public ResponseEntity<?> getItems(){
 		try {

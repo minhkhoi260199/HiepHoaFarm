@@ -4687,6 +4687,10 @@ section {
     padding-right: 10px; */
 }
 
+.table-data3 tbody td.pending {
+    color: #d5d202;
+}
+
 .table-data3 tbody td.process {
     color: #00ad5f;
 }

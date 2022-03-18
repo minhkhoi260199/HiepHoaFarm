@@ -18,7 +18,7 @@
                                 <div class="table-data__tool-right">
                                     <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
                                             data-toggle="modal" data-target="#staticModal">
-                                        <i class="zmdi zmdi-plus"></i>Thêm danh mục mới
+                                        <i class="fa fa-plus"></i>Thêm danh mục mới
                                     </button>
                                 </div>
                             </div>
@@ -40,14 +40,14 @@
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="edit(${category.idCategory},'${category.categoryName }')" title="Edit">
-                                                    <i class="zmdi zmdi-edit"></i>
+                                                    <i class="fa fa-edit"></i>
                                                 </button>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item" onClick="remove(${category.idCategory})"  title="Delete">
-                                                    <i class="zmdi zmdi-delete"></i>
+                                                    <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -150,8 +150,8 @@
             function edit(id, name){
                 let contentId = `#categoryName_`+ id;
                 $(contentId).html(`<div style="float: left; padding: 2px; border: 1px solid grey; width: 100%"><input style="width: 82%" id="edit_`+ id +`" type="text" value="`+ name +`"/>`
-                    + `<button type="button" title="Submit" onClick="submit(`+id+`)" class="btn btn-success btn-sm"><i class="zmdi zmdi-check"></i></button>`
-                    + `<button type="button" title="Cancel" onClick="cancel(`+id+`,'`+name+`')" class="btn btn-danger btn-sm"><i class="zmdi zmdi-close"></i></button></div>`
+                    + `<button type="button" title="Submit" onClick="submit(`+id+`)" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`
+                    + `<button type="button" title="Cancel" onClick="cancel(`+id+`,'`+name+`')" class="btn btn-danger btn-sm"><i class="fa fa-close"></i></button></div>`
                 );
             }
             function cancel(id, content){

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tmp" tagdir="/WEB-INF/tags" %>
 <tmp:adminTemplate title="Hiệp Hoà Farm">
 	<jsp:attribute name="content">
@@ -12,35 +13,56 @@
                         <div class="col-md-12">
                             <!-- NEW ORDER -->
                             <div class="table-data__tool">
-                                <div class="table-data__tool-left">
-                                    <h3 class="title-5 m-t-10">ĐƠN MỚI</h3>
+                                <div class="table-data__tool-left" style="display: inline-flex">
+                                    <h3 class="title-5 m-t-5">ĐƠN MỚI </h3> &nbsp;&nbsp;
+                                    <p style="color: red" >(Đang chờ: " ${fn:length(pendings)} ")</p>
                                 </div>
                             </div>
-                            <div class="table-responsive m-b-40">
+                            <div style="overflow-y: scroll; max-height: 300px" class="table-responsive m-b-10">
                                 <table class="table table-borderless table-data3">
                                     <thead>
-                                    <tr>
-                                        <th>ThoiGianNhanDon</th>
-                                        <th>type</th>
-                                        <th>description</th>
-                                        <th>status</th>
-                                        <th>mmmmmmmmmmmmmmmmm</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Số điện thoại</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Tổng đơn</th>
+                                            <th>Thời gian</th>
+                                            <th>Trạng thái</th>
+                                            <th>Chi tiết</th>
+                                            <th></th>
+                                        </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>2018</td>
-                                        <td>Mobile</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td class="process">Processed</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                    </tr>
+                                    <script>
+                                        function numberWithCommas(x) {
+                                            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" đ";
+                                        }
+                                    </script>
+                                    <tbody >
+                                    <c:forEach var="pendingOrder" items="${pendings}">
+                                        <tr>
+                                            <td>${pendingOrder.customerPhone}</td>
+                                            <td>${pendingOrder.customerName}</td>
+                                            <td>${pendingOrder.address}</td>
+                                            <td style="text-align: end">
+                                                <script>
+                                                    document.write(numberWithCommas(${pendingOrder.orderAmount}))
+                                                </script>
+                                            </td>
+                                            <td>${pendingOrder.createdTime}</td>
+                                            <td class="pending">${pendingOrder.statusByStatusId.statusNamevie}</td>
+                                            <td style="text-align: center" >
+                                                <button class="btn btn-outline-secondary btn-sm" onClick="" title="Chi tiết">
+                                                    <i class="fa fa-caret-square-o-down"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" onclick="" title="Nhận đơn">
+<%--                                                    <i class="fa fa-rocket"></i>--%>
+                                                    Nhận đơn
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -48,41 +70,57 @@
                             <hr/>
                             <!-- ORDER TABLE -->
                             <div class="table-data__tool">
-                                <div class="table-data__tool-left">
-                                    <h3 class="title-5 m-t-10">ĐƠN HÀNG BẠN ĐANG XỬ LÝ</h3>
+                                <div class="table-data__tool-left" style="display: inline-flex">
+                                    <h3 class="title-5 m-t-10">ĐƠN HÀNG BẠN ĐANG XỬ LÝ</h3> &nbsp;&nbsp;
+                                    <p style="color: green" >(Đang xử lý: " ${fn:length(processing)} ")</p>
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
                                             data-toggle="modal" data-target="#scrollmodal">
-                                        <i class="zmdi zmdi-plus"></i>Thêm đơn mới
+                                        <i class="fa fa-plus"></i>Thêm đơn mới
                                     </button>
                                 </div>
                             </div>
-                            <div class="table-responsive m-b-40">
+                            <div class="table-responsive m-b-10">
                                 <table class="table table-borderless table-data3">
                                     <thead>
                                     <tr>
-                                        <th>ThoiGianNhanDon</th>
-                                        <th>type</th>
-                                        <th>description</th>
-                                        <th>status</th>
-                                        <th>mmmmmmmmmmmmmmmmm</th>
-                                        <th>price</th>
-                                        <th>price</th>
-                                        <th>price</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Tổng đơn</th>
+                                        <th>Thời gian</th>
+                                        <th>Trạng thái</th>
+                                        <th>Chi tiết</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>2018</td>
-                                        <td>Mobile</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td class="process">Processed</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                        <td>$999.00</td>
-                                    </tr>
+                                    <c:forEach var="order" items="${processing}">
+                                        <tr>
+                                            <td>${order.customerPhone}</td>
+                                            <td>${order.customerName}</td>
+                                            <td>${order.address}</td>
+                                            <td style="text-align: end">
+                                                <script>
+                                                    document.write(numberWithCommas(${order.orderAmount}))
+                                                </script>
+                                            </td>
+                                            <td>${order.createdTime}</td>
+                                            <td class="process">${order.statusByStatusId.statusNamevie}</td>
+                                            <td style="text-align: center" >
+                                                <button class="btn btn-outline-secondary btn-sm" onClick="" title="Chi tiết">
+                                                    <i class="fa fa-caret-square-o-down"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-warning btn-sm" onclick="" title="Chuyển tiếp">
+                                                        <%--                                                    <i class="fa fa-rocket"></i>--%>
+                                                    Vận chuyển
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

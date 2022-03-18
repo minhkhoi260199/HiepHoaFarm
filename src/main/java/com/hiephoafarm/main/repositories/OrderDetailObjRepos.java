@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository("orderDetailObjRepos")
 public interface OrderDetailObjRepos extends JpaRepository<OrderDetailObj, Integer> {
-
 }

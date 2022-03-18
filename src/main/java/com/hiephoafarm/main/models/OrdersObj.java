@@ -1,7 +1,10 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "orders", schema = "hiephoafarm", catalog = "")
@@ -12,13 +15,13 @@ public class OrdersObj {
     private String address;
     private int shippingFee;
     private int orderAmount;
-    private Date createdTime;
+    private Timestamp createdTime;
     private Integer userId;
     private int statusId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_order")
+    @Column(name = "id_order", nullable = false)
     public int getIdOrder() {
         return idOrder;
     }
@@ -28,7 +31,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "customer_phone")
+    @Column(name = "customer_phone", nullable = false, length = 10)
     public String getCustomerPhone() {
         return customerPhone;
     }
@@ -38,7 +41,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "customer_name")
+    @Column(name = "customer_name", nullable = false, length = 45)
     public String getCustomerName() {
         return customerName;
     }
@@ -48,7 +51,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "address")
+    @Column(name = "address", nullable = false, length = 150)
     public String getAddress() {
         return address;
     }
@@ -58,7 +61,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "shipping_fee")
+    @Column(name = "shipping_fee", nullable = false)
     public int getShippingFee() {
         return shippingFee;
     }
@@ -68,7 +71,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "order_amount")
+    @Column(name = "order_amount", nullable = false)
     public int getOrderAmount() {
         return orderAmount;
     }
@@ -78,17 +81,19 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "created_time")
-    public Date getCreatedTime() {
+    @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ss:mm:HH dd/MM/yyyy")
+    @Column(name = "created_time", nullable = false)
+    public Timestamp getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
 
     @Basic
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = true)
     public Integer getUserId() {
         return userId;
     }
@@ -98,7 +103,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "status_id")
+    @Column(name = "status_id", nullable = false)
     public int getStatusId() {
         return statusId;
     }

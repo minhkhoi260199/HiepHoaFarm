@@ -39,7 +39,7 @@ public class OrderRestController {
 			order.setAddress(obj.getString("address"));
 			order.setShippingFee(obj.getInt("shippingFee"));
 			order.setOrderAmount(obj.getInt("orderAmount"));
-			order.setCreatedTime(new Date( new java.util.Date().getTime()));
+//			order.setCreatedTime(new Date( new java.util.Date().getTime()));
 			order.setStatusId(3);
 
 			OrdersObj rep = ordersService.saveOrder(order);

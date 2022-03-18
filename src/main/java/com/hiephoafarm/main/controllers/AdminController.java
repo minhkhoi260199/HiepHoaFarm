@@ -1,6 +1,7 @@
 package com.hiephoafarm.main.controllers;
 
 import com.hiephoafarm.main.services.CategoryService;
+import com.hiephoafarm.main.services.OrdersService;
 import com.hiephoafarm.main.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -11,17 +12,23 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @Controller
 @RequestMapping({"","admin"})
 public class AdminController {
 
     @Autowired
+    OrdersService ordersService;
+    @Autowired
     CategoryService categoryService;
     @Autowired
     ProductService productService;
 
-    @RequestMapping(value = {"index"} ,method = RequestMethod.GET)
-    public String index() {
+    @RequestMapping(value = {"","index"} ,method = RequestMethod.GET)
+    public String index(ModelMap modelMap) {
+        modelMap.put("pendings", ordersService.findPending());
+        modelMap.put("processing", ordersService.findProcessing());
         return "admin/index";
     }
 
@@ -35,7 +42,7 @@ public class AdminController {
         return "admin/comingSoon";
     }
 
-    @RequestMapping(value = {"","product"} ,method = RequestMethod.GET)
+    @RequestMapping(value = {"product"} ,method = RequestMethod.GET)
     public String product(ModelMap modelMap) {
         modelMap.put("countProduct", productService.countAll());
 //        Pageable pageable = PageRequest.of(1, 5, Sort.by("idProduct").descending());

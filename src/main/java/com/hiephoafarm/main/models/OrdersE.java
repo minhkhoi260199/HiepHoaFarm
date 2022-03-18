@@ -1,10 +1,11 @@
 package com.hiephoafarm.main.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
@@ -16,7 +17,7 @@ public class OrdersE {
     private String address;
     private int shippingFee;
     private int orderAmount;
-    private Date createdTime;
+    private Timestamp createdTime;
     private Collection<OrderDetailE> orderDetailsByIdOrder;
     private UserE userByUserId;
     private StatusE statusByStatusId;
@@ -74,21 +75,22 @@ public class OrdersE {
 
     @Basic
     @Column(name = "order_amount")
-    public int getorderAmount() {
+    public int getOrderAmount() {
         return orderAmount;
     }
 
-    public void setorderAmount(int orderAmount) {
+    public void setOrderAmount(int orderAmount) {
         this.orderAmount = orderAmount;
     }
 
     @Basic
     @Column(name = "created_time")
-    public Date getCreatedTime() {
+    @JsonFormat(pattern = "ss:mm:HH dd/MM/yyyy")
+    public Timestamp getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
 

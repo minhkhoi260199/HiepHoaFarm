@@ -26,7 +26,7 @@ public class OrderRestController {
 			return "Hello JavaSolutionsGuide Readers";
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin
 	@RequestMapping(value="save", method = RequestMethod.POST)
 	public ResponseEntity<?> createProduct(@RequestBody String payload){
 		try {

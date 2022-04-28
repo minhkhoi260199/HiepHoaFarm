@@ -6,6 +6,7 @@ import com.hiephoafarm.main.models.ProductE;
 import com.hiephoafarm.main.models.ProductObj;
 import com.hiephoafarm.main.services.GalleryService;
 import com.hiephoafarm.main.services.ProductService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,30 @@ public class ProductRestController {
 	@CrossOrigin
 	@RequestMapping(value="getItems", method = RequestMethod.GET)
 	public ResponseEntity<?> getItems(){
+		try {
+			List<ProductE> products = productService.findAll();
+			return new ResponseEntity<>(products, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(value="search", method = RequestMethod.GET)
+	public ResponseEntity<?> getItemsSearch(@RequestParam String keyword){
+		try {
+			List<ProductE> products = productService.search(keyword);
+			return new ResponseEntity<>(products, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(value="getItemsByCate", method = RequestMethod.GET)
+	public ResponseEntity<?> getItemsByCategory(@RequestParam int cateId){
 		try {
 			List<ProductE> products = productService.findAll();
 			return new ResponseEntity<>(products, HttpStatus.OK);

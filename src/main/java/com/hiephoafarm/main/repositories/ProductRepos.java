@@ -12,4 +12,6 @@ import java.util.List;
 public interface ProductRepos extends JpaRepository<ProductE, Integer> {
    @Query(nativeQuery = true, value = "select * from product where product_name like %:keyword%")
    public List<ProductE> search(@Param("keyword") String keyword);
+   @Query(nativeQuery = true, value = "select * from product where category_id = :id")
+   public List<ProductE> searchByCate(@Param("id") int id);
 }

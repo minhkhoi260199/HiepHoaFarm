@@ -22,6 +22,7 @@ public class ProductService {
     public List<ProductE> findAll(){
         return productRepos.findAll();
     }
+    public List<ProductE> findByCate(int id) { return productRepos.searchByCate(id);}
     public List<ProductE> search(String keyword) { return productRepos.search(keyword); }
     public long countAll(){
         return productRepos.count();

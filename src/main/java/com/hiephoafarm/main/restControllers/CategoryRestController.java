@@ -42,10 +42,10 @@ public class CategoryRestController {
 
 	@RequestMapping(value="save", method = RequestMethod.POST)
 //	public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryE category, Authentication authentication){
-	public ResponseEntity<?> createCategory(@Validated @RequestBody CategoryE category){
+	public ResponseEntity<?> createCategory(@Validated @RequestBody CategoryView category){
 		try {
-			categoryService.save(category);
-			return new ResponseEntity<>(HttpStatus.OK);
+			CategoryView cate = categoryService.save(category);
+			return new ResponseEntity<>(cate, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

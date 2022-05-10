@@ -21,8 +21,8 @@ public class CategoryService {
     public List<CategoryE> findAll(){
         return categoryRepos.findAll();
     }
-    public CategoryE save(CategoryE categoryE){
-        return categoryRepos.save(categoryE);
+    public CategoryView save(CategoryView categoryE){
+        return categoryViewRepos.save(categoryE);
     }
     public boolean existsById(int id){
         return categoryRepos.existsById(id);

@@ -108,16 +108,16 @@
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(res) {
+                        swal({
+                            title: "Thành công",
+                            text: "Danh mục '"+res.categoryName+"' đã được tạo !",
+                            icon: "success",
+                            buttons: "OK",
+                        }).then(() => {
+                            location.reload();
+                        });
                     }
                 })
-                swal({
-                    title: "Thành công",
-                    text: "Danh mục '"+newValue+"' đã được tạo !",
-                    icon: "success",
-                    buttons: "OK",
-                }).then(() => {
-                        location.reload();
-                    });
             }
             function remove(id){
                 swal({
@@ -175,16 +175,24 @@
                         contentType: "application/json",
                         dataType: 'json',
                         success: function(res) {
+                            swal({
+                                title: "Hoàn thành",
+                                text: "Thông tin đã được cập nhật thành công !",
+                                icon: "success",
+                                buttons: "OK",
+                            }).then(() => {
+                                cancel(id, newValue);
+                            });
+                        },
+                        error: function() {
+                            swal({
+                                title: "Fail",
+                                text: "Đã có lỗi xảy ra !!",
+                                icon: "error",
+                                buttons: "OK",
+                            })
                         }
                     })
-                    swal({
-                        title: "Hoàn thành",
-                        text: "Thông tin đã được cập nhật thành công !",
-                        icon: "success",
-                        buttons: "OK",
-                    }).then(() => {
-                        cancel(id, newValue);
-                    });
                 } else {
                     swal({
                         title: "Fail",

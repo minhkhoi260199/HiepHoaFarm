@@ -29,6 +29,7 @@ public class CategoryRestController {
 		}
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "getAll", method = RequestMethod.GET)
 	public ResponseEntity<?> getDataList(){
 		try {

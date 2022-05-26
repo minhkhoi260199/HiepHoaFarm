@@ -95,12 +95,12 @@ public class ProductRestController {
 	@PostMapping("/saveGal")
 	public ResponseEntity<?> uploadFilez(@RequestParam("gallery") MultipartFile[] files, @RequestParam("productIdGal") String productIdGal) {
 		try {
-			String uploadResult = UploadHelper.saveImages(files);
+			boolean uploadResult = UploadHelper.saveImages(files);
 			int productId = Integer.parseInt(productIdGal);
 			if(galleryService.countPhotoById(productId) > 0){
 				galleryService.deleteByProductId(productId);
 			}
-			if(uploadResult == "Uploaded fine"){
+			if(uploadResult){
 				List<GalleryObj> gals = new ArrayList<>();
 				for (MultipartFile file : files) {
 					GalleryObj gallery = new GalleryObj();

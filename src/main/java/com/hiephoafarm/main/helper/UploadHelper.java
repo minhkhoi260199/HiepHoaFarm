@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class UploadHelper {
 //	public static String saveImage(ServletContext servletContext, MultipartFile[] files) {
-	public static String saveImages(MultipartFile[] files) {
+	public static boolean saveImages(MultipartFile[] files) {
 		try {
 //			byte[] bytes = multipartFile.getBytes();
 //			Path path = Paths
@@ -20,7 +20,8 @@ public class UploadHelper {
 //			return multipartFile.getOriginalFilename();
 
 			if (files.length == 0) {
-				return "Looks like there are no files uploaded";
+//				return "Looks like there are no files uploaded";
+				return false;
 			}
 			for (MultipartFile file : files) {
 				byte[] bytes = file.getBytes();
@@ -28,9 +29,9 @@ public class UploadHelper {
 				Path path = Paths.get("src/main/webapp/static/uploads/images/" + file.getOriginalFilename());
 				Files.write(path, bytes);
 			}
-			return "Uploaded fine";
+			return true;
 		} catch (IOException e) {
-			return null;
+			return false;
 		}
 	}
 }

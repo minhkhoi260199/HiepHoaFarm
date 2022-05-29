@@ -1,6 +1,7 @@
 package com.hiephoafarm.main.restControllers;
 
 import com.hiephoafarm.main.models.OrderDetailObj;
+import com.hiephoafarm.main.models.OrdersE;
 import com.hiephoafarm.main.models.OrdersObj;
 import com.hiephoafarm.main.services.OrdersService;
 import org.json.JSONArray;
@@ -24,6 +25,39 @@ public class OrderRestController {
 	@RequestMapping(value = "index", method=RequestMethod.GET)
 	public String getDataList(){
 			return "Hello JavaSolutionsGuide Readers";
+	}
+
+	@RequestMapping(value = "setProcessing", method=RequestMethod.GET)
+	public ResponseEntity<?> setProcessing(@RequestParam int id){
+		try {
+			List<OrdersE> result = ordersService.setStatus(id, 4);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "setShipping", method=RequestMethod.GET)
+	public ResponseEntity<?> setShipping(@RequestParam int id){
+		try {
+			List<OrdersE> result = ordersService.setStatus(id, 5);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "setCompleted", method=RequestMethod.GET)
+	public ResponseEntity<?> setCompleted(@RequestParam int id){
+		try {
+			List<OrdersE> result = ordersService.setStatus(id, 5);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@CrossOrigin

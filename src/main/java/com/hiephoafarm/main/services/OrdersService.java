@@ -21,6 +21,8 @@ public class OrdersService {
     OrderDetailObjRepos orderDetailObjRepos;
 
     public OrdersObj saveOrder(OrdersObj ordersObj){return ordersObjRepos.save(ordersObj);}
+    public List<OrdersE> setStatus(int id, int statusId){return ordersRepos.setStatus(id, statusId);}
+
     public List<OrderDetailObj> saveAllOrderDetail(List<OrderDetailObj> items){return orderDetailObjRepos.saveAll(items);}
 
     public List<OrdersE> findPending(){return ordersRepos.findPending();}

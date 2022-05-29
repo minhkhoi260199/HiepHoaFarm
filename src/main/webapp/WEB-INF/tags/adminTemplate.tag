@@ -47,11 +47,11 @@
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath }/admin/retail">
-                            <i class="fa fa-check-square"></i>Đơn lẻ</a>
+                            <i class="fa fa-check-square"></i>Tra cứu đơn</a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath }/admin/wholeSale">
-                            <i class="fa fa-table"></i>Đơn sỉ</a>
+                            <i class="fa fa-table"></i>Thống kê</a>
                     </li>
                     <hr style="border: 1px solid red;"/>
                     <li class="has-sub">

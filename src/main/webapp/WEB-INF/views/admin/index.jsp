@@ -56,7 +56,7 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-success btn-sm" onclick="" title="Nhận đơn">
+                                                <button class="btn btn-success btn-sm" onclick="setStatus(${pendingOrder.idOrder},'setProcessing')" title="Nhận đơn">
 <%--                                                    <i class="fa fa-rocket"></i>--%>
                                                     Nhận đơn
                                                 </button>
@@ -114,7 +114,7 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm" onclick="" title="Chuyển tiếp">
+                                                <button class="btn btn-warning btn-sm" onclick="setStatus(${pendingOrder.idOrder},'setShipping')" title="Chuyển tiếp">
                                                         <%--                                                    <i class="fa fa-rocket"></i>--%>
                                                     Vận chuyển
                                                 </button>
@@ -166,5 +166,35 @@
             </div>
         </div>
         <!-- end modal scroll -->
+        <!-- Logic -->
+        <script type="text/javascript">
+            function setStatus(id, typeSet){
+                swal({
+                    title: "Xác nhận thay đổi trạng thái đơn?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            if ( id != "") {
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath }/api/order/"+typeSet+"?id="+id,
+                                    method: "GET",
+                                    success: function(res) {
+                                        swal("Thành công!", {
+                                            icon: "success",
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    }
+                                })
+                            }
+                        } else {
+                            swal({title:"Canceled !"});
+                        }
+                    });
+            }
+        </script>
 	</jsp:attribute>
 </tmp:adminTemplate>

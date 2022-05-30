@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("ordersService")
 public class OrdersService {
@@ -19,6 +20,9 @@ public class OrdersService {
     OrdersRepos ordersRepos;
     @Autowired
     OrderDetailObjRepos orderDetailObjRepos;
+
+    public List<OrdersE> findAllOrder(){return ordersRepos.findAllOrder();}
+    public OrdersE findByIdOrder(int id){return ordersRepos.findByIdOrder(id);}
 
     public OrdersObj saveOrder(OrdersObj ordersObj){return ordersObjRepos.save(ordersObj);}
     public List<OrdersE> setStatus(int id, int statusId){return ordersRepos.setStatus(id, statusId);}

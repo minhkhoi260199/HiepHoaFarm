@@ -46,11 +46,11 @@
                             <i class="fa fa-trello"></i>Đơn mới</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath }/admin/retail">
+                        <a href="${pageContext.request.contextPath }/admin/orders">
                             <i class="fa fa-check-square"></i>Tra cứu đơn</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath }/admin/wholeSale">
+                        <a href="${pageContext.request.contextPath }/admin/report">
                             <i class="fa fa-table"></i>Thống kê</a>
                     </li>
                     <hr style="border: 1px solid red;"/>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/order")
@@ -25,6 +26,28 @@ public class OrderRestController {
 	@RequestMapping(value = "index", method=RequestMethod.GET)
 	public String getDataList(){
 			return "Hello JavaSolutionsGuide Readers";
+	}
+
+	@RequestMapping(value = "getOrderById", method=RequestMethod.GET)
+	public ResponseEntity<?> getById(@RequestParam int id){
+		try {
+			OrdersE result = ordersService.findByIdOrder(id);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "getAllOrder", method=RequestMethod.GET)
+	public ResponseEntity<?> getAll(){
+		try {
+			List<OrdersE> result = ordersService.findAllOrder();
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@RequestMapping(value = "setProcessing", method=RequestMethod.GET)
@@ -52,7 +75,18 @@ public class OrderRestController {
 	@RequestMapping(value = "setCompleted", method=RequestMethod.GET)
 	public ResponseEntity<?> setCompleted(@RequestParam int id){
 		try {
-			List<OrdersE> result = ordersService.setStatus(id, 5);
+			List<OrdersE> result = ordersService.setStatus(id, 6);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "setCanceled", method=RequestMethod.GET)
+	public ResponseEntity<?> setCanceled(@RequestParam int id){
+		try {
+			List<OrdersE> result = ordersService.setStatus(id, 7);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

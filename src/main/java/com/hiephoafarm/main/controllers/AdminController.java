@@ -32,6 +32,12 @@ public class AdminController {
         return "admin/index";
     }
 
+    @RequestMapping(value = {"orders"} ,method = RequestMethod.GET)
+    public String orders(ModelMap modelMap) {
+        modelMap.put("orders", ordersService.findAllOrder());
+        return "admin/orders";
+    }
+
     @RequestMapping(value = {"retail"} ,method = RequestMethod.GET)
     public String retail() {
         return "admin/comingSoon";

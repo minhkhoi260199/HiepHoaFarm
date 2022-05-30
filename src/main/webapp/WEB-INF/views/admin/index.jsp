@@ -22,6 +22,7 @@
                                 <table class="table table-borderless table-data3">
                                     <thead>
                                         <tr>
+                                            <th>Hủy đơn</th>
                                             <th>Số điện thoại</th>
                                             <th>Tên khách hàng</th>
                                             <th>Địa chỉ</th>
@@ -37,9 +38,14 @@
                                             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" đ";
                                         }
                                     </script>
-                                    <tbody >
+                                    <tbody>
                                     <c:forEach var="pendingOrder" items="${pendings}">
                                         <tr>
+                                            <td>
+                                                <button id="statusButton${pendingOrder.idOrder}" class="btn btn-outline-danger btn-sm" onclick="setStatus(${pendingOrder.idOrder},'setCanceled')" title="Hủy đơn">
+                                                    <i class="fa fa-window-close"></i>
+                                                </button>
+                                            </td>
                                             <td>${pendingOrder.customerPhone}</td>
                                             <td>${pendingOrder.customerName}</td>
                                             <td>${pendingOrder.address}</td>
@@ -51,7 +57,7 @@
                                             <td>${pendingOrder.createdTime}</td>
                                             <td class="pending">${pendingOrder.statusByStatusId.statusNamevie}</td>
                                             <td style="text-align: center" >
-                                                <button class="btn btn-outline-secondary btn-sm" onClick="" title="Chi tiết">
+                                                <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail(${pendingOrder.idOrder})" title="Chi tiết">
                                                     <i class="fa fa-caret-square-o-down"></i>
                                                 </button>
                                             </td>
@@ -74,17 +80,18 @@
                                     <h3 class="title-5 m-t-10">ĐƠN HÀNG BẠN ĐANG XỬ LÝ</h3> &nbsp;&nbsp;
                                     <p style="color: green" >(Đang xử lý: " ${fn:length(processing)} ")</p>
                                 </div>
-                                <div class="table-data__tool-right">
-                                    <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"
-                                            data-toggle="modal" data-target="#scrollmodal">
-                                        <i class="fa fa-plus"></i>Thêm đơn mới
-                                    </button>
-                                </div>
+<%--                                <div class="table-data__tool-right">--%>
+<%--                                    <button type="button" class="au-btn au-btn-icon au-btn--green au-btn--small"--%>
+<%--                                            data-toggle="modal" data-target="#scrollmodal">--%>
+<%--                                        <i class="fa fa-plus"></i>Thêm đơn mới--%>
+<%--                                    </button>--%>
+<%--                                </div>--%>
                             </div>
-                            <div class="table-responsive m-b-10">
+                            <div style="overflow-y: scroll; max-height: 300px" class="table-responsive m-b-10">
                                 <table class="table table-borderless table-data3">
                                     <thead>
                                     <tr>
+                                        <th>Hủy đơn</th>
                                         <th>Số điện thoại</th>
                                         <th>Tên khách hàng</th>
                                         <th>Địa chỉ</th>
@@ -95,9 +102,14 @@
                                         <th></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="overflow-y: scroll; max-height: 300px">
                                     <c:forEach var="order" items="${processing}">
                                         <tr>
+                                            <td>
+                                                <button id="statusButton${order.idOrder}" class="btn btn-outline-danger btn-sm" onclick="setStatus(${order.idOrder},'setCanceled')" title="Hủy đơn">
+                                                    <i class="fa fa-window-close"></i>
+                                                </button>
+                                            </td>
                                             <td>${order.customerPhone}</td>
                                             <td>${order.customerName}</td>
                                             <td>${order.address}</td>
@@ -109,16 +121,27 @@
                                             <td>${order.createdTime}</td>
                                             <td class="process">${order.statusByStatusId.statusNamevie}</td>
                                             <td style="text-align: center" >
-                                                <button class="btn btn-outline-secondary btn-sm" onClick="" title="Chi tiết">
+                                                <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail('${order.idOrder}')" title="Chi tiết">
                                                     <i class="fa fa-caret-square-o-down"></i>
                                                 </button>
                                             </td>
+<%--                                            <c:if test="${order.statusByStatusId.idStatus == 4 }">--%>
+<%--                                            <td>--%>
+<%--                                                <button class="btn btn-warning btn-sm" onclick="setStatus(${order.idOrder},'setShipping')" title="Chuyển tiếp">--%>
+<%--                                                        &lt;%&ndash;                                                    <i class="fa fa-rocket"></i>&ndash;%&gt;--%>
+<%--                                                    Vận chuyển--%>
+<%--                                                </button>--%>
+<%--                                            </td>--%>
+<%--                                            </c:if>--%>
+<%--                                            <c:if test="${order.statusByStatusId.idStatus == 5 }">--%>
                                             <td>
-                                                <button class="btn btn-warning btn-sm" onclick="setStatus(${pendingOrder.idOrder},'setShipping')" title="Chuyển tiếp">
+                                                <button class="btn btn-warning btn-sm" onclick="setStatus(${order.idOrder},'setCompleted')" title="Hoàn thành">
                                                         <%--                                                    <i class="fa fa-rocket"></i>--%>
-                                                    Vận chuyển
+                                                    Hoàn thành
                                                 </button>
                                             </td>
+<%--                                            </c:if>--%>
+
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -146,17 +169,22 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="scrollmodalLabel">Scrolling Long Content Modal</h5>
+                        <h5 class="modal-title" id="scrollmodalLabel">Chi tiết đơn hàng</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>
-                            <br> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                            scelerisque nisl consectetur et.
-                            Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-                        </p>
+<%--                        <h5>Thông tin khách hàng:</h5>--%>
+<%--                        <span>Tên: <div id="customerName"></div></span>--%>
+<%--                        <span>Điện thoại: </span><div id="customerPhone"></div>--%>
+<%--                        <span>Địa chỉ: </span><div id="customerAddress"></div>--%>
+<%--                        <hr/>--%>
+<%--                        <h5>Thông tin đơn hàng:</h5>--%>
+<%--                        <span>Tổng đơn: </span><div id="orderAmout"></div>--%>
+<%--                        <span>Ngày tạo: </span><div id="orderCreated"></div>--%>
+<%--                        <span>Giỏ hàng: </span>--%>
+                        <div id="orderDetail"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -169,8 +197,14 @@
         <!-- Logic -->
         <script type="text/javascript">
             function setStatus(id, typeSet){
+                let mess = 'Xác nhận thay đổi trạng thái đơn ?'
+                switch (typeSet){
+                    case 'setProcessing': { mess = 'Bạn nhận đơn này ?'} break;
+                    case 'setCompleted' : { mess = 'Đơn hàng đã hoàn thành ?'} break;
+                    case 'setCanceled' : { mess = 'Hủy đơn này ?'} break;
+                }
                 swal({
-                    title: "Xác nhận thay đổi trạng thái đơn?",
+                    title: "Xác nhận! "+mess,
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -194,6 +228,27 @@
                             swal({title:"Canceled !"});
                         }
                     });
+            }
+            function orderDetail(idOrder){
+                $('#scrollmodal').modal('show');
+                $('#scrollmodal').css("cursor","wait");
+                $.ajax({
+                    url: "${pageContext.request.contextPath }/api/order/getOrderById?id="+idOrder,
+                    method: "GET",
+                    success: function(res) {
+                        console.log(res);
+                        $('#scrollmodal').css("cursor","default");
+                        $('#orderDetail').html("<h5>Thông tin khách hàng:</h5>"
+                            +"<p>Tên: "+res.customerName+"</p>"
+                            +"<p>Điện thoại: "+res.customerPhone+"</p>"
+                            +"<p>Địa chỉ: "+res.address+"</p>"
+                            +"<hr/>"
+                            +"<h5>Thông tin đơn hàng:</h5>"
+                            +"<p>Tổng đơn: "+numberWithCommas(res.orderAmount)+"</p>"
+                            +"<p>Ngày tạo: "+res.createdTime+"</p>"
+                            +"<p>Giỏ hàng: </p>");
+                    }
+                });
             }
         </script>
 	</jsp:attribute>

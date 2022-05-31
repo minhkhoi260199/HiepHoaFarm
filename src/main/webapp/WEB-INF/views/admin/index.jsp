@@ -57,7 +57,7 @@
                                             <td>${pendingOrder.createdTime}</td>
                                             <td class="pending">${pendingOrder.statusByStatusId.statusNamevie}</td>
                                             <td style="text-align: center" >
-                                                <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail(${pendingOrder.idOrder})" title="Chi tiết">
+                                                <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail('${pendingOrder.idOrder}','${pendingOrder.orderAmount}')" title="Chi tiết">
                                                     <i class="fa fa-caret-square-o-down"></i>
                                                 </button>
                                             </td>
@@ -121,7 +121,7 @@
                                             <td>${order.createdTime}</td>
                                             <td class="process">${order.statusByStatusId.statusNamevie}</td>
                                             <td style="text-align: center" >
-                                                <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail('${order.idOrder}')" title="Chi tiết">
+                                                <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail('${order.idOrder}','${order.orderAmount}')" title="Chi tiết">
                                                     <i class="fa fa-caret-square-o-down"></i>
                                                 </button>
                                             </td>
@@ -164,35 +164,83 @@
         </div>
 
         <!-- modal scroll -->
-        <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="scrollmodalLabel">Chi tiết đơn hàng</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-<%--                        <h5>Thông tin khách hàng:</h5>--%>
-<%--                        <span>Tên: <div id="customerName"></div></span>--%>
-<%--                        <span>Điện thoại: </span><div id="customerPhone"></div>--%>
-<%--                        <span>Địa chỉ: </span><div id="customerAddress"></div>--%>
-<%--                        <hr/>--%>
-<%--                        <h5>Thông tin đơn hàng:</h5>--%>
-<%--                        <span>Tổng đơn: </span><div id="orderAmout"></div>--%>
-<%--                        <span>Ngày tạo: </span><div id="orderCreated"></div>--%>
-<%--                        <span>Giỏ hàng: </span>--%>
-                        <div id="orderDetail"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Confirm</button>
+        <c:forEach var="order" items="${pendings}">
+            <!-- modal scroll -->
+            <div class="modal fade" id="scrollmodal${order.idOrder}" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel"
+                 aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Chi tiết đơn hàng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Thông tin khách hàng:</h5>
+                            <div>Tên: ${order.customerName}</div>
+                            <div>Điện thoại: ${order.customerPhone}</div>
+                            <div>Địa chỉ: ${order.address}</div>
+                            <hr/>
+                            <h5>Thông tin đơn hàng:</h5>
+                            <div>Tổng đơn: <span id="amount${order.idOrder}"></span></div>
+                            <div>Ngày tạo: ${order.createdTime}</div>
+                            <div>Giỏ hàng: </div>
+                            <fieldset style="border: gray 1px solid; border-radius: 10px; padding-left: 20px;">
+                            <c:forEach var="item" items="${order.orderDetailsByIdOrder}">
+                                <div>-${item.productByProductId.productName} (${item.productByProductId.productPrice}) : ${item.quantity}${item.productByProductId.saleUnit}</div>
+                            </c:forEach>
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <%--                            <button type="button" class="btn btn-primary">Confirm</button>--%>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <!-- end modal scroll -->
+        </c:forEach>
+
+        <c:forEach var="order" items="${processing}">
+            <!-- modal scroll -->
+            <div class="modal fade" id="scrollmodal${order.idOrder}" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel"
+                 aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" >Chi tiết đơn hàng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Thông tin khách hàng:</h5>
+                            <div>Tên: ${order.customerName}</div>
+                            <div>Điện thoại: ${order.customerPhone}</div>
+                            <div>Địa chỉ: ${order.address}</div>
+                            <hr/>
+                            <h5>Thông tin đơn hàng:</h5>
+                            <div>Tổng đơn: <span id="amount${order.idOrder}"></span></div>
+                            <div>Ngày tạo: ${order.createdTime}</div>
+                            <div>Giỏ hàng: </div>
+                            <fieldset style="border: gray 1px solid; border-radius: 10px; padding-left: 20px;">
+                            <c:forEach var="item" items="${order.orderDetailsByIdOrder}">
+                                <div>-${item.productByProductId.productName} (${item.productByProductId.productPrice}) : ${item.quantity}${item.productByProductId.saleUnit}</div>
+                            </c:forEach>
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <%--                            <button type="button" class="btn btn-primary">Confirm</button>--%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end modal scroll -->
+        </c:forEach>
+
+
         <!-- end modal scroll -->
         <!-- Logic -->
         <script type="text/javascript">
@@ -229,26 +277,9 @@
                         }
                     });
             }
-            function orderDetail(idOrder){
-                $('#scrollmodal').modal('show');
-                $('#scrollmodal').css("cursor","wait");
-                $.ajax({
-                    url: "${pageContext.request.contextPath }/api/order/getOrderById?id="+idOrder,
-                    method: "GET",
-                    success: function(res) {
-                        console.log(res);
-                        $('#scrollmodal').css("cursor","default");
-                        $('#orderDetail').html("<h5>Thông tin khách hàng:</h5>"
-                            +"<p>Tên: "+res.customerName+"</p>"
-                            +"<p>Điện thoại: "+res.customerPhone+"</p>"
-                            +"<p>Địa chỉ: "+res.address+"</p>"
-                            +"<hr/>"
-                            +"<h5>Thông tin đơn hàng:</h5>"
-                            +"<p>Tổng đơn: "+numberWithCommas(res.orderAmount)+"</p>"
-                            +"<p>Ngày tạo: "+res.createdTime+"</p>"
-                            +"<p>Giỏ hàng: </p>");
-                    }
-                });
+            function orderDetail(idOrder, amount){
+                $('#scrollmodal'+idOrder).modal('show');
+                $('#amount'+idOrder).text(numberWithCommas(amount).toString())
             }
         </script>
 	</jsp:attribute>

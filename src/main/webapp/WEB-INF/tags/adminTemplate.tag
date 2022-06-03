@@ -94,12 +94,15 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="header-wrap">
-                        <form class="form-header" action="" method="POST">
-                            <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                            <button class="au-btn--submit" type="submit">
+                        <div class="form-header" >
+                            <span>Search by:</span>&nbsp;
+                            <select id="searchBy" style="height: 30px">
+                            </select>
+                            <input id="searchKeyword" class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                            <button id="submitSearch" class="au-btn--submit" >
                                 <i class="fa fa-search"></i>
                             </button>
-                        </form>
+                        </div>
                         <div class="header-button">
                             <div class="account-wrap">
                                 <div class="account-item clearfix js-item-menu">

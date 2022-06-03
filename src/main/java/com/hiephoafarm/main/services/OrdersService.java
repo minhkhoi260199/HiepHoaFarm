@@ -24,6 +24,9 @@ public class OrdersService {
     public List<OrdersE> findAllOrder(){return ordersRepos.findAllOrder();}
     public OrdersE findByIdOrder(int id){return ordersRepos.findByIdOrder(id);}
 
+    public List<OrdersE> searchByPhone(String phonenumber){return ordersRepos.searchOrderByPhone(phonenumber);}
+    public List<OrdersE> searchByName(String name){return ordersRepos.searchOrderByName(name);}
+
     public OrdersObj saveOrder(OrdersObj ordersObj){return ordersObjRepos.save(ordersObj);}
     public List<OrdersE> setStatus(int id, int statusId){return ordersRepos.setStatus(id, statusId);}
 

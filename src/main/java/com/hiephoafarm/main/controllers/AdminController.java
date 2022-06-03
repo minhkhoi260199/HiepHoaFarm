@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,6 +37,22 @@ public class AdminController {
     public String orders(ModelMap modelMap) {
         modelMap.put("orders", ordersService.findAllOrder());
         return "admin/orders";
+    }
+
+    @RequestMapping(value = {"searchOrsers"} ,method = RequestMethod.GET)
+    public String searchOrders(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
+        switch (searchBy){
+            case "phone" : modelMap.put("orders", ordersService.searchByPhone(keyword)); break;
+            case "name" : modelMap.put("orders", ordersService.searchByName(keyword)); break;
+            default: modelMap.put("orders", ordersService.searchByName(keyword));
+        }
+        return "admin/orders";
+    }
+
+    @RequestMapping(value = {"searchProducts"} ,method = RequestMethod.GET)
+    public String searchProducts(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
+        modelMap.put("products", productService.search(keyword));
+        return "admin/products";
     }
 
     @RequestMapping(value = {"retail"} ,method = RequestMethod.GET)

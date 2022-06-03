@@ -73,6 +73,11 @@
                             </div>
                             <!-- END ORDER TABLE-->
                             <hr/>
+                            <c:if test="${fn:length(orders) == 0}">
+                                <div class="col-md-12 text-center">
+                                    <h4 class="title-5 m-b-10">KHÔNG CÓ KẾT QUẢ TÌM KIẾM !</h4>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -93,15 +98,15 @@
                         </div>
                         <div class="modal-body">
                             <h5>Thông tin khách hàng:</h5>
-                            <div>Tên: ${order.customerName}</div>
-                            <div>Điện thoại: ${order.customerPhone}</div>
-                            <div>Địa chỉ: ${order.address}</div>
+                            <div>Tên: <span style="color: red">${order.customerName}</span></div>
+                            <div>Điện thoại: <span style="color: blue">${order.customerPhone}</span></div>
+                            <div>Địa chỉ: <span style="color: royalblue">${order.address}</span></div>
                             <hr/>
                             <h5>Thông tin đơn hàng:</h5>
-                            <div>Tổng đơn: <span id="amount${order.idOrder}"></span></div>
+                            <div>Tổng đơn: <span style="color: red" id="amount${order.idOrder}"></span></div>
                             <div>Ngày tạo: ${order.createdTime}</div>
-                            <div>Giỏ hàng: </div>
-                            <fieldset style="border: gray 1px solid; border-radius: 10px; padding-left: 20px;">
+                            <div style="color: darkred">Giỏ hàng: </div>
+                            <fieldset style="border: #e0a800 3px double; border-radius: 10px; padding-left: 20px;">
                             <c:forEach var="item" items="${order.orderDetailsByIdOrder}">
                                 <div>-${item.productByProductId.productName} (${item.productByProductId.productPrice}) : ${item.quantity}${item.productByProductId.saleUnit}</div>
                             </c:forEach>
@@ -119,37 +124,21 @@
 
         <!-- Logic -->
         <script type="text/javascript">
+            $("#searchBy").html("<option>name</option><option>phone</option>");
             function orderDetail(idOrder, amount){
                 $('#scrollmodal'+idOrder).modal('show');
                 $('#amount'+idOrder).text(numberWithCommas(amount).toString())
-                <%--$('#scrollmodal').css("cursor","wait");--%>
-                <%--$.ajax({--%>
-                <%--    url: "${pageContext.request.contextPath }/api/order/getOrderById?id="+idOrder,--%>
-                <%--    method: "GET",--%>
-                <%--    success: function(res) {--%>
-                <%--        console.log(res);--%>
-                <%--        $('#scrollmodal').css("cursor","default");--%>
-                <%--        $('#orderDetail').html("<h5>Thông tin khách hàng:</h5>"--%>
-                <%--            +"<p>Tên: "+res.customerName+"</p>"--%>
-                <%--            +"<p>Điện thoại: "+res.customerPhone+"</p>"--%>
-                <%--            +"<p>Địa chỉ: "+res.address+"</p>"--%>
-                <%--            +"<hr/>"--%>
-                <%--            +"<h5>Thông tin đơn hàng:</h5>"--%>
-                <%--            +"<p>Tổng đơn: "+numberWithCommas(res.orderAmount)+"</p>"--%>
-                <%--            +"<p>Ngày tạo: "+res.createdTime+"</p>"--%>
-                <%--            +"<p>Giỏ hàng: </p>"--%>
-                <%--            +"<hr/>"--%>
-                <%--            +""--%>
-                <%--        );--%>
-                <%--        // for(let detail of res.orderDetailsByIdOrder){--%>
-                <%--        //     console.log(detail.productByProductId);--%>
-                <%--        //     $('#orderDetail').append(--%>
-                <%--        //         "<p>"+detail.quantity+"</p>"--%>
-                <%--        //     );--%>
-                <%--        // }--%>
-                <%--    }--%>
-                <%--});--%>
             }
+            $("#submitSearch").on('click',()=>{
+                let searchBy = $("#searchBy").find(":selected").text();
+                let keyword = $("#searchKeyword").val();
+
+                $(location).attr('href','searchOrsers?searchBy='+searchBy+'&keyword='+keyword);
+
+                console.log("search ERROR");
+                console.log("searchBy: "+searchBy);
+                console.log("keyword: "+keyword);
+            });
         </script>
 	</jsp:attribute>
 </tmp:adminTemplate>

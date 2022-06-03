@@ -104,6 +104,11 @@
                             </div>
                             <!-- END ORDER TABLE-->
                             <hr/>
+                            <c:if test="${fn:length(products) == 0}">
+                                <div class="col-md-12 text-center">
+                                    <h4 class="title-5 m-b-10">KHÔNG CÓ KẾT QUẢ TÌM KIẾM !</h4>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                     <!-- Pagination-->
@@ -609,6 +614,17 @@
                     console.log(err);
                 });
             }
+            $("#searchBy").html("<option>name</option>");
+            $("#submitSearch").on('click',()=>{
+                let searchBy = $("#searchBy").find(":selected").text();
+                let keyword = $("#searchKeyword").val();
+
+                $(location).attr('href','searchProducts?searchBy='+searchBy+'&keyword='+keyword);
+
+                console.log("search ERROR");
+                console.log("searchBy: "+searchBy);
+                console.log("keyword: "+keyword);
+            });
         </script>
 	</jsp:attribute>
 </tmp:adminTemplate>

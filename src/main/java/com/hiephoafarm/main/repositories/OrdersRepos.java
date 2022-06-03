@@ -13,6 +13,10 @@ import java.util.List;
 public interface OrdersRepos extends JpaRepository<OrdersE, Integer> {
     @Query(nativeQuery = true, value = "select * from orders order by id_order DESC")
     public List<OrdersE> findAllOrder ();
+    @Query(nativeQuery = true, value = "select * from orders where customer_phone = :phonenumber order by id_order DESC")
+    public List<OrdersE> searchOrderByPhone (@Param("phonenumber") String phonenumber);
+    @Query(nativeQuery = true, value = "select * from orders where customer_name like %:name% order by id_order DESC")
+    public List<OrdersE> searchOrderByName (@Param("name") String name);
     @Query(nativeQuery = true, value = "select * from orders where id_order = :id")
     public OrdersE findByIdOrder (@Param("id") int id);
     @Query(nativeQuery = true, value = "select * from orders where status_id = 3")

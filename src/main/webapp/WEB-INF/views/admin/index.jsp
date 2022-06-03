@@ -178,15 +178,15 @@
                         </div>
                         <div class="modal-body">
                             <h5>Thông tin khách hàng:</h5>
-                            <div>Tên: ${order.customerName}</div>
-                            <div>Điện thoại: ${order.customerPhone}</div>
-                            <div>Địa chỉ: ${order.address}</div>
+                            <div>Tên: <span style="color: red">${order.customerName}</span></div>
+                            <div>Điện thoại: <span style="color: blue">${order.customerPhone}</span></div>
+                            <div>Địa chỉ: <span style="color: royalblue">${order.address}</span></div>
                             <hr/>
                             <h5>Thông tin đơn hàng:</h5>
-                            <div>Tổng đơn: <span id="amount${order.idOrder}"></span></div>
+                            <div>Tổng đơn: <span style="color: red" id="amount${order.idOrder}"></span></div>
                             <div>Ngày tạo: ${order.createdTime}</div>
-                            <div>Giỏ hàng: </div>
-                            <fieldset style="border: gray 1px solid; border-radius: 10px; padding-left: 20px;">
+                            <div style="color: darkred">Giỏ hàng: </div>
+                            <fieldset style="border: #e0a800 3px double; border-radius: 10px; padding-left: 20px;">
                             <c:forEach var="item" items="${order.orderDetailsByIdOrder}">
                                 <div>-${item.productByProductId.productName} (${item.productByProductId.productPrice}) : ${item.quantity}${item.productByProductId.saleUnit}</div>
                             </c:forEach>
@@ -216,15 +216,15 @@
                         </div>
                         <div class="modal-body">
                             <h5>Thông tin khách hàng:</h5>
-                            <div>Tên: ${order.customerName}</div>
-                            <div>Điện thoại: ${order.customerPhone}</div>
-                            <div>Địa chỉ: ${order.address}</div>
+                            <div>Tên: <span style="color: red">${order.customerName}</span></div>
+                            <div>Điện thoại: <span style="color: blue">${order.customerPhone}</span></div>
+                            <div>Địa chỉ: <span style="color: royalblue">${order.address}</span></div>
                             <hr/>
                             <h5>Thông tin đơn hàng:</h5>
-                            <div>Tổng đơn: <span id="amount${order.idOrder}"></span></div>
+                            <div>Tổng đơn: <span style="color: red" id="amount${order.idOrder}"></span></div>
                             <div>Ngày tạo: ${order.createdTime}</div>
-                            <div>Giỏ hàng: </div>
-                            <fieldset style="border: gray 1px solid; border-radius: 10px; padding-left: 20px;">
+                            <div style="color: darkred">Giỏ hàng: </div>
+                            <fieldset style="border: #e0a800 3px double; border-radius: 10px; padding-left: 20px;">
                             <c:forEach var="item" items="${order.orderDetailsByIdOrder}">
                                 <div>-${item.productByProductId.productName} (${item.productByProductId.productPrice}) : ${item.quantity}${item.productByProductId.saleUnit}</div>
                             </c:forEach>
@@ -281,6 +281,17 @@
                 $('#scrollmodal'+idOrder).modal('show');
                 $('#amount'+idOrder).text(numberWithCommas(amount).toString())
             }
+            $("#searchBy").html("<option>name</option><option>phone</option>");
+            $("#submitSearch").on('click',()=>{
+                let searchBy = $("#searchBy").find(":selected").text();
+                let keyword = $("#searchKeyword").val();
+
+                $(location).attr('href','searchOrsers?searchBy='+searchBy+'&keyword='+keyword);
+
+                console.log("search ERROR");
+                console.log("searchBy: "+searchBy);
+                console.log("keyword: "+keyword);
+            });
         </script>
 	</jsp:attribute>
 </tmp:adminTemplate>

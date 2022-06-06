@@ -14,4 +14,6 @@ public interface ProductRepos extends JpaRepository<ProductE, Integer> {
    public List<ProductE> search(@Param("keyword") String keyword);
    @Query(nativeQuery = true, value = "select * from product where category_id = :id")
    public List<ProductE> searchByCate(@Param("id") int id);
+   @Query(nativeQuery = true, value = "select * from product where status_id = 1")
+   public List<ProductE> findAllEnabled();
 }

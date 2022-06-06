@@ -37,7 +37,7 @@ public class ProductRestController {
 	@RequestMapping(value="getItems", method = RequestMethod.GET)
 	public ResponseEntity<?> getItems(){
 		try {
-			List<ProductE> products = productService.findAll();
+			List<ProductE> products = productService.findAllEnabled();
 			return new ResponseEntity<>(products, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

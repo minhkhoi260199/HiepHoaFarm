@@ -4,14 +4,14 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user", schema = "hiephoafarm", catalog = "")
-public class UserE {
+public class UserObj {
    private int idUser;
    private String username;
    private String password;
+   private int roleId;
    private String fullname;
    private String address;
-   private RoleE roleByRoleId;
-   private StatusE statusByStatusId;
+   private Integer statusId;
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
@@ -45,6 +45,16 @@ public class UserE {
    }
 
    @Basic
+   @Column(name = "role_id", nullable = false)
+   public int getRoleId() {
+      return roleId;
+   }
+
+   public void setRoleId(int roleId) {
+      this.roleId = roleId;
+   }
+
+   @Basic
    @Column(name = "fullname", nullable = true, length = 45)
    public String getFullname() {
       return fullname;
@@ -64,18 +74,30 @@ public class UserE {
       this.address = address;
    }
 
+   @Basic
+   @Column(name = "status_id", nullable = true)
+   public Integer getStatusId() {
+      return statusId;
+   }
+
+   public void setStatusId(Integer statusId) {
+      this.statusId = statusId;
+   }
+
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
 
-      UserE userE = (UserE) o;
+      UserObj userObj = (UserObj) o;
 
-      if (idUser != userE.idUser) return false;
-      if (username != null ? !username.equals(userE.username) : userE.username != null) return false;
-      if (password != null ? !password.equals(userE.password) : userE.password != null) return false;
-      if (fullname != null ? !fullname.equals(userE.fullname) : userE.fullname != null) return false;
-      if (address != null ? !address.equals(userE.address) : userE.address != null) return false;
+      if (idUser != userObj.idUser) return false;
+      if (roleId != userObj.roleId) return false;
+      if (username != null ? !username.equals(userObj.username) : userObj.username != null) return false;
+      if (password != null ? !password.equals(userObj.password) : userObj.password != null) return false;
+      if (fullname != null ? !fullname.equals(userObj.fullname) : userObj.fullname != null) return false;
+      if (address != null ? !address.equals(userObj.address) : userObj.address != null) return false;
+      if (statusId != null ? !statusId.equals(userObj.statusId) : userObj.statusId != null) return false;
 
       return true;
    }
@@ -85,28 +107,10 @@ public class UserE {
       int result = idUser;
       result = 31 * result + (username != null ? username.hashCode() : 0);
       result = 31 * result + (password != null ? password.hashCode() : 0);
+      result = 31 * result + roleId;
       result = 31 * result + (fullname != null ? fullname.hashCode() : 0);
       result = 31 * result + (address != null ? address.hashCode() : 0);
+      result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
       return result;
-   }
-
-   @ManyToOne
-   @JoinColumn(name = "role_id", referencedColumnName = "id_role", nullable = false)
-   public RoleE getRoleByRoleId() {
-      return roleByRoleId;
-   }
-
-   public void setRoleByRoleId(RoleE roleByRoleId) {
-      this.roleByRoleId = roleByRoleId;
-   }
-
-   @ManyToOne
-   @JoinColumn(name = "status_id", referencedColumnName = "id_status")
-   public StatusE getStatusByStatusId() {
-      return statusByStatusId;
-   }
-
-   public void setStatusByStatusId(StatusE statusByStatusId) {
-      this.statusByStatusId = statusByStatusId;
    }
 }

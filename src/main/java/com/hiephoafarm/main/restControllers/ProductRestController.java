@@ -124,8 +124,7 @@ public class ProductRestController {
 		try {
 			int productId = Integer.parseInt(id);
 			if(productService.existsById(productId)){
-				productService.delete(productId);
-				galleryService.deleteByProductId(productId);
+				productService.deleteLogic(productId);
 			}
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {

@@ -16,4 +16,9 @@ public interface ProductRepos extends JpaRepository<ProductE, Integer> {
    public List<ProductE> searchByCate(@Param("id") int id);
    @Query(nativeQuery = true, value = "select * from product where status_id = 1")
    public List<ProductE> findAllEnabled();
+   @Query(nativeQuery = true, value = "select * from product where status_id <> 8")
+   public List<ProductE> findAllAdmin();
+   @Query(nativeQuery = true, value = "update product set status_id = 8 where id_product = :id ")
+   public List<ProductE> deleteLogicById(@Param("id") int id);
+
 }

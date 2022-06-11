@@ -1,6 +1,7 @@
 <%@ tag display-name="adminTemplate" language="java" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ attribute name="title" type="java.lang.String" required="true" rtexprvalue="true"%>
 <%@ attribute name="content" fragment="true" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,45 +43,52 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li>
-                        <a href="${pageContext.request.contextPath }/admin/index">
+                        <a href="${pageContext.request.contextPath }/orders/index">
                             <i class="fa fa-trello"></i>Đơn mới</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath }/admin/orders">
+                        <a href="${pageContext.request.contextPath }/orders/orders">
                             <i class="fa fa-check-square"></i>Tra cứu đơn</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath }/admin/report">
-                            <i class="fa fa-table"></i>Thống kê</a>
+                        <a href="${pageContext.request.contextPath }/orders/orders">
+                            <i class="fa fa-check-square"></i>Khách hàng</a>
                     </li>
-                    <hr style="border: 1px solid red;"/>
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fa fa-th"></i>Quản lí kho</a>
-                        <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li>
-                                <a href="${pageContext.request.contextPath }/admin/product">Về sản phẩm</a>
-                            </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath }/admin/category">Về danh mục</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fa fa-desktop"></i>Về giao diện</a>
-                        <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li>
-                                <a href="${pageContext.request.contextPath }/admin/ads">Dòng thông báo</a>
-                            </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath }/admin/about">Trang giới thiệu</a>
-                            </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath }/admin/contact">Về doanh nghiệp</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <li>
+                            <a href="${pageContext.request.contextPath }/orders/report">
+                                <i class="fa fa-table"></i>Thống kê</a>
+                        </li>
+                        <hr style="border: 1px solid red;"/>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fa fa-th"></i>Quản lí kho</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="${pageContext.request.contextPath }/admin/product">Về sản phẩm</a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath }/admin/category">Về danh mục</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fa fa-desktop"></i>Về giao diện</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="${pageContext.request.contextPath }/admin/ads">Dòng thông báo</a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath }/admin/about">Trang giới thiệu</a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath }/admin/contact">Về doanh nghiệp</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </security:authorize>
+
                 </ul>
             </nav>
         </div>
@@ -110,7 +118,7 @@
                                         <img src="${pageContext.request.contextPath }/resources/images/icon/photo.gif" alt="Admin" />
                                     </div>
                                     <div class="content">
-                                        <a class="js-acc-btn" href="#">Admin</a>
+                                        <a class="js-acc-btn" href="#">${pageContext.request.userPrincipal.name }</a>
                                         <i class="fa fa-angle-down"></i>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
@@ -122,7 +130,7 @@
                                             </div>
                                             <div class="content">
                                                 <h5 class="name">
-                                                    <a href="#">Admin</a>
+                                                    <a href="#">${pageContext.request.userPrincipal.name }</a>
                                                 </h5>
                                                 <!-- <span class="email">johndoe@example.com</span> -->
                                             </div>
@@ -134,7 +142,7 @@
                                             </div>
                                         </div> -->
                                         <div class="account-dropdown__footer">
-                                            <a href="#">
+                                            <a href="${pageContext.request.contextPath }/auth/logout">
                                                 <i class="fa fa-power"></i>Logout</a>
                                         </div>
                                     </div>

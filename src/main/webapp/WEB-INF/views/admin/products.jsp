@@ -75,7 +75,7 @@
                                         <td>${product.productPrice}</td>
                                         <td>${product.saleUnit}</td>
                                         <c:if test="${product.statusByStatusId.idStatus == 1 }">
-                                        <td class="process" id="statusName${product.idProduct}">${product.statusByStatusId.statusNamevie}</td>
+                                        <td class="process" id="statusName${product.idProduct}">${product.statusByStatusId.statusNameVie}</td>
                                         <td>
                                             <button id="statusButton${product.idProduct}" class="btn btn-outline-danger btn-sm" onclick="setStatus(prData${product.idProduct},'disable')" title="Vô hiệu">
                                                 <i class="fa fa-window-close"></i>
@@ -83,7 +83,7 @@
                                         </td>
                                         </c:if>
                                         <c:if test="${product.statusByStatusId.idStatus == 2 }">
-                                        <td class="denied" id="statusName${product.idProduct}">${product.statusByStatusId.statusNamevie}</td>
+                                        <td class="denied" id="statusName${product.idProduct}">${product.statusByStatusId.statusNameVie}</td>
                                         <td>
                                             <button id="statusButton${product.idProduct}" class="btn btn-outline-success btn-sm" onclick="setStatus(prData${product.idProduct},'enable')" title="Kích hoạt">
                                                 <i class="fa fa-rocket"></i>

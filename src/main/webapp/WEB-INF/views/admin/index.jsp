@@ -55,7 +55,7 @@
                                                 </script>
                                             </td>
                                             <td>${pendingOrder.createdTime}</td>
-                                            <td class="pending">${pendingOrder.statusByStatusId.statusNamevie}</td>
+                                            <td class="pending">${pendingOrder.statusByStatusId.statusNameVie}</td>
                                             <td style="text-align: center" >
                                                 <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail('${pendingOrder.idOrder}','${pendingOrder.orderAmount}')" title="Chi tiết">
                                                     <i class="fa fa-caret-square-o-down"></i>
@@ -119,7 +119,7 @@
                                                 </script>
                                             </td>
                                             <td>${order.createdTime}</td>
-                                            <td class="process">${order.statusByStatusId.statusNamevie}</td>
+                                            <td class="process">${order.statusByStatusId.statusNameVie}</td>
                                             <td style="text-align: center" >
                                                 <button class="btn btn-outline-secondary btn-sm" onClick="orderDetail('${order.idOrder}','${order.orderAmount}')" title="Chi tiết">
                                                     <i class="fa fa-caret-square-o-down"></i>

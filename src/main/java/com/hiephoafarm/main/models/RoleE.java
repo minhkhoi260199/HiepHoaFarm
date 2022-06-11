@@ -3,18 +3,19 @@ package com.hiephoafarm.main.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Table(name = "role", schema = "hiephoafarm", catalog = "")
-public class RoleE {
+public class RoleE implements Serializable {
     private int idRole;
     private String roleName;
     private Collection<UserE> usersByIdRole;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_role")
+    @Column(name = "id_role", nullable = false)
     public int getIdRole() {
         return idRole;
     }
@@ -24,7 +25,7 @@ public class RoleE {
     }
 
     @Basic
-    @Column(name = "role_name")
+    @Column(name = "role_name", nullable = false, length = 45)
     public String getRoleName() {
         return roleName;
     }

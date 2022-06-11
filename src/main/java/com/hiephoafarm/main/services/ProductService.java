@@ -20,7 +20,7 @@ public class ProductService {
 
     //Repos
     public List<ProductE> findAll(){
-        return productRepos.findAll();
+        return productRepos.findAllAdmin();
     }
     public List<ProductE> findAllEnabled() { return productRepos.findAllEnabled();}
     public List<ProductE> findByCate(int id) { return productRepos.searchByCate(id);}
@@ -32,7 +32,7 @@ public class ProductService {
         return productRepos.findAll(pageable);
     }
     public boolean existsById(int id){ return productRepos.existsById(id);}
-    public void delete(int id){productRepos.deleteById(id);}
+    public void deleteLogic(int id){productRepos.deleteLogicById(id);}
     //ObjRepos
     public ProductObj save(ProductObj productObj){return productObjRepos.save(productObj);}
 

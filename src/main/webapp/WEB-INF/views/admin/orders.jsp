@@ -40,16 +40,16 @@
                                     <c:forEach var="order" items="${orders}">
                                         <tr>
                                             <c:if test="${order.statusByStatusId.idStatus == 3 }">
-                                            <td style="font-weight: bold ;color: #e0a800">${order.statusByStatusId.statusNamevie}</td>
+                                            <td style="font-weight: bold ;color: #e0a800">${order.statusByStatusId.statusNameVie}</td>
                                             </c:if>
                                             <c:if test="${order.statusByStatusId.idStatus == 4 }">
-                                            <td style="font-weight: bold ;color: forestgreen">${order.statusByStatusId.statusNamevie}</td>
+                                            <td style="font-weight: bold ;color: forestgreen">${order.statusByStatusId.statusNameVie}</td>
                                             </c:if>
                                             <c:if test="${order.statusByStatusId.idStatus == 6 }">
-                                            <td style="font-weight: bold ;color: #00a2e3">${order.statusByStatusId.statusNamevie}</td>
+                                            <td style="font-weight: bold ;color: #00a2e3">${order.statusByStatusId.statusNameVie}</td>
                                             </c:if>
                                             <c:if test="${order.statusByStatusId.idStatus == 7 }">
-                                            <td style="font-weight: bold ;color: red">${order.statusByStatusId.statusNamevie}</td>
+                                            <td style="font-weight: bold ;color: red">${order.statusByStatusId.statusNameVie}</td>
                                             </c:if>
                                             <td>${order.customerPhone}</td>
                                             <td>${order.customerName}</td>

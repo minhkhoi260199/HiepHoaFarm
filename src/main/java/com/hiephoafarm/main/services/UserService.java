@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
@@ -28,6 +29,7 @@ public class UserService implements UserDetailsService {
     public UserE findByUsername(String username){
         return userRepos.findByUsername(username);
     }
+    public UserObj findById(int id) { return userObjRepos.findByIdUserObj(id);}
     public UserObj findUserObjByUsername(String username){
         return userObjRepos.findByUsername(username);
     }

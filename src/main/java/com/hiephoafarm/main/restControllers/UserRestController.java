@@ -5,6 +5,7 @@ import com.hiephoafarm.main.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +24,10 @@ public class UserRestController {
 
 //	@CrossOrigin(origins = "http://
 	@CrossOrigin
-	@RequestMapping(value="getUser", method = RequestMethod.GET)
-	public ResponseEntity<?> findByUsername(@RequestParam String username){
+	@RequestMapping(value="getUserProfile", method = RequestMethod.GET)
+	public ResponseEntity<?> findByUsername(@RequestParam("un") String username){
 		try {
-			UserE user = userService.findByUsername(username);
+			UserObj user = userService.findUserObjByUsername(username);
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -34,9 +35,57 @@ public class UserRestController {
 		}
 	}
 	@CrossOrigin
-	@RequestMapping(value="save", method = RequestMethod.POST)
-	public ResponseEntity<?> save(@RequestBody UserObj user){
+	@RequestMapping(value="login", method = RequestMethod.GET)
+	public ResponseEntity<?> login(@RequestParam("un") String username, @RequestParam("pw") String password){
 		try {
+			UserObj user = userService.findUserObjByUsername(username);
+			if(user == null){
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			if(!encoder.matches(password, user.getPassword())){
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<>(user, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	@CrossOrigin
+	@RequestMapping(value="register", method = RequestMethod.POST)
+	public ResponseEntity<?> register(@RequestBody UserObj user){
+		try {
+			UserObj compUser = userService.findUserObjByUsername(user.getUsername());
+			if(compUser != null){
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			String password = user.getPassword().trim();
+			String hash = new BCryptPasswordEncoder().encode(password);
+			user.setPassword(hash);
+			user.setStatusId(1);
+			user.setRoleId(3);
+			UserObj flag = userService.save(user);
+			return new ResponseEntity<>(flag, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	@CrossOrigin
+	@RequestMapping(value="profileSave", method = RequestMethod.POST)
+	public ResponseEntity<?> profileSave(@RequestBody UserObj user){
+		try {
+			UserObj compUsername = userService.findUserObjByUsername(user.getUsername());
+			if(compUsername != null){
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			UserObj compUser = userService.findById(user.getIdUser());
+			if(!compUser.getPassword().equals(user.getPassword())){
+				String password = user.getPassword().trim();
+				String hash = new BCryptPasswordEncoder().encode(password);
+				user.setPassword(hash);
+			}
 			UserObj flag = userService.save(user);
 			return new ResponseEntity<>(flag, HttpStatus.OK);
 		} catch (Exception e) {

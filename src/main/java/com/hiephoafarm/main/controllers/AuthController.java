@@ -32,24 +32,32 @@ public class AuthController {
         if (logout != null) {
             modelMap.put("msg", "Logout Successful");
         }
-        modelMap.put("user", new UserE());
+//        modelMap.put("user", new UserE());
         return "auth/login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String register(ModelMap modelMap) {
+    public String register(ModelMap modelMap, @RequestParam(value = "error", required = false) String error) {
+        if(error!=null){
+            modelMap.put("msg", "Username đã tồn tại !");
+        }
         modelMap.put("user", new UserObj());
         return "auth/register";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(@ModelAttribute("user") UserObj account) {
+        UserE user = userService.findByUsername(account.getUsername());
+        if(account.getUsername().equals(user.getUsername())){
+            return "redirect:/auth/profile?error";
+        }
         String password = account.getPassword().trim();
         String hash = new BCryptPasswordEncoder().encode(password);
         account.setPassword(hash);
         account.setRoleId(2);
+        account.setStatusId(1);
         userService.save(account);
-        return "redirect:/auth/login";
+        return "redirect:/admin/employees";
     }
 
     @RequestMapping(value = "accessDenied", method = RequestMethod.GET)
@@ -58,9 +66,30 @@ public class AuthController {
     }
 
     @RequestMapping(value = "profile", method = RequestMethod.GET)
-    public String profile(Authentication authentication, ModelMap modelMap) {
-        modelMap.put("account", userService.findByUsername(authentication.getName()));
+    public String profile(Authentication authentication, ModelMap modelMap,
+                          @RequestParam(value = "error", required = false) String error) {
+        if(error!=null){
+            modelMap.put("msg", "Nhập thiếu thông tin hoặc Username đã tồn tại !");
+        }
+        UserObj user = userService.findUserObjByUsername(authentication.getName());
+        modelMap.put("user", user);
         return "auth/profile";
+    }
+
+    @RequestMapping(value = "profile", method = RequestMethod.POST)
+    public String saveProfile(Authentication authentication, @ModelAttribute("user") UserObj account) {
+        UserE user = userService.findByUsername(authentication.getName());
+        if(!account.getPassword().equals(user.getPassword())){
+            String password = account.getPassword().trim();
+            String hash = new BCryptPasswordEncoder().encode(password);
+            account.setPassword(hash);
+        }
+        try {
+            userService.save(account);
+        } catch (Exception e) {
+            return "redirect:/auth/profile?errol";
+        }
+        return "redirect:/orders/index";
     }
 
 }

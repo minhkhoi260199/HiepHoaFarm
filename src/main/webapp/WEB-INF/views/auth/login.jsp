@@ -16,7 +16,7 @@
                         </div>
                         <div class="login-form">
                         	<span style="color:red">${msg }</span>
-                            <s:form method="post" modelAttribute="user" action="${pageContext.request.contextPath }/auth/process-login">
+                            <form method="post" action="${pageContext.request.contextPath }/auth/process-login">
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input class="au-input au-input--full" type="text" path="username" name="username" placeholder="Username"/>
@@ -40,11 +40,10 @@
                                         <button class="au-btn au-btn--block au-btn--blue2">sign in with twitter</button>
                                     </div>
                                 </div> -->
-                            </s:form>
+                            </form>
                             <div class="register-link">
                                 <p>
-                                    Don't you have account?
-                                    <a href="${pageContext.request.contextPath }/auth/register">Sign Up Here</a>
+                                    Don't you have account? Contact to admin to have one.
                                 </p>
                             </div>
                         </div>

@@ -28,6 +28,16 @@ public class UserService implements UserDetailsService {
     public UserE findByUsername(String username){
         return userRepos.findByUsername(username);
     }
+    public UserObj findUserObjByUsername(String username){
+        return userObjRepos.findByUsername(username);
+    }
+    public List<UserE> findAllUsers() {return userRepos.findAllUsers(); }
+    public List<UserE> findAllEmployees() {return userRepos.findAllEmployees(); }
+    public List<UserE> searchByUsername(String username) {return userRepos.searchByUsername(username); }
+    public List<UserE> searchByUsernameEmployee(String username) {return userRepos.searchByUsernameEmployee(username); }
+    public boolean existsById(int id){ return userRepos.existsById(id);}
+    public void deleteLogic(int id){userRepos.deleteLogicById(id);}
+    public void changeStatus(int id, int status){userRepos.changeStatusId(id, status);}
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

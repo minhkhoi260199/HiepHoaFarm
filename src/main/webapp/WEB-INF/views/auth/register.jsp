@@ -3,7 +3,7 @@
 <%@ taglib prefix="tmp" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<tmp:authTemplate title="Register">
+<tmp:adminTemplate title="Register">
 	<jsp:attribute name="content">
 		 <div class="page-content">
             <div class="container">
@@ -35,12 +35,12 @@
 										class="au-input au-input--full" type="password"
 										name="password" placeholder="Password" path="password"/>
                                 </div>
-<%--                                 <div class="form-group">--%>
-<%--                                    <label>Name</label> <s:errors path="name" style="color:red; font-style:italic"></s:errors>--%>
-<%--                                    <input--%>
-<%--										class="au-input au-input--full" type="text" name="name"--%>
-<%--										placeholder="Name" path="name"/>--%>
-<%--                                </div>--%>
+                                 <div class="form-group">
+                                    <label>Name</label> <s:errors path="fullname" style="color:red; font-style:italic"></s:errors>
+                                    <input
+										class="au-input au-input--full" type="text" name="name"
+										placeholder="Name" path="name"/>
+                                </div>
 <%--                                <div class="form-group">--%>
 <%--                                    <label>Address</label> <s:errors path="address" style="color:red; font-style:italic"></s:errors>--%>
 <%--                                    <input--%>
@@ -63,16 +63,11 @@
 									register
 								</button>
                             </s:form>
-                            <div class="register-link">
-                                <p>
-                                    Already have account?
-                                    <a href="${pageContext.request.contextPath }/auth/login">Sign In</a>
-                                </p>
-                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 	</jsp:attribute>
-</tmp:authTemplate>
+</tmp:adminTemplate>

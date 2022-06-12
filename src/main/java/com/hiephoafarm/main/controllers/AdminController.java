@@ -3,6 +3,7 @@ package com.hiephoafarm.main.controllers;
 import com.hiephoafarm.main.services.CategoryService;
 import com.hiephoafarm.main.services.OrdersService;
 import com.hiephoafarm.main.services.ProductService;
+import com.hiephoafarm.main.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +21,8 @@ public class AdminController {
     CategoryService categoryService;
     @Autowired
     ProductService productService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = {"searchProducts"} ,method = RequestMethod.GET)
     public String searchProducts(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
@@ -44,6 +47,17 @@ public class AdminController {
 //        modelMap.put("products", productService.loadData(pageable));
         modelMap.put("products", productService.findAll());
         return "admin/products";
+    }
+
+    @RequestMapping(value = {"employees"} ,method = RequestMethod.GET)
+    public String employees(ModelMap modelMap) {
+        modelMap.put("users", userService.findAllEmployees());
+        return "admin/employees";
+    }
+    @RequestMapping(value = {"searchEmployee"} ,method = RequestMethod.GET)
+    public String searchUsers(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
+        modelMap.put("users", userService.searchByUsernameEmployee(keyword));
+        return "admin/employees";
     }
 
     @RequestMapping(value = {"category"} ,method = RequestMethod.GET)

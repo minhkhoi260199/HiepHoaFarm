@@ -51,10 +51,14 @@
                             <i class="fa fa-check-square"></i>Tra cứu đơn</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath }/orders/orders">
-                            <i class="fa fa-check-square"></i>Khách hàng</a>
+                        <a href="${pageContext.request.contextPath }/orders/users">
+                            <i class="fa fa-user"></i>Khách hàng</a>
                     </li>
                     <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <li>
+                            <a href="${pageContext.request.contextPath }/admin/employees">
+                                <i class="fa fa-users"></i>Nhân viên</a>
+                        </li>
                         <li>
                             <a href="${pageContext.request.contextPath }/orders/report">
                                 <i class="fa fa-table"></i>Thống kê</a>
@@ -135,12 +139,12 @@
                                                 <!-- <span class="email">johndoe@example.com</span> -->
                                             </div>
                                         </div>
-                                        <!-- <div class="account-dropdown__body">
+                                        <div class="account-dropdown__body">
                                             <div class="account-dropdown__item">
-                                                <a href="#">
-                                                    <i class="fa fa-account"></i>Account</a>
+                                                <a href="${pageContext.request.contextPath }/auth/profile">
+                                                    <i class="fa fa-account"></i>Profile</a>
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <div class="account-dropdown__footer">
                                             <a href="${pageContext.request.contextPath }/auth/logout">
                                                 <i class="fa fa-power"></i>Logout</a>

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository("userObjRepos")
 public interface UserObjRepos extends JpaRepository<UserObj, Integer> {
    @Query(nativeQuery = true, value = "select * from user where username = :username")
-   public UserObj findByUsername(@Param("username") String keyword);
+   public UserObj findByUsername(@Param("username") String username);
+   @Query(nativeQuery = true, value = "select * from user where id_user <> :id and username = :username")
+   public UserObj findAnotherUsername(@Param("id") int id, @Param("username") String username);
    @Query(nativeQuery = true, value = "select * from user where id_user = :id")
    public UserObj findByIdUserObj(@Param("id") int id);
 }

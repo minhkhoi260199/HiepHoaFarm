@@ -1,9 +1,11 @@
 package com.hiephoafarm.main.services;
 
+import com.hiephoafarm.main.models.OrderDetailE;
 import com.hiephoafarm.main.models.OrderDetailObj;
 import com.hiephoafarm.main.models.OrdersE;
 import com.hiephoafarm.main.models.OrdersObj;
 import com.hiephoafarm.main.repositories.OrderDetailObjRepos;
+import com.hiephoafarm.main.repositories.OrderDetailRepos;
 import com.hiephoafarm.main.repositories.OrdersObjRepos;
 import com.hiephoafarm.main.repositories.OrdersRepos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class OrdersService {
     OrdersRepos ordersRepos;
     @Autowired
     OrderDetailObjRepos orderDetailObjRepos;
+    @Autowired
+    OrderDetailRepos orderDetailRepos;
 
     public List<OrdersE> findAllOrder(){return ordersRepos.findAllOrder();}
     public OrdersE findByIdOrder(int id){return ordersRepos.findByIdOrder(id);}
@@ -34,4 +38,6 @@ public class OrdersService {
 
     public List<OrdersE> findPending(){return ordersRepos.findPending();}
     public List<OrdersE> findProcessing(){return ordersRepos.findProcessing();}
+
+    public List<OrderDetailE> findDetailByIdOrder(int id) { return orderDetailRepos.findByIdOrder(id);}
 }

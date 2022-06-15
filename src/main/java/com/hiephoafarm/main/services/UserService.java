@@ -33,6 +33,9 @@ public class UserService implements UserDetailsService {
     public UserObj findUserObjByUsername(String username){
         return userObjRepos.findByUsername(username);
     }
+    public UserObj findUserObjIsAnotherUsername(int id, String username){
+        return userObjRepos.findAnotherUsername(id, username);
+    }
     public List<UserE> findAllUsers() {return userRepos.findAllUsers(); }
     public List<UserE> findAllEmployees() {return userRepos.findAllEmployees(); }
     public List<UserE> searchByUsername(String username) {return userRepos.searchByUsername(username); }

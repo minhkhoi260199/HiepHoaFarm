@@ -76,7 +76,7 @@ public class UserRestController {
 	@RequestMapping(value="profileSave", method = RequestMethod.POST)
 	public ResponseEntity<?> profileSave(@RequestBody UserObj user){
 		try {
-			UserObj compUsername = userService.findUserObjByUsername(user.getUsername());
+			UserObj compUsername = userService.findUserObjIsAnotherUsername(user.getIdUser(), user.getUsername());
 			if(compUsername != null){
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}

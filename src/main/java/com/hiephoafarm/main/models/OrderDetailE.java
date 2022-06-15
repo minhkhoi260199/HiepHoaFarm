@@ -65,7 +65,7 @@ public class OrderDetailE {
     }
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id_order", nullable = false)
     public OrdersE getOrdersByOrderId() {
         return ordersByOrderId;

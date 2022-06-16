@@ -23,6 +23,8 @@ public interface OrdersRepos extends JpaRepository<OrdersE, Integer> {
     public List<OrdersE> findPending ();
     @Query(nativeQuery = true, value = "select * from orders where status_id = 4")
     public List<OrdersE> findProcessing ();
+    @Query(nativeQuery = true, value = "select * from orders where status_id=6 and created_time>=:from and created_time<=:to")
+    public List<OrdersE> findByTimeRange (@Param("from") String from, @Param("to") String to);
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE orders SET status_id = :statusId WHERE id_order = :id")
     public List<OrdersE> setStatus (@Param("id") int id, @Param("statusId") int statusId);

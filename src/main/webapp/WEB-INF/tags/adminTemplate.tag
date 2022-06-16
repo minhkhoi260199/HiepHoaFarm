@@ -24,10 +24,25 @@
     <!-- Vendor CSS-->
     <link href="${pageContext.request.contextPath }/resources/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
     <link href="${pageContext.request.contextPath }/resources/vendor/tui-pagination/tui-pagination.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
     <!-- Main CSS-->
     <link href="${pageContext.request.contextPath }/resources/css/theme.css" rel="stylesheet" media="all">
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
 </head>
 
 <body class="animsition">
@@ -160,7 +175,7 @@
         <!-- END HEADER DESKTOP-->
 
         <!-- Jquery JS-->
-        <script src="${pageContext.request.contextPath }/resources/vendor/jquery-3.2.1.min.js"></script>
+<%--        <script src="${pageContext.request.contextPath }/resources/vendor/jquery-3.2.1.min.js"></script>--%>
         <script src="${pageContext.request.contextPath }/resources/vendor/tui-pagination/tui-pagination.min.js"></script>
 
         <!-- MAIN CONTENT-->

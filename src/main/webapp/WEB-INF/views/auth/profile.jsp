@@ -24,8 +24,8 @@
                                 <div class="form-group">
                                     <label>Username</label> <s:errors path="username" style="color:red; font-style:italic"></s:errors>
                                     <s:input
-										class="au-input au-input--full" type="text" name="username" path="username"
-										placeholder="phone"/>
+										class="au-input au-input--full" type="number" name="username" path="username"
+										placeholder="Số điện thoại"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label> <s:errors path="password" style="color:red; font-style:italic"></s:errors>
@@ -37,13 +37,13 @@
                                     <label>Họ và Tên</label> <s:errors path="fullname" style="color:red; font-style:italic"></s:errors>
                                     <s:input
 										class="au-input au-input--full" type="text" name="fullname"
-										placeholder="Name" path="fullname"/>
+										placeholder="Tên nhân viên" path="fullname"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Địa Chỉ</label> <s:errors path="address" style="color:red; font-style:italic"></s:errors>
                                     <s:input
 										class="au-input au-input--full" type="text" name="address"
-										placeholder="Address" path="address"/>
+										placeholder="Địa chỉ thường trú" path="address"/>
                                 </div>
 
                                 <button

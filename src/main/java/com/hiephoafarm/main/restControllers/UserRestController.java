@@ -40,6 +40,9 @@ public class UserRestController {
 		try {
 			UserObj user = userService.findUserObjByUsername(username);
 			if(user == null){
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			if(!user.getStatusId().equals(1)) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

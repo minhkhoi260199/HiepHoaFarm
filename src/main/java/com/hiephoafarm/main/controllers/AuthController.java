@@ -48,8 +48,10 @@ public class AuthController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(@ModelAttribute("user") UserObj account) {
         UserE user = userService.findByUsername(account.getUsername());
-        if(account.getUsername().equals(user.getUsername())){
-            return "redirect:/auth/profile?error";
+        if(user != null){
+            if(account.getUsername().equals(user.getUsername())){
+                return "redirect:/auth/register?error";
+            }
         }
         String password = account.getPassword().trim();
         String hash = new BCryptPasswordEncoder().encode(password);

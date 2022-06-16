@@ -12,13 +12,13 @@ import java.util.List;
 @Transactional
 @Repository("productRepos")
 public interface ProductRepos extends JpaRepository<ProductE, Integer> {
-   @Query(nativeQuery = true, value = "select * from product where product_name like %:keyword%")
+   @Query(nativeQuery = true, value = "select * from product where product_name like %:keyword% and status_id <> 8 order by id_product DESC")
    public List<ProductE> search(@Param("keyword") String keyword);
-   @Query(nativeQuery = true, value = "select * from product where category_id = :id")
+   @Query(nativeQuery = true, value = "select * from product where category_id = :id and status_id <> 8 order by id_product DESC")
    public List<ProductE> searchByCate(@Param("id") int id);
-   @Query(nativeQuery = true, value = "select * from product where status_id = 1")
+   @Query(nativeQuery = true, value = "select * from product where status_id = 1 order by id_product DESC")
    public List<ProductE> findAllEnabled();
-   @Query(nativeQuery = true, value = "select * from product where status_id <> 8")
+   @Query(nativeQuery = true, value = "select * from product where status_id <> 8 order by id_product DESC")
    public List<ProductE> findAllAdmin();
    @Modifying
    @Query(nativeQuery = true, value = "update product set status_id = 8 where id_product = :id ")

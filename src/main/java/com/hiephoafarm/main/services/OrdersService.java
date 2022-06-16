@@ -38,6 +38,7 @@ public class OrdersService {
 
     public List<OrdersE> findPending(){return ordersRepos.findPending();}
     public List<OrdersE> findProcessing(){return ordersRepos.findProcessing();}
+    public List<OrdersE> findByTimeRange(String from, String to) {return ordersRepos.findByTimeRange(from, to);}
 
     public List<OrderDetailE> findDetailByIdOrder(int id) { return orderDetailRepos.findByIdOrder(id);}
 }

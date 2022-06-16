@@ -1,5 +1,6 @@
 package com.hiephoafarm.main.controllers;
 
+import com.hiephoafarm.main.models.OrdersE;
 import com.hiephoafarm.main.services.OrdersService;
 import com.hiephoafarm.main.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 @RequestMapping({"orders"})
@@ -50,6 +55,29 @@ public class OrdersController {
             default: modelMap.put("orders", ordersService.searchByName(keyword));
         }
         return "admin/orders";
+    }
+
+    @RequestMapping(value = {"report"} ,method = RequestMethod.GET)
+    public String report(@RequestParam(name = "from", required = false) String from,
+                         @RequestParam(name = "to", required = false) String to,
+                         ModelMap modelMap) {
+        if(from!=null && to!=null){
+            System.out.println("before:"+from);
+//            Format f = new SimpleDateFormat("dd/MM/yyyy");
+//            System.out.println("after:"+f.format(from));
+//            modelMap.put("from", f.format(from));
+//            modelMap.put("to", f.format(to));
+            List<OrdersE> orders = ordersService.findByTimeRange(from,to);
+            modelMap.put("orders", orders);
+            modelMap.put("orderCount", orders.size());
+            long totalAmount = 0;
+            for (OrdersE order : orders){
+                totalAmount+=order.getOrderAmount();
+            }
+            System.out.println("totalAmount:"+totalAmount);
+            modelMap.put("totalAmount", totalAmount);
+        }
+        return "admin/report";
     }
 
 }

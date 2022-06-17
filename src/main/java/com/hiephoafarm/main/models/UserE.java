@@ -1,6 +1,7 @@
 package com.hiephoafarm.main.models;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "user", schema = "hiephoafarm", catalog = "")
@@ -10,6 +11,8 @@ public class UserE {
    private String password;
    private String fullname;
    private String address;
+   private String email;
+   private Collection<OrdersE> ordersByIdUser;
    private RoleE roleByRoleId;
    private StatusE statusByStatusId;
 
@@ -18,6 +21,10 @@ public class UserE {
    @Column(name = "id_user", nullable = false)
    public int getIdUser() {
       return idUser;
+   }
+
+   public void setIdUser(Integer idUser) {
+      this.idUser = idUser;
    }
 
    public void setIdUser(int idUser) {
@@ -64,6 +71,16 @@ public class UserE {
       this.address = address;
    }
 
+   @Basic
+   @Column(name = "email", nullable = true, length = 50)
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
@@ -76,6 +93,7 @@ public class UserE {
       if (password != null ? !password.equals(userE.password) : userE.password != null) return false;
       if (fullname != null ? !fullname.equals(userE.fullname) : userE.fullname != null) return false;
       if (address != null ? !address.equals(userE.address) : userE.address != null) return false;
+      if (email != null ? !email.equals(userE.email) : userE.email != null) return false;
 
       return true;
    }
@@ -87,7 +105,17 @@ public class UserE {
       result = 31 * result + (password != null ? password.hashCode() : 0);
       result = 31 * result + (fullname != null ? fullname.hashCode() : 0);
       result = 31 * result + (address != null ? address.hashCode() : 0);
+      result = 31 * result + (email != null ? email.hashCode() : 0);
       return result;
+   }
+
+   @OneToMany(mappedBy = "userByUserId")
+   public Collection<OrdersE> getOrdersByIdUser() {
+      return ordersByIdUser;
+   }
+
+   public void setOrdersByIdUser(Collection<OrdersE> ordersByIdUser) {
+      this.ordersByIdUser = ordersByIdUser;
    }
 
    @ManyToOne

@@ -21,6 +21,7 @@ public class OrdersE {
     private Collection<OrderDetailE> orderDetailsByIdOrder;
     private UserE userByUserId;
     private StatusE statusByStatusId;
+    private String customerEmail;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -156,5 +157,15 @@ public class OrdersE {
 
     public void setStatusByStatusId(StatusE statusByStatusId) {
         this.statusByStatusId = statusByStatusId;
+    }
+
+    @Basic
+    @Column(name = "customer_email")
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 }

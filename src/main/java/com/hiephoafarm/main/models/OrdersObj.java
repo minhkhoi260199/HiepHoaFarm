@@ -18,10 +18,11 @@ public class OrdersObj {
     private Timestamp createdTime;
     private Integer userId;
     private int statusId;
+    private String customerEmail;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_order", nullable = false)
+    @Column(name = "id_order")
     public int getIdOrder() {
         return idOrder;
     }
@@ -31,7 +32,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "customer_phone", nullable = false, length = 10)
+    @Column(name = "customer_phone")
     public String getCustomerPhone() {
         return customerPhone;
     }
@@ -41,7 +42,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "customer_name", nullable = false, length = 45)
+    @Column(name = "customer_name")
     public String getCustomerName() {
         return customerName;
     }
@@ -51,7 +52,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "address", nullable = false, length = 150)
+    @Column(name = "address")
     public String getAddress() {
         return address;
     }
@@ -60,8 +61,19 @@ public class OrdersObj {
         this.address = address;
     }
 
+
     @Basic
-    @Column(name = "shipping_fee", nullable = false)
+    @Column(name = "customer_email")
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    @Basic
+    @Column(name = "shipping_fee")
     public int getShippingFee() {
         return shippingFee;
     }
@@ -71,7 +83,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "order_amount", nullable = false)
+    @Column(name = "order_amount")
     public int getOrderAmount() {
         return orderAmount;
     }
@@ -83,7 +95,7 @@ public class OrdersObj {
     @Basic
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ss:mm:HH dd/MM/yyyy")
-    @Column(name = "created_time", nullable = false)
+    @Column(name = "created_time")
     public Timestamp getCreatedTime() {
         return createdTime;
     }
@@ -103,7 +115,7 @@ public class OrdersObj {
     }
 
     @Basic
-    @Column(name = "status_id", nullable = false)
+    @Column(name = "status_id")
     public int getStatusId() {
         return statusId;
     }

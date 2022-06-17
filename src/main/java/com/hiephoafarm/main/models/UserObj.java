@@ -12,6 +12,7 @@ public class UserObj {
    private String fullname;
    private String address;
    private Integer statusId;
+   private String email;
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
@@ -84,6 +85,16 @@ public class UserObj {
       this.statusId = statusId;
    }
 
+   @Basic
+   @Column(name = "email", nullable = true, length = 50)
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
@@ -98,6 +109,7 @@ public class UserObj {
       if (fullname != null ? !fullname.equals(userObj.fullname) : userObj.fullname != null) return false;
       if (address != null ? !address.equals(userObj.address) : userObj.address != null) return false;
       if (statusId != null ? !statusId.equals(userObj.statusId) : userObj.statusId != null) return false;
+      if (email != null ? !email.equals(userObj.email) : userObj.email != null) return false;
 
       return true;
    }
@@ -111,6 +123,7 @@ public class UserObj {
       result = 31 * result + (fullname != null ? fullname.hashCode() : 0);
       result = 31 * result + (address != null ? address.hashCode() : 0);
       result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
+      result = 31 * result + (email != null ? email.hashCode() : 0);
       return result;
    }
 }

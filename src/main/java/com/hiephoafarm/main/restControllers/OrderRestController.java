@@ -7,9 +7,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,6 +21,8 @@ public class OrderRestController {
 
 	@Autowired
 	OrdersService ordersService;
+	@Autowired
+	JavaMailSender emailSender;
 
 	@RequestMapping(value = "index", method=RequestMethod.GET)
 	public String getDataList(){
@@ -42,11 +45,12 @@ public class OrderRestController {
 	@RequestMapping(value = "getOrderDetailByOrderId", method=RequestMethod.GET)
 	public ResponseEntity<?> getDetailByIdOrder(@RequestParam("id") int id){
 		try {
-			Format f = new SimpleDateFormat("ss:mm:hh dd/MM/yyyy");
+			Format f = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy");
 			OrdersE orderE = ordersService.findByIdOrder(id);
 			Map<String, Object> order = new HashMap<>();
 			order.put("customerName", orderE.getCustomerName());
 			order.put("customerPhone", orderE.getCustomerPhone());
+			order.put("email", orderE.getCustomerEmail());
 			order.put("address", orderE.getAddress());
 			order.put("orderAmout", orderE.getOrderAmount());
 			order.put("shippingFee", orderE.getShippingFee());
@@ -80,7 +84,7 @@ public class OrderRestController {
 	public ResponseEntity<?> getByUsername(@RequestParam("un") String username){
 		try {
 			List<OrdersE> orders = ordersService.searchByPhone(username);
-			Format f = new SimpleDateFormat("ss:mm:hh dd/MM/yyyy");
+			Format f = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy");
 			List<Map<String, Object>> results = new ArrayList<>();
 			for(OrdersE item : orders){
 				Map<String, Object> order = new HashMap<>();
@@ -155,7 +159,7 @@ public class OrderRestController {
 
 	@CrossOrigin
 	@RequestMapping(value="save", method = RequestMethod.POST)
-	public ResponseEntity<?> createProduct(@RequestBody String payload){
+	public ResponseEntity<?> createOrder(@RequestBody String payload){
 		try {
 			System.out.println(payload);
 			JSONObject obj = new JSONObject(payload);
@@ -163,6 +167,7 @@ public class OrderRestController {
 			OrdersObj order = new OrdersObj();
 			order.setCustomerName(obj.getString("customerName"));
 			order.setCustomerPhone(obj.getString("customerPhone"));
+			order.setCustomerEmail(obj.getString("customerEmail"));
 			order.setAddress(obj.getString("address"));
 			order.setShippingFee(obj.getInt("shippingFee"));
 			order.setOrderAmount(obj.getInt("orderAmount"));
@@ -183,8 +188,8 @@ public class OrderRestController {
 
 					items.add(item);
 				}
-
 				ordersService.saveAllOrderDetail(items);
+
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
@@ -194,6 +199,16 @@ public class OrderRestController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	public void sendEmail(String sendTo){
+		//sendEmail
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(sendTo);
+		message.setSubject("Test Simple Email");
+		message.setText("Hello, Im testing Simple Email");
+		// Send Message!
+		this.emailSender.send(message);
 	}
 
 

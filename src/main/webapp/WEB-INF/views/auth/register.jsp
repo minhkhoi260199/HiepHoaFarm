@@ -45,6 +45,12 @@
                                             class="au-input au-input--full" type="text" name="address"
                                             placeholder="Địa chỉ thường trú" path="address"/>
                                 </div>
+                                <div class="form-group">
+                                    <label>Email:</label> <s:errors path="email" style="color:red; font-style:italic"></s:errors>
+                                    <s:input
+                                            class="au-input au-input--full" type="email" name="email"
+                                            placeholder="linhfarm@gmail.com" path="email"/>
+                                </div>
 
                                 <button
                                         class="au-btn au-btn--block au-btn--green m-b-20" type="submit">

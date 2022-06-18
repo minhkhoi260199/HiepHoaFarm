@@ -9,8 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -193,7 +197,8 @@ public class OrderRestController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
-
+			//sendEmail
+			sendHTMLEmail(rep);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -211,5 +216,75 @@ public class OrderRestController {
 		this.emailSender.send(message);
 	}
 
+	@Async("threadPoolTaskExecutor")
+	public void sendHTMLEmail(OrdersObj order) throws MessagingException {
+		MimeMessage message = emailSender.createMimeMessage();
+
+		boolean multipart = true;
+		Format f = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		MimeMessageHelper helper = new MimeMessageHelper(message, multipart, "UTF-8");
+
+		String htmlMsg = "<div colspan=\"2\" style=\"padding:30px;background:#fff;\">\n" +
+				"        <table style=\"background-color:#fff;margin: auto;\" width=\"80%\">\n" +
+				"            <tbody>\n" +
+				"                <tr>\n" +
+				"                    <td style=\"font-size:22px;line-height:24px;font-weight:bold;padding-bottom:10px;color:#212529;text-align:center\">\n" +
+				"                    <img src=\"https://minhkhoi260199.github.io/img/linh_logo.png\" alt=\"linhFarm_logo\" style=\"width:70px;height:70px;margin-bottom:20px;\">\n" +
+				"                    <div>HÓA ĐƠN ĐIỆN TỬ</div>\n" +
+				"                    <div style=\"font-size:18px;color:#6d6d72;font-weight:normal;font-style:italic\">(Linh Farm - Hotline: 0376.052.775)</div>\n" +
+				"                    </td>\n" +
+				"                </tr>\n" +
+				"                <tr>\n" +
+				"                    <td style=\"color:#212529\">\n" +
+				"                    <table cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:100%;width:100%;border-right:1px solid #ccc;border-top:1px solid #ccc\" width=\"100%\">\n" +
+				"                        <tbody>\n" +
+				"                            <tr>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\" width=\"210\"><b>Ngày, giờ:</b>\n" +
+				"                                <div style=\"color:#6d6d72;font-size:13px\"><i>Trans. Date, Time</i></div>\n" +
+				"                                </td>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\">"+f.format(order.getCreatedTime())+"</td>\n" +
+				"                            </tr>\n" +
+				"                            <tr>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\" width=\"210\"><b>Người đặt:</b>\n" +
+				"                                <div style=\"color:#6d6d72;font-size:13px\"><i>Fullname</i></div>\n" +
+				"                                </td>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\">"+order.getCustomerName()+"</td>\n" +
+				"                            </tr>\n" +
+				"                            <tr>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\" width=\"210\"><b>Số điện thoại:</b>\n" +
+				"                                <div style=\"color:#6d6d72;font-size:13px\"><i>Phone</i></div>\n" +
+				"                                </td>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\">"+order.getCustomerPhone()+"</td>\n" +
+				"                            </tr>\n" +
+				"                            <tr>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\" width=\"210\"><b>Địa chỉ giao hàng:</b>\n" +
+				"                                <div style=\"color:#6d6d72;font-size:13px\"><i>Address</i></div>\n" +
+				"                                </td>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\">"+order.getAddress()+"</td>\n" +
+				"                            </tr>\n" +
+				"                            <tr>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\" width=\"210\"><b>Tổng hóa đơn:</b>\n" +
+				"                                <div style=\"color:#6d6d72;font-size:13px\"><i>Total</i></div>\n" +
+				"                                </td>\n" +
+				"                                <td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:6px 10px\">"+order.getOrderAmount()+" VND</td>\n" +
+				"                            </tr>\n" +
+				"                        </tbody>\n" +
+				"                    </table>\n" +
+				"                    </td>\n" +
+				"                </tr>\n" +
+				"            </tbody>\n" +
+				"        </table>\n" +
+				"        </div>";
+
+		String a = "";
+		message.setContent(htmlMsg, "text/html");
+
+		helper.setTo(order.getCustomerEmail());
+
+		helper.setSubject("LINH FARM - Đặt hàng thành công !");
+
+
+		this.emailSender.send(message);
+	}
 
 }

@@ -24,6 +24,8 @@ public class MailConfig {
       props.put("mail.smtp.auth", "true");
       props.put("mail.smtp.starttls.enable", "true");
       props.put("mail.debug", "true");
+      props.setProperty("mail.smtp.allow8bitmime", "true");
+      props.setProperty("mail.smtps.allow8bitmime", "true");
 
       return mailSender;
    }

@@ -4,6 +4,8 @@ import com.hiephoafarm.main.models.OrdersE;
 import com.hiephoafarm.main.services.OrdersService;
 import com.hiephoafarm.main.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +44,16 @@ public class OrdersController {
     }
 
     @RequestMapping(value = {"orders"} ,method = RequestMethod.GET)
-    public String orders(ModelMap modelMap) {
-        modelMap.put("orders", ordersService.findAllOrder());
+    public String orders(ModelMap modelMap,
+                         @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+                         @RequestParam(name = "size", required = false, defaultValue = "10") Integer size) {
+        modelMap.put("countOrders", ordersService.countAll());
+//        Sort sortable = Sort.by("id_product").descending();
+        Pageable pageable = PageRequest.of(page-1, size);
+        modelMap.put("orders", ordersService.findAllPaging(pageable).toList());
+        modelMap.put("setCurrentPage", page);
+//        modelMap.put("products", productService.findAll());
+//        modelMap.put("orders", ordersService.findAllOrder());
         return "admin/orders";
     }
 

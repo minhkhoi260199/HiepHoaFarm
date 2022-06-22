@@ -1,6 +1,9 @@
 package com.hiephoafarm.main.repositories;
 
 import com.hiephoafarm.main.models.OrdersE;
+import com.hiephoafarm.main.models.ProductE;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +16,8 @@ import java.util.List;
 public interface OrdersRepos extends JpaRepository<OrdersE, Integer> {
     @Query(nativeQuery = true, value = "select * from orders order by id_order DESC")
     public List<OrdersE> findAllOrder ();
+    @Query(nativeQuery = true, value = "select * from orders order by id_order DESC")
+    public Page<OrdersE> findAllPaging(Pageable pageable);
     @Query(nativeQuery = true, value = "select * from orders where customer_phone = :phonenumber order by id_order DESC")
     public List<OrdersE> searchOrderByPhone (@Param("phonenumber") String phonenumber);
     @Query(nativeQuery = true, value = "select * from orders where customer_name like %:name% order by id_order DESC")

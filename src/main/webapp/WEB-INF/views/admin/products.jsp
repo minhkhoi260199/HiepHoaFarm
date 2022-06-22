@@ -225,14 +225,16 @@
                 visiblePages: 5
             });
             // Load table
+            pagination.movePageTo(${setCurrentPage});
             pagination.on('afterMove', (event) => {
                 const currentPage = event.page;
                 console.log(currentPage);
-                <%--let datas = {--%>
-                <%--    "page" : currentPage,--%>
-                <%--    "size" : 5,--%>
-                <%--    "sort" : "DESC",--%>
-                <%--}--%>
+                let datas = {
+                    "page" : currentPage,
+                    "size" : 5,
+                    "sort" : "DESC",
+                }
+                $(location).attr('href','product?page='+datas.page+'&size='+datas.size);
                 <%--$.ajax({--%>
                 <%--    url: "${pageContext.request.contextPath }/api/product/load",--%>
                 <%--    method: "GET",--%>

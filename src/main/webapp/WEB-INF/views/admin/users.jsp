@@ -182,7 +182,7 @@
                     console.log(err);
                 });
             }
-            $("#searchBy").html("<option>username</option>");
+            $("#searchBy").html("<option>phone</option>");
             $("#submitSearch").on('click',()=>{
                 let searchBy = $("#searchBy").find(":selected").text();
                 let keyword = $("#searchKeyword").val();

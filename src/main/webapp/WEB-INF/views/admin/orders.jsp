@@ -80,6 +80,9 @@
                             </c:if>
                         </div>
                     </div>
+                    <!-- Pagination-->
+                    <div id="pagination" class="tui-pagination"></div>
+                    <!-- End Pagination-->
                 </div>
             </div>
         </div>
@@ -124,6 +127,25 @@
 
         <!-- Logic -->
         <script type="text/javascript">
+            // Pagination
+            const pagination = new tui.Pagination('pagination', {
+                totalItems: ${countOrders},
+                itemsPerPage: 10,
+                visiblePages: 5
+            });
+            // Load table
+            pagination.movePageTo(${setCurrentPage});
+            pagination.on('afterMove', (event) => {
+                const currentPage = event.page;
+                console.log(currentPage);
+                let datas = {
+                    "page" : currentPage,
+                    "size" : 10,
+                    "sort" : "DESC",
+                }
+                $(location).attr('href','orders?page='+datas.page+'&size='+datas.size);
+
+            });
             $("#searchBy").html("<option>name</option><option>phone</option>");
             function orderDetail(idOrder, amount){
                 $('#scrollmodal'+idOrder).modal('show');

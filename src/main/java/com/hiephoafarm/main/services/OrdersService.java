@@ -1,14 +1,13 @@
 package com.hiephoafarm.main.services;
 
-import com.hiephoafarm.main.models.OrderDetailE;
-import com.hiephoafarm.main.models.OrderDetailObj;
-import com.hiephoafarm.main.models.OrdersE;
-import com.hiephoafarm.main.models.OrdersObj;
+import com.hiephoafarm.main.models.*;
 import com.hiephoafarm.main.repositories.OrderDetailObjRepos;
 import com.hiephoafarm.main.repositories.OrderDetailRepos;
 import com.hiephoafarm.main.repositories.OrdersObjRepos;
 import com.hiephoafarm.main.repositories.OrdersRepos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +24,9 @@ public class OrdersService {
     @Autowired
     OrderDetailRepos orderDetailRepos;
 
+    public long countAll(){return ordersRepos.count();}
     public List<OrdersE> findAllOrder(){return ordersRepos.findAllOrder();}
+    public Page<OrdersE> findAllPaging(Pageable pageable) { return ordersRepos.findAllPaging(pageable);}
     public OrdersE findByIdOrder(int id){return ordersRepos.findByIdOrder(id);}
 
     public List<OrdersE> searchByPhone(String phonenumber){return ordersRepos.searchOrderByPhone(phonenumber);}

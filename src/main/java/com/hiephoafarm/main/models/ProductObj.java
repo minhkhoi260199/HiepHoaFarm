@@ -1,6 +1,10 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +17,7 @@ public class ProductObj {
     private Integer categoryId;
     private String saleUnit;
     private Integer statusId;
+   private Timestamp createdTime;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -97,4 +102,16 @@ public class ProductObj {
     public int hashCode() {
         return Objects.hash(idProduct, productName, description, productPrice, categoryId, saleUnit, statusId);
     }
+
+   @Basic
+   @CreationTimestamp
+   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ss:mm:HH dd/MM/yyyy")
+   @Column(name = "created_time")
+   public Timestamp getCreatedTime() {
+      return createdTime;
+   }
+
+   public void setCreatedTime(Timestamp createdTime) {
+      this.createdTime = createdTime;
+   }
 }

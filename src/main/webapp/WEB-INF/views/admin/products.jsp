@@ -34,6 +34,7 @@
                                         <th>Danh mục</th>
                                         <th>Giá</th>
                                         <th>Đơn vị</th>
+                                        <th>Ngày tạo</th>
                                         <th>Trạng thái</th>
                                         <th>Đổi</th>
                                         <th>Xoá</th>
@@ -49,7 +50,8 @@
                                                 "productPrice" : "${product.productPrice}",
                                                 "saleUnit" : "${product.saleUnit}",
                                                 "description" : "${product.description}",
-                                                "statusId" : "${product.statusByStatusId.idStatus}"
+                                                "statusId" : "${product.statusByStatusId.idStatus}",
+                                                "createdTime" : "${product.createdTime}"
                                             }
                                         </script>
                                     <tr>
@@ -74,6 +76,7 @@
                                         <td>${product.categoryByCategoryId.categoryName}</td>
                                         <td>${product.productPrice}</td>
                                         <td>${product.saleUnit}</td>
+                                        <td>${product.createdTime}</td>
                                         <c:if test="${product.statusByStatusId.idStatus == 1 }">
                                         <td class="process" id="statusName${product.idProduct}">${product.statusByStatusId.statusNameVie}</td>
                                         <td>

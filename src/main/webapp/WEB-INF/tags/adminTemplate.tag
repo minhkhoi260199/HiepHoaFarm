@@ -78,16 +78,17 @@
                             <a href="${pageContext.request.contextPath }/orders/report">
                                 <i class="fa fa-table"></i>Thống kê</a>
                         </li>
+                    </security:authorize>
                         <hr style="border: 1px solid red;"/>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fa fa-th"></i>Quản lí kho</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="${pageContext.request.contextPath }/admin/product">Về sản phẩm</a>
+                                    <a href="${pageContext.request.contextPath }/product/infos">Về sản phẩm</a>
                                 </li>
                                 <li>
-                                    <a href="${pageContext.request.contextPath }/admin/category">Về danh mục</a>
+                                    <a href="${pageContext.request.contextPath }/product/category">Về danh mục</a>
                                 </li>
                             </ul>
                         </li>
@@ -106,7 +107,6 @@
                                 </li>
                             </ul>
                         </li>
-                    </security:authorize>
 
                 </ul>
             </nav>

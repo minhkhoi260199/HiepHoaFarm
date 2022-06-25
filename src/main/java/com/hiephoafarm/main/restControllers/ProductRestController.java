@@ -1,12 +1,12 @@
 package com.hiephoafarm.main.restControllers;
 
 import com.hiephoafarm.main.helper.UploadHelper;
-import com.hiephoafarm.main.models.GalleryObj;
-import com.hiephoafarm.main.models.ProductE;
-import com.hiephoafarm.main.models.ProductObj;
+import com.hiephoafarm.main.models.*;
 import com.hiephoafarm.main.services.GalleryService;
 import com.hiephoafarm.main.services.ProductService;
+import com.hiephoafarm.main.services.ReviewService;
 import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/product")
@@ -25,6 +27,8 @@ public class ProductRestController {
 	ProductService productService;
 	@Autowired
 	GalleryService galleryService;
+	@Autowired
+	ReviewService reviewService;
 //	private ServletContext servletContext;
 
 	@RequestMapping(value = "index", method=RequestMethod.GET)
@@ -32,7 +36,41 @@ public class ProductRestController {
 			return "Hello JavaSolutionsGuide Readers";
 	}
 
-//	@CrossOrigin(origins = "http://
+	@CrossOrigin
+	@RequestMapping(value="saveReview", method = RequestMethod.POST)
+	public ResponseEntity<?> saveReviews(@RequestBody String payload){
+		try {
+			JSONObject obj = new JSONObject(payload);
+			ReviewObj review = new ReviewObj();
+			review.setContent(obj.getString("content"));
+			review.setProductId(obj.getInt("productId"));
+			review.setUserId(obj.getInt("userId"));
+
+			ReviewObj result = reviewService.save(review);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(value="getProductReviews", method = RequestMethod.GET)
+	public ResponseEntity<?> GetReviews(@RequestParam int id){
+		try {
+			Map<String, Object> result = new HashMap<>();
+			ProductE product = productService.findById(id);
+			result.put("product", product);
+			List<ReviewE> reviews = reviewService.getProductReviews(id);
+			result.put("countReview", reviews.size());
+			result.put("reviews", reviews);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@CrossOrigin
 	@RequestMapping(value="getItems", method = RequestMethod.GET)
 	public ResponseEntity<?> getItems(){

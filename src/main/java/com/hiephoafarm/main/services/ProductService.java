@@ -22,6 +22,7 @@ public class ProductService {
     public List<ProductE> findAll(){
         return productRepos.findAllAdmin();
     }
+    public ProductE findById(int id){ return productRepos.findById(id);}
     public List<ProductE> findAllEnabled() { return productRepos.findAllEnabled();}
     public Page<ProductE> findAllAdminPaging(Pageable pageable) { return productRepos.findAllAdminPaging(pageable);}
     public List<ProductE> findByCate(int id) { return productRepos.searchByCate(id);}

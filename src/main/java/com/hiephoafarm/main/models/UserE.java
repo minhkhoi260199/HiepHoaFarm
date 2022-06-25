@@ -1,33 +1,33 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Table(name = "user", schema = "hiephoafarm", catalog = "")
 public class UserE {
-   private int idUser;
+   private Integer idUser;
    private String username;
    private String password;
    private String fullname;
    private String address;
    private String email;
    private Collection<OrdersE> ordersByIdUser;
+   private Collection<ReviewE> reviewsByIdUser;
    private RoleE roleByRoleId;
    private StatusE statusByStatusId;
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    @Column(name = "id_user", nullable = false)
-   public int getIdUser() {
+   public Integer getIdUser() {
       return idUser;
    }
 
    public void setIdUser(Integer idUser) {
-      this.idUser = idUser;
-   }
-
-   public void setIdUser(int idUser) {
       this.idUser = idUser;
    }
 
@@ -88,7 +88,7 @@ public class UserE {
 
       UserE userE = (UserE) o;
 
-      if (idUser != userE.idUser) return false;
+      if (idUser != null ? !idUser.equals(userE.idUser) : userE.idUser != null) return false;
       if (username != null ? !username.equals(userE.username) : userE.username != null) return false;
       if (password != null ? !password.equals(userE.password) : userE.password != null) return false;
       if (fullname != null ? !fullname.equals(userE.fullname) : userE.fullname != null) return false;
@@ -100,7 +100,7 @@ public class UserE {
 
    @Override
    public int hashCode() {
-      int result = idUser;
+      int result = idUser != null ? idUser.hashCode() : 0;
       result = 31 * result + (username != null ? username.hashCode() : 0);
       result = 31 * result + (password != null ? password.hashCode() : 0);
       result = 31 * result + (fullname != null ? fullname.hashCode() : 0);
@@ -109,6 +109,7 @@ public class UserE {
       return result;
    }
 
+   @JsonBackReference
    @OneToMany(mappedBy = "userByUserId")
    public Collection<OrdersE> getOrdersByIdUser() {
       return ordersByIdUser;
@@ -118,6 +119,17 @@ public class UserE {
       this.ordersByIdUser = ordersByIdUser;
    }
 
+   @JsonBackReference
+   @OneToMany(mappedBy = "userByUserId")
+   public Collection<ReviewE> getReviewsByIdUser() {
+      return reviewsByIdUser;
+   }
+
+   public void setReviewsByIdUser(Collection<ReviewE> reviewsByIdUser) {
+      this.reviewsByIdUser = reviewsByIdUser;
+   }
+
+   @JsonManagedReference
    @ManyToOne
    @JoinColumn(name = "role_id", referencedColumnName = "id_role", nullable = false)
    public RoleE getRoleByRoleId() {
@@ -128,6 +140,7 @@ public class UserE {
       this.roleByRoleId = roleByRoleId;
    }
 
+   @JsonManagedReference
    @ManyToOne
    @JoinColumn(name = "status_id", referencedColumnName = "id_status")
    public StatusE getStatusByStatusId() {

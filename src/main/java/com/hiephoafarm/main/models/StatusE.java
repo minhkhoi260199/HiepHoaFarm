@@ -1,22 +1,28 @@
 package com.hiephoafarm.main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "status", schema = "hiephoafarm", catalog = "")
 public class StatusE {
-   private int idStatus;
+   private Integer idStatus;
    private String statusName;
    private String statusNameVie;
+   private Collection<OrdersE> ordersByIdStatus;
+   private Collection<ProductE> productsByIdStatus;
+   private Collection<UserE> usersByIdStatus;
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    @Column(name = "id_status", nullable = false)
-   public int getIdStatus() {
+   public Integer getIdStatus() {
       return idStatus;
    }
 
-   public void setIdStatus(int idStatus) {
+   public void setIdStatus(Integer idStatus) {
       this.idStatus = idStatus;
    }
 
@@ -47,7 +53,7 @@ public class StatusE {
 
       StatusE statusE = (StatusE) o;
 
-      if (idStatus != statusE.idStatus) return false;
+      if (idStatus != null ? !idStatus.equals(statusE.idStatus) : statusE.idStatus != null) return false;
       if (statusName != null ? !statusName.equals(statusE.statusName) : statusE.statusName != null) return false;
       if (statusNameVie != null ? !statusNameVie.equals(statusE.statusNameVie) : statusE.statusNameVie != null)
          return false;
@@ -57,9 +63,39 @@ public class StatusE {
 
    @Override
    public int hashCode() {
-      int result = idStatus;
+      int result = idStatus != null ? idStatus.hashCode() : 0;
       result = 31 * result + (statusName != null ? statusName.hashCode() : 0);
       result = 31 * result + (statusNameVie != null ? statusNameVie.hashCode() : 0);
       return result;
+   }
+
+   @JsonBackReference
+   @OneToMany(mappedBy = "statusByStatusId")
+   public Collection<OrdersE> getOrdersByIdStatus() {
+      return ordersByIdStatus;
+   }
+
+   public void setOrdersByIdStatus(Collection<OrdersE> ordersByIdStatus) {
+      this.ordersByIdStatus = ordersByIdStatus;
+   }
+
+   @JsonBackReference
+   @OneToMany(mappedBy = "statusByStatusId")
+   public Collection<ProductE> getProductsByIdStatus() {
+      return productsByIdStatus;
+   }
+
+   public void setProductsByIdStatus(Collection<ProductE> productsByIdStatus) {
+      this.productsByIdStatus = productsByIdStatus;
+   }
+
+   @JsonBackReference
+   @OneToMany(mappedBy = "statusByStatusId")
+   public Collection<UserE> getUsersByIdStatus() {
+      return usersByIdStatus;
+   }
+
+   public void setUsersByIdStatus(Collection<UserE> usersByIdStatus) {
+      this.usersByIdStatus = usersByIdStatus;
    }
 }

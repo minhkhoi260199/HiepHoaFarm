@@ -1,7 +1,6 @@
 package com.hiephoafarm.main.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -11,161 +10,163 @@ import java.util.Collection;
 @Entity
 @Table(name = "orders", schema = "hiephoafarm", catalog = "")
 public class OrdersE {
-    private int idOrder;
-    private String customerPhone;
-    private String customerName;
-    private String address;
-    private int shippingFee;
-    private int orderAmount;
-    private Timestamp createdTime;
-    private Collection<OrderDetailE> orderDetailsByIdOrder;
-    private UserE userByUserId;
-    private StatusE statusByStatusId;
-    private String customerEmail;
+   private Integer idOrder;
+   private String customerPhone;
+   private String customerName;
+   private String address;
+   private Integer shippingFee;
+   private Integer orderAmount;
+   private Timestamp createdTime;
+   private String customerEmail;
+   private Collection<OrderDetailE> orderDetailsByIdOrder;
+   private UserE userByUserId;
+   private StatusE statusByStatusId;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id_order")
-    public int getIdOrder() {
-        return idOrder;
-    }
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   @Column(name = "id_order", nullable = false)
+   public Integer getIdOrder() {
+      return idOrder;
+   }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
-    }
+   public void setIdOrder(Integer idOrder) {
+      this.idOrder = idOrder;
+   }
 
-    @Basic
-    @Column(name = "customer_phone")
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
+   @Basic
+   @Column(name = "customer_phone", nullable = true, length = 11)
+   public String getCustomerPhone() {
+      return customerPhone;
+   }
 
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
-    }
+   public void setCustomerPhone(String customerPhone) {
+      this.customerPhone = customerPhone;
+   }
 
-    @Basic
-    @Column(name = "customer_name")
-    public String getCustomerName() {
-        return customerName;
-    }
+   @Basic
+   @Column(name = "customer_name", nullable = true, length = 45)
+   public String getCustomerName() {
+      return customerName;
+   }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+   public void setCustomerName(String customerName) {
+      this.customerName = customerName;
+   }
 
-    @Basic
-    @Column(name = "address")
-    public String getAddress() {
-        return address;
-    }
+   @Basic
+   @Column(name = "address", nullable = true, length = 150)
+   public String getAddress() {
+      return address;
+   }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+   public void setAddress(String address) {
+      this.address = address;
+   }
 
-    @Basic
-    @Column(name = "shipping_fee")
-    public int getShippingFee() {
-        return shippingFee;
-    }
+   @Basic
+   @Column(name = "shipping_fee", nullable = false)
+   public Integer getShippingFee() {
+      return shippingFee;
+   }
 
-    public void setShippingFee(int shippingFee) {
-        this.shippingFee = shippingFee;
-    }
+   public void setShippingFee(Integer shippingFee) {
+      this.shippingFee = shippingFee;
+   }
 
-    @Basic
-    @Column(name = "order_amount")
-    public int getOrderAmount() {
-        return orderAmount;
-    }
+   @Basic
+   @Column(name = "order_amount", nullable = true)
+   public Integer getOrderAmount() {
+      return orderAmount;
+   }
 
-    public void setOrderAmount(int orderAmount) {
-        this.orderAmount = orderAmount;
-    }
+   public void setOrderAmount(Integer orderAmount) {
+      this.orderAmount = orderAmount;
+   }
 
-    @Basic
-    @Column(name = "created_time")
-    @JsonFormat(pattern = "ss:mm:HH dd/MM/yyyy")
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
+   @Basic
+   @Column(name = "created_time", nullable = false)
+   public Timestamp getCreatedTime() {
+      return createdTime;
+   }
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
+   public void setCreatedTime(Timestamp createdTime) {
+      this.createdTime = createdTime;
+   }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+   @Basic
+   @Column(name = "customer_email", nullable = true, length = 50)
+   public String getCustomerEmail() {
+      return customerEmail;
+   }
 
-        OrdersE ordersE = (OrdersE) o;
+   public void setCustomerEmail(String customerEmail) {
+      this.customerEmail = customerEmail;
+   }
 
-        if (idOrder != ordersE.idOrder) return false;
-        if (shippingFee != ordersE.shippingFee) return false;
-        if (orderAmount != ordersE.orderAmount) return false;
-        if (customerPhone != null ? !customerPhone.equals(ordersE.customerPhone) : ordersE.customerPhone != null)
-            return false;
-        if (customerName != null ? !customerName.equals(ordersE.customerName) : ordersE.customerName != null)
-            return false;
-        if (address != null ? !address.equals(ordersE.address) : ordersE.address != null) return false;
-        if (createdTime != null ? !createdTime.equals(ordersE.createdTime) : ordersE.createdTime != null) return false;
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
 
-        return true;
-    }
+      OrdersE ordersE = (OrdersE) o;
 
-    @Override
-    public int hashCode() {
-        int result = idOrder;
-        result = 31 * result + (customerPhone != null ? customerPhone.hashCode() : 0);
-        result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + shippingFee;
-        result = 31 * result + orderAmount;
-        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-        return result;
-    }
+      if (idOrder != null ? !idOrder.equals(ordersE.idOrder) : ordersE.idOrder != null) return false;
+      if (customerPhone != null ? !customerPhone.equals(ordersE.customerPhone) : ordersE.customerPhone != null)
+         return false;
+      if (customerName != null ? !customerName.equals(ordersE.customerName) : ordersE.customerName != null)
+         return false;
+      if (address != null ? !address.equals(ordersE.address) : ordersE.address != null) return false;
+      if (shippingFee != null ? !shippingFee.equals(ordersE.shippingFee) : ordersE.shippingFee != null) return false;
+      if (orderAmount != null ? !orderAmount.equals(ordersE.orderAmount) : ordersE.orderAmount != null) return false;
+      if (createdTime != null ? !createdTime.equals(ordersE.createdTime) : ordersE.createdTime != null) return false;
+      if (customerEmail != null ? !customerEmail.equals(ordersE.customerEmail) : ordersE.customerEmail != null)
+         return false;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "ordersByOrderId")
-    public Collection<OrderDetailE> getOrderDetailsByIdOrder() {
-        return orderDetailsByIdOrder;
-    }
+      return true;
+   }
 
-    public void setOrderDetailsByIdOrder(Collection<OrderDetailE> orderDetailsByIdOrder) {
-        this.orderDetailsByIdOrder = orderDetailsByIdOrder;
-    }
+   @Override
+   public int hashCode() {
+      int result = idOrder != null ? idOrder.hashCode() : 0;
+      result = 31 * result + (customerPhone != null ? customerPhone.hashCode() : 0);
+      result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
+      result = 31 * result + (address != null ? address.hashCode() : 0);
+      result = 31 * result + (shippingFee != null ? shippingFee.hashCode() : 0);
+      result = 31 * result + (orderAmount != null ? orderAmount.hashCode() : 0);
+      result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
+      result = 31 * result + (customerEmail != null ? customerEmail.hashCode() : 0);
+      return result;
+   }
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id_user", nullable = false)
-    public UserE getUserByUserId() {
-        return userByUserId;
-    }
+   @JsonManagedReference
+   @OneToMany(mappedBy = "ordersByOrderId")
+   public Collection<OrderDetailE> getOrderDetailsByIdOrder() {
+      return orderDetailsByIdOrder;
+   }
 
-    public void setUserByUserId(UserE userByUserId) {
-        this.userByUserId = userByUserId;
-    }
+   public void setOrderDetailsByIdOrder(Collection<OrderDetailE> orderDetailsByIdOrder) {
+      this.orderDetailsByIdOrder = orderDetailsByIdOrder;
+   }
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id_status", nullable = false)
-    public StatusE getStatusByStatusId() {
-        return statusByStatusId;
-    }
+   @JsonManagedReference
+   @ManyToOne
+   @JoinColumn(name = "user_id", referencedColumnName = "id_user")
+   public UserE getUserByUserId() {
+      return userByUserId;
+   }
 
-    public void setStatusByStatusId(StatusE statusByStatusId) {
-        this.statusByStatusId = statusByStatusId;
-    }
+   public void setUserByUserId(UserE userByUserId) {
+      this.userByUserId = userByUserId;
+   }
 
-    @Basic
-    @Column(name = "customer_email")
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
+   @JsonManagedReference
+   @ManyToOne
+   @JoinColumn(name = "status_id", referencedColumnName = "id_status")
+   public StatusE getStatusByStatusId() {
+      return statusByStatusId;
+   }
 
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
+   public void setStatusByStatusId(StatusE statusByStatusId) {
+      this.statusByStatusId = statusByStatusId;
+   }
 }

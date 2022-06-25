@@ -1,7 +1,6 @@
 package com.hiephoafarm.main.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -29,7 +28,6 @@ public class ReviewE {
 
    @Basic
    @Column(name = "created_time", nullable = true)
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ss:mm:HH dd/MM/yyyy")
    public Timestamp getCreatedTime() {
       return createdTime;
    }
@@ -69,18 +67,6 @@ public class ReviewE {
       result = 31 * result + (content != null ? content.hashCode() : 0);
       return result;
    }
-
-   @Override
-   public String toString() {
-      return "ReviewE{" +
-              "id=" + id +
-              ", createdTime=" + createdTime +
-              ", content='" + content + '\'' +
-              ", userByUserId=" + userByUserId +
-              ", productByProductId=" + productByProductId +
-              '}';
-   }
-
    @JsonManagedReference
    @ManyToOne
    @JoinColumn(name = "user_id", referencedColumnName = "id_user")

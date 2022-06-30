@@ -35,4 +35,7 @@ public class CategoryService {
     public List<CategoryView> findAll4view(){
         return categoryViewRepos.findAll();
     }
+    public List<CategoryView> searchByCategoryName(String key){
+        return categoryViewRepos.searchByName(key);
+    }
 }

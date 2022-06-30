@@ -204,6 +204,17 @@
                     });
                 }
             }
+            $("#searchBy").html("<option>name</option>");
+            $("#submitSearch").on('click',()=>{
+                let searchBy = $("#searchBy").find(":selected").text();
+                let keyword = $("#searchKeyword").val();
+
+                $(location).attr('href','searchCategory?searchBy='+searchBy+'&keyword='+keyword);
+
+                console.log("search ERROR");
+                console.log("searchBy: "+searchBy);
+                console.log("keyword: "+keyword);
+            });
         </script>
 	</jsp:attribute>
 </tmp:adminTemplate>

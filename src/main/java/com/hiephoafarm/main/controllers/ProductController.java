@@ -49,6 +49,11 @@ public class ProductController {
         modelMap.put("categories", categoryService.findAll4view());
         return "admin/categories";
     }
+    @RequestMapping(value = {"searchCategory"} ,method = RequestMethod.GET)
+    public String searchCategory(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
+        modelMap.put("categories", categoryService.searchByCategoryName(keyword));
+        return "admin/categories";
+    }
     @RequestMapping(value = {"about"} ,method = RequestMethod.GET)
     public String about() {
         return "admin/comingSoon";

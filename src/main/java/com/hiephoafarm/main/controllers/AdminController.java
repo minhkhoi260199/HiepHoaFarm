@@ -1,9 +1,6 @@
 package com.hiephoafarm.main.controllers;
 
-import com.hiephoafarm.main.services.CategoryService;
-import com.hiephoafarm.main.services.OrdersService;
-import com.hiephoafarm.main.services.ProductService;
-import com.hiephoafarm.main.services.UserService;
+import com.hiephoafarm.main.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +23,8 @@ public class AdminController {
     ProductService productService;
     @Autowired
     UserService userService;
+    @Autowired
+    ContactService contactService;
 
     @RequestMapping(value = {"searchProducts"} ,method = RequestMethod.GET)
     public String searchProducts(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
@@ -72,13 +71,23 @@ public class AdminController {
         modelMap.put("categories", categoryService.findAll4view());
         return "admin/categories";
     }
+    @RequestMapping(value = {"searchCategory"} ,method = RequestMethod.GET)
+    public String searchCategory(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
+        modelMap.put("categories", categoryService.searchByCategoryName(keyword));
+        return "admin/categories";
+    }
+    @RequestMapping(value = {"contact"} ,method = RequestMethod.GET)
+    public String contact(ModelMap modelMap) {
+        modelMap.put("contacts", contactService.getContacts());
+        return "admin/contact";
+    }
+    @RequestMapping(value = {"searchContact"} ,method = RequestMethod.GET)
+    public String searchContact(@RequestParam String searchBy, @RequestParam String keyword, ModelMap modelMap) {
+        modelMap.put("contacts", contactService.search(keyword));
+        return "admin/contact";
+    }
     @RequestMapping(value = {"about"} ,method = RequestMethod.GET)
     public String about() {
-        return "admin/comingSoon";
-    }
-
-    @RequestMapping(value = {"contact"} ,method = RequestMethod.GET)
-    public String contact() {
         return "admin/comingSoon";
     }
 

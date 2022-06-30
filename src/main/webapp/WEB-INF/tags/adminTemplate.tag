@@ -78,6 +78,9 @@
                             <a href="${pageContext.request.contextPath }/orders/report">
                                 <i class="fa fa-table"></i>Thống kê</a>
                         </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath }/admin/contact"><i class="fa fa-info"></i>Phản hồi</a>
+                                </li>
                     </security:authorize>
                         <hr style="border: 1px solid red;"/>
                         <li class="has-sub">
@@ -101,9 +104,6 @@
                                 </li>
                                 <li>
                                     <a href="${pageContext.request.contextPath }/admin/about">Trang giới thiệu</a>
-                                </li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath }/admin/contact">Về doanh nghiệp</a>
                                 </li>
                             </ul>
                         </li>

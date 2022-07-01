@@ -237,7 +237,7 @@
                     "size" : 5,
                     "sort" : "DESC",
                 }
-                $(location).attr('href','product?page='+datas.page+'&size='+datas.size);
+                $(location).attr('href','infos?page='+datas.page+'&size='+datas.size);
                 <%--$.ajax({--%>
                 <%--    url: "${pageContext.request.contextPath }/api/product/load",--%>
                 <%--    method: "GET",--%>

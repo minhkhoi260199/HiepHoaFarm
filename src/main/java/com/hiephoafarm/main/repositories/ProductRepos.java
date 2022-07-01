@@ -29,5 +29,8 @@ public interface ProductRepos extends JpaRepository<ProductE, Integer> {
    @Modifying
    @Query(nativeQuery = true, value = "update product set status_id = 8 where id_product = :id ")
    public void deleteLogicById(@Param("id") int id);
+   @Modifying
+   @Query(nativeQuery = true, value = "update product set status_id = :status where id_product = :id ")
+   public void setStatus(@Param("id") int id,@Param("status") int status);
 
 }

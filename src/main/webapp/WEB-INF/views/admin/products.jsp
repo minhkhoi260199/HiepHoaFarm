@@ -584,7 +584,7 @@
                         let button = '#statusButton'+product.idProduct;
                         let label = '#statusName'+product.idProduct;
                         $.ajax({
-                            url: "${pageContext.request.contextPath }/api/product/save",
+                            url: "${pageContext.request.contextPath }/api/product/setStatus?id="+product.idProduct+"&status="+product.statusId,
                             method: "POST",
                             data: JSON.stringify(product),
                             contentType: "application/json",

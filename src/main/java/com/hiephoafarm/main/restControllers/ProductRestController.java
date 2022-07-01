@@ -110,8 +110,16 @@ public class ProductRestController {
 	@RequestMapping(value="save", method = RequestMethod.POST)
 	public ResponseEntity<?> createProduct(@Validated @RequestBody ProductObj product){
 		try {
-			ProductObj flag = productService.save(product);
-			return new ResponseEntity<>(flag, HttpStatus.OK);
+			if(product.getIdProduct()==null){
+				ProductObj flag = productService.save(product);
+				return new ResponseEntity<>(flag, HttpStatus.OK);
+			} else {
+				ProductE flag = productService.findById(product.getIdProduct());
+				product.setCreatedTime(flag.getCreatedTime());
+				ProductObj result = productService.save(product);
+				return new ResponseEntity<>(result, HttpStatus.OK);
+			}
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -165,6 +173,21 @@ public class ProductRestController {
 				productService.deleteLogic(productId);
 			}
 			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	@RequestMapping(value="setStatus", method = RequestMethod.POST)
+	public ResponseEntity<?> setProduct(@RequestParam("id") String id, @RequestParam("status") String status){
+		try {
+			int productId = Integer.parseInt(id);
+			int statusId = Integer.parseInt(status);
+			if(productService.existsById(productId)){
+				productService.setStatus(productId, statusId);
+			}
+			ProductObj flag = productService.findObjById(productId);
+			return new ResponseEntity<>(flag, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

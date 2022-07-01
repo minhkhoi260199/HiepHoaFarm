@@ -87,7 +87,7 @@ public class ProductRestController {
 	@RequestMapping(value="search", method = RequestMethod.GET)
 	public ResponseEntity<?> getItemsSearch(@RequestParam String keyword){
 		try {
-			List<ProductE> products = productService.search(keyword);
+			List<ProductE> products = productService.searchEnable(keyword);
 			return new ResponseEntity<>(products, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

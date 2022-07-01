@@ -99,7 +99,7 @@ public class ProductRestController {
 	@RequestMapping(value="getItemsByCate", method = RequestMethod.GET)
 	public ResponseEntity<?> getItemsByCategory(@RequestParam int cateId){
 		try {
-			List<ProductE> products = productService.findByCate(cateId);
+			List<ProductE> products = productService.findByCateEnable(cateId);
 			return new ResponseEntity<>(products, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

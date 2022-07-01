@@ -26,6 +26,7 @@ public class ProductService {
     public List<ProductE> findAllEnabled() { return productRepos.findAllEnabled();}
     public Page<ProductE> findAllAdminPaging(Pageable pageable) { return productRepos.findAllAdminPaging(pageable);}
     public List<ProductE> findByCate(int id) { return productRepos.searchByCate(id);}
+    public List<ProductE> findByCateEnable(int id) { return productRepos.findByCateEnable(id);}
     public List<ProductE> search(String keyword) { return productRepos.search(keyword); }
     public List<ProductE> searchEnable(String keyword) { return productRepos.searchEnable(keyword); }
     public long countAll(){

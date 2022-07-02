@@ -3,6 +3,7 @@ package com.hiephoafarm.main.restControllers;
 import com.hiephoafarm.main.models.*;
 import com.hiephoafarm.main.services.OrdersService;
 import com.hiephoafarm.main.services.ProductService;
+import com.hiephoafarm.main.services.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -30,6 +32,8 @@ public class OrderRestController {
 	JavaMailSender emailSender;
 	@Autowired
 	ProductService productService;
+	@Autowired
+	UserService userService;
 
 	@RequestMapping(value = "index", method=RequestMethod.GET)
 	public String getDataList(){
@@ -121,7 +125,7 @@ public class OrderRestController {
 	}
 
 	@RequestMapping(value = "setProcessing", method=RequestMethod.GET)
-	public ResponseEntity<?> setProcessing(@RequestParam("id") int id){
+	public ResponseEntity<?> setProcessing(Authentication authentication, @RequestParam("id") int id){
 		try {
 			OrdersE order = ordersService.findByIdOrder(id);
 			for(OrderDetailE detail : order.getOrderDetailsByIdOrder()){
@@ -129,6 +133,8 @@ public class OrderRestController {
 					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 				}
 			}
+			UserObj user = userService.findUserObjByUsername(authentication.getName());
+			ordersService.setUserId(id, user.getIdUser());
 			ordersService.setStatus(id, 4);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {

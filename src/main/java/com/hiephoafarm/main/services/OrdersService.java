@@ -34,11 +34,13 @@ public class OrdersService {
 
     public OrdersObj saveOrder(OrdersObj ordersObj){return ordersObjRepos.save(ordersObj);}
     public void setStatus(int id, int statusId){ordersRepos.setStatus(id, statusId);}
+    public void setUserId(int id, int userId){ordersRepos.setUserId(id, userId);}
 
     public List<OrderDetailObj> saveAllOrderDetail(List<OrderDetailObj> items){return orderDetailObjRepos.saveAll(items);}
 
     public List<OrdersE> findPending(){return ordersRepos.findPending();}
-    public List<OrdersE> findProcessing(){return ordersRepos.findProcessing();}
+    public List<OrdersE> findAllProcessing(){return ordersRepos.findAllProcessing();}
+    public List<OrdersE> findProcessing(int idUser){return ordersRepos.findProcessing(idUser);}
     public List<OrdersE> findByTimeRange(String from, String to) {return ordersRepos.findByTimeRange(from, to);}
 
     public List<OrderDetailE> findDetailByIdOrder(int id) { return orderDetailRepos.findByIdOrder(id);}

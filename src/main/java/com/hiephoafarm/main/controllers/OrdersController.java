@@ -1,11 +1,13 @@
 package com.hiephoafarm.main.controllers;
 
 import com.hiephoafarm.main.models.OrdersE;
+import com.hiephoafarm.main.models.UserObj;
 import com.hiephoafarm.main.services.OrdersService;
 import com.hiephoafarm.main.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +28,14 @@ public class OrdersController {
     UserService userService;
 
     @RequestMapping(value = {"index"} ,method = RequestMethod.GET)
-    public String index(ModelMap modelMap) {
+    public String index(Authentication authentication, ModelMap modelMap) {
         modelMap.put("pendings", ordersService.findPending());
-        modelMap.put("processing", ordersService.findProcessing());
+        UserObj user = userService.findUserObjByUsername(authentication.getName());
+        if(user.getRoleId() == 1) {
+            modelMap.put("processing", ordersService.findAllProcessing());
+        } else {
+            modelMap.put("processing", ordersService.findProcessing(user.getIdUser()));
+        }
         return "admin/index";
     }
     @RequestMapping(value = {"users"} ,method = RequestMethod.GET)

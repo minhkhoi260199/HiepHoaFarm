@@ -27,6 +27,7 @@
                                 <table class="table table-borderless table-data3">
                                     <thead>
                                     <tr>
+                                        <th>Nhân viên</th>
                                         <th>Trạng thái</th>
                                         <th>Số điện thoại</th>
                                         <th>Tên khách hàng</th>
@@ -39,6 +40,7 @@
                                     <tbody style="overflow-y: scroll; max-height: 300px">
                                     <c:forEach var="order" items="${orders}">
                                         <tr>
+                                            <td>${order.userByUserId.fullname}</td>
                                             <c:if test="${order.statusByStatusId.idStatus == 3 }">
                                             <td style="font-weight: bold ;color: #e0a800">${order.statusByStatusId.statusNameVie}</td>
                                             </c:if>
@@ -111,7 +113,7 @@
                             <div style="color: darkred">Giỏ hàng: </div>
                             <fieldset style="border: #e0a800 3px double; border-radius: 10px; padding-left: 20px;">
                             <c:forEach var="item" items="${order.orderDetailsByIdOrder}">
-                                <div>-${item.productByProductId.productName} (${item.productByProductId.productPrice}) : ${item.quantity}${item.productByProductId.saleUnit}</div>
+                                <div>-${item.productByProductId.productName} (${item.productByProductId.productPrice}) : ${item.quantity}&nbsp;${item.productByProductId.saleUnit}</div>
                             </c:forEach>
                             </fieldset>
                         </div>

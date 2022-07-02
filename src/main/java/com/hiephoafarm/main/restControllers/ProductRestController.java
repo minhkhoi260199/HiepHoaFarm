@@ -8,6 +8,8 @@ import com.hiephoafarm.main.services.ReviewService;
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -76,6 +78,19 @@ public class ProductRestController {
 	public ResponseEntity<?> getItems(){
 		try {
 			List<ProductE> products = productService.findAllEnabled();
+			return new ResponseEntity<>(products, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(value="getItemsPaging", method = RequestMethod.GET)
+	public ResponseEntity<?> getItemsPaging(@RequestParam("page") int page, @RequestParam("size") int size){
+		try {
+			Pageable pageable = PageRequest.of(page-1, size);
+			List<ProductE> products = productService.findAllEnablePaging(pageable).toList();
 			return new ResponseEntity<>(products, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

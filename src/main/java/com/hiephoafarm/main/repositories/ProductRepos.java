@@ -28,6 +28,8 @@ public interface ProductRepos extends JpaRepository<ProductE, Integer> {
    public ProductE findById(@Param("id") int id);
    @Query(nativeQuery = true, value = "select * from product where status_id <> 8 order by id_product DESC")
    public Page<ProductE> findAllAdminPaging(Pageable pageable);
+   @Query(nativeQuery = true, value = "select * from product where status_id = 1 order by id_product DESC")
+   public Page<ProductE> findAllEnablePaging(Pageable pageable);
    @Query(nativeQuery = true, value = "select * from product where status_id <> 8 order by id_product DESC")
    public List<ProductE> findAllAdmin();
    @Query(nativeQuery = true, value = "select quantity from product where id_product = :id")

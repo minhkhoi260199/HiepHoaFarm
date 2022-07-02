@@ -38,6 +38,8 @@ public class ProductService {
     public boolean existsById(int id){ return productRepos.existsById(id);}
     public void deleteLogic(int id){productRepos.deleteLogicById(id);}
     public void setStatus(int id, int status){productRepos.setStatus(id, status);}
+    public void setQuantity(int id, int quantity){productRepos.setQuantity(id, quantity);}
+    public int getQuantityById(int id){return productRepos.getQuantityById(id);}
     //ObjRepos
     public ProductObj save(ProductObj productObj){return productObjRepos.save(productObj);}
     public ProductObj findObjById(int id){ return productObjRepos.findById(id);}

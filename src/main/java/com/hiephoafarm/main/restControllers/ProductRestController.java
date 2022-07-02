@@ -193,5 +193,31 @@ public class ProductRestController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	@RequestMapping(value="setQuantity", method = RequestMethod.GET)
+	public ResponseEntity<?> setQuantity(@RequestParam("id") String id, @RequestParam("quantity") String quantityPar){
+		try {
+			int productId = Integer.parseInt(id);
+			int quantity = Integer.parseInt(quantityPar);
+			if(productService.existsById(productId)){
+				productService.setQuantity(productId, quantity);
+			}
+			ProductObj flag = productService.findObjById(productId);
+			return new ResponseEntity<>(flag, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	@RequestMapping(value="getQuantityById", method = RequestMethod.GET)
+	public ResponseEntity<?> getQuantityById(@RequestParam("id") String id){
+		try {
+			int productId = Integer.parseInt(id);
+			int result = productService.getQuantityById(productId);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }

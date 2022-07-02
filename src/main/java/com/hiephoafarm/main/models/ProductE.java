@@ -21,6 +21,7 @@ public class ProductE {
    private CategoryE categoryByCategoryId;
    private StatusE statusByStatusId;
    private Collection<ReviewE> reviewsByIdProduct;
+   private Integer quantity;
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
@@ -162,5 +163,15 @@ public class ProductE {
 
    public void setReviewsByIdProduct(Collection<ReviewE> reviewsByIdProduct) {
       this.reviewsByIdProduct = reviewsByIdProduct;
+   }
+
+   @Basic
+   @Column(name = "quantity", nullable = true)
+   public Integer getQuantity() {
+      return quantity;
+   }
+
+   public void setQuantity(Integer quantity) {
+      this.quantity = quantity;
    }
 }

@@ -18,6 +18,7 @@ public class ProductObj {
     private String saleUnit;
     private Integer statusId;
    private Timestamp createdTime;
+   private Integer quantity;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -113,5 +114,15 @@ public class ProductObj {
 
    public void setCreatedTime(Timestamp createdTime) {
       this.createdTime = createdTime;
+   }
+
+   @Basic
+   @Column(name = "quantity", nullable = true)
+   public Integer getQuantity() {
+      return quantity;
+   }
+
+   public void setQuantity(Integer quantity) {
+      this.quantity = quantity;
    }
 }

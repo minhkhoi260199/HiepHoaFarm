@@ -31,9 +31,10 @@
                                         <th>Sửa</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Ảnh</th>
-                                        <th>Danh mục</th>
+                                        <th>Số lượng</th>
                                         <th>Giá</th>
                                         <th>Đơn vị</th>
+                                        <th>Danh mục</th>
                                         <th>Ngày tạo</th>
                                         <th>Trạng thái</th>
                                         <th>Đổi</th>
@@ -51,7 +52,8 @@
                                                 "saleUnit" : "${product.saleUnit}",
                                                 "description" : "${product.description}",
                                                 "statusId" : "${product.statusByStatusId.idStatus}",
-                                                "createdTime" : "${product.createdTime}"
+                                                "createdTime" : "${product.createdTime}",
+                                                "quantity" : "${product.quantity}"
                                             }
                                         </script>
                                     <tr>
@@ -73,9 +75,18 @@
                                                 <button class="btn btn-outline-secondary btn-sm" onClick="editGal(prData${product.idProduct})" title="Edit">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                        <td>${product.categoryByCategoryId.categoryName}</td>
+                                        </td>
+                                        <td>
+                                            <p style="color: #bd2130; font-weight: bold; min-width: 50px">
+                                            <button class="btn btn-outline-secondary btn-sm" onClick="editQuantity(prData${product.idProduct})" title="Edit">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                                &emsp;&emsp;&emsp;${product.quantity}
+                                            </p>
+                                        </td>
                                         <td>${product.productPrice}</td>
                                         <td>${product.saleUnit}</td>
+                                        <td>${product.categoryByCategoryId.categoryName}</td>
                                         <td>${product.createdTime}</td>
                                         <c:if test="${product.statusByStatusId.idStatus == 1 }">
                                         <td class="process" id="statusName${product.idProduct}">${product.statusByStatusId.statusNameVie}</td>
@@ -154,6 +165,14 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-3">
+                                    <label for="quantity" class="form-control-label">Số lượng:</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="number" id="quantity" name="quantity" placeholder="Số lượng sản phẩm" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
                                     <label for="productPrice" class=" form-control-label">Giá sản phẩm:</label>
                                 </div>
                                 <div class="col-12 col-md-4">
@@ -219,6 +238,31 @@
             </div>
         </div>
         <!-- end modal static addGallery-->
+        <!-- modal static edit quantity -->
+        <div class="modal fade" id="staticModalQuantity" tabindex="-1" role="dialog" aria-labelledby="staticModalQuantityLabel" aria-hidden="true"
+             data-backdrop="static">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticModalQuantityLabel">SỬA SỐ LƯỢNG SẢN PHẨM</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" id="quantityForm" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <input type="hidden" id="productIdQuantity" name="productIdQuantity" value="">
+                            <input style="border: 1px solid gray; width: 100%; padding: 10px" type="number" id="editQuantity" name="quantity" value="">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="saveQuantity()" class="btn btn-primary">Lưu số lượng mới</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal static edit quantity-->
         <script type="text/javascript">
             // Pagination
             let total = $('#countProduct').val();
@@ -342,6 +386,7 @@
 
                 $('#productId').val(product.idProduct);
                 $('#productName').val(product.productName);
+                $('#quantity').val(product.quantity);
                 $('#productPrice').val(product.productPrice);
                 $('#unit').val(product.saleUnit);
                 $('#description').val(product.description);
@@ -352,10 +397,11 @@
                 let productId = $('#productId').val();
                 let productName = $('#productName').val();
                 let category = $('#category').val();
+                let quantity = $('#quantity').val();
                 let price = $('#productPrice').val();
                 let unit = $('#unit').val();
                 let description = $('#description').val();
-                if(productName != "" && price != "" && description != "" && unit != ""){
+                if(productName != "" && price != "" && description != "" && unit != "" && quantity != ""){
                     if(category != null) {
                         if(!isNaN(price)){
                             let data = {
@@ -366,6 +412,7 @@
                                 "saleUnit" : unit,
                                 "statusId" : 1,
                                 "description" : description,
+                                "quantity" : quantity
                             }
                             console.log("Data: " + JSON.stringify(data));
                             if(JSON.stringify(data) !== JSON.stringify(clone)){
@@ -518,6 +565,60 @@
                                             buttons: "OK",
                                         }).then(() => {
                                             $('#staticModal').modal('hide');
+                                        });
+                                    }
+                                });
+                            } else {
+                                swal({title: "Đã huỷ !",icon: "success"});
+                            }
+                        });
+                }
+            }
+            function editQuantity(product){
+                $('#staticModalQuantityLabel').html("SỐ LƯỢNG SẢN PHẨM CỦA '"+product.productName+"'");
+                $('#productIdQuantity').val(product.idProduct);
+                $('#editQuantity').val(product.quantity);
+                $('#staticModalQuantity').modal('show');
+            }
+            function saveQuantity() {
+                if($('#editQuantity').val() == ""){
+                    $('#staticModalQuantity').modal('hide');
+                    swal({
+                        title: "Số lượng không đổi",
+                        icon: "info",
+                    });
+                } else {
+                    swal({
+                        title: "Xác nhận lưu số lượng mới ?",
+                        icon: "warning",
+                        buttons: ["Huỷ !", "Xác nhận"],
+                        dangerMode: true,
+                    })
+                        .then((confirmSubmit) => {
+                            if (confirmSubmit) {
+                                let productId = $('#productIdQuantity').val();
+                                let quantity =$('#editQuantity').val();
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath }/api/product/setQuantity?id="+productId+"&quantity="+quantity,
+                                    type: "GET",
+                                    success: function () {
+                                        swal({
+                                            title: "Thành công",
+                                            text: "Lưu ảnh thành công !!",
+                                            icon: "success",
+                                            buttons: "OK",
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    },
+                                    error: function () {
+                                        swal({
+                                            title: "Fail",
+                                            text: "Đã có lỗi xảy ra !!",
+                                            icon: "error",
+                                            buttons: "OK",
+                                        }).then(() => {
+                                            $('#staticModalQuantity').modal('hide');
                                         });
                                     }
                                 });

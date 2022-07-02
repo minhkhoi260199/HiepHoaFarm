@@ -2,6 +2,7 @@ package com.hiephoafarm.main.restControllers;
 
 import com.hiephoafarm.main.models.*;
 import com.hiephoafarm.main.services.OrdersService;
+import com.hiephoafarm.main.services.ProductService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class OrderRestController {
 	OrdersService ordersService;
 	@Autowired
 	JavaMailSender emailSender;
+	@Autowired
+	ProductService productService;
 
 	@RequestMapping(value = "index", method=RequestMethod.GET)
 	public String getDataList(){
@@ -120,7 +123,13 @@ public class OrderRestController {
 	@RequestMapping(value = "setProcessing", method=RequestMethod.GET)
 	public ResponseEntity<?> setProcessing(@RequestParam("id") int id){
 		try {
-			List<OrdersE> result = ordersService.setStatus(id, 4);
+			OrdersE order = ordersService.findByIdOrder(id);
+			for(OrderDetailE detail : order.getOrderDetailsByIdOrder()){
+				if(detail.getQuantity() > detail.getProductByProductId().getQuantity()){
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}
+			}
+			ordersService.setStatus(id, 4);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -131,7 +140,7 @@ public class OrderRestController {
 	@RequestMapping(value = "setShipping", method=RequestMethod.GET)
 	public ResponseEntity<?> setShipping(@RequestParam("id") int id){
 		try {
-			List<OrdersE> result = ordersService.setStatus(id, 5);
+			ordersService.setStatus(id, 5);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -142,7 +151,17 @@ public class OrderRestController {
 	@RequestMapping(value = "setCompleted", method=RequestMethod.GET)
 	public ResponseEntity<?> setCompleted(@RequestParam("id") int id){
 		try {
-			List<OrdersE> result = ordersService.setStatus(id, 6);
+			OrdersE order = ordersService.findByIdOrder(id);
+			for(OrderDetailE detail : order.getOrderDetailsByIdOrder()){
+				if(detail.getQuantity() > detail.getProductByProductId().getQuantity()){
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}
+			}
+			for(OrderDetailE detail : order.getOrderDetailsByIdOrder()){
+				productService.setQuantity(detail.getProductByProductId().getIdProduct(),
+						detail.getProductByProductId().getQuantity()-detail.getQuantity());
+			}
+			ordersService.setStatus(id, 6);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -153,7 +172,7 @@ public class OrderRestController {
 	@RequestMapping(value = "setCanceled", method=RequestMethod.GET)
 	public ResponseEntity<?> setCanceled(@RequestParam("id") int id){
 		try {
-			List<OrdersE> result = ordersService.setStatus(id, 7);
+			ordersService.setStatus(id, 7);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

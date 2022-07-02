@@ -9,9 +9,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional
 @Repository("ordersRepos")
 public interface OrdersRepos extends JpaRepository<OrdersE, Integer> {
     @Query(nativeQuery = true, value = "select * from orders order by id_order DESC")
@@ -32,5 +33,5 @@ public interface OrdersRepos extends JpaRepository<OrdersE, Integer> {
     public List<OrdersE> findByTimeRange (@Param("from") String from, @Param("to") String to);
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE orders SET status_id = :statusId WHERE id_order = :id")
-    public List<OrdersE> setStatus (@Param("id") int id, @Param("statusId") int statusId);
+    public void setStatus (@Param("id") int id, @Param("statusId") int statusId);
 }

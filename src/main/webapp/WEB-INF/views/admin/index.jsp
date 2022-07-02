@@ -264,11 +264,24 @@
                                     url: "${pageContext.request.contextPath }/api/order/"+typeSet+"?id="+id,
                                     method: "GET",
                                     success: function(res) {
-                                        swal("Thành công!", {
+                                        swal({
+                                            title: "Thành công",
                                             icon: "success",
+                                            buttons: "OK",
                                         }).then(() => {
                                             location.reload();
                                         });
+                                    },
+                                    error: function() {
+                                        swal({
+                                            title: "Thất bại",
+                                            text: "Không đủ sản phẩm để chốt đơn !!",
+                                            icon: "error",
+                                            buttons: "OK",
+                                        })
+                                        //     .then(() => {
+                                        //     $('#scrollmodal').modal('hide');
+                                        // });
                                     }
                                 })
                             }

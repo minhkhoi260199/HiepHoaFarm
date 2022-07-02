@@ -33,7 +33,7 @@ public class OrdersService {
     public List<OrdersE> searchByName(String name){return ordersRepos.searchOrderByName(name);}
 
     public OrdersObj saveOrder(OrdersObj ordersObj){return ordersObjRepos.save(ordersObj);}
-    public List<OrdersE> setStatus(int id, int statusId){return ordersRepos.setStatus(id, statusId);}
+    public void setStatus(int id, int statusId){ordersRepos.setStatus(id, statusId);}
 
     public List<OrderDetailObj> saveAllOrderDetail(List<OrderDetailObj> items){return orderDetailObjRepos.saveAll(items);}
 

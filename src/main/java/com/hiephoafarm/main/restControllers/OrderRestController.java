@@ -254,9 +254,9 @@ public class OrderRestController {
 				"            <tbody>\n" +
 				"                <tr>\n" +
 				"                    <td style=\"font-size:22px;line-height:24px;font-weight:bold;padding-bottom:10px;color:#212529;text-align:center\">\n" +
-				"                    <img src=\"https://minhkhoi260199.github.io/img/linh_logo.png\" alt=\"linhFarm_logo\" style=\"width:70px;height:70px;margin-bottom:20px;\">\n" +
+				"                    <img src=\"https://minhkhoi260199.github.io/img/LogoHHF.png\" alt=\"HiepHoaFarm_logo\" style=\"width:70px;height:70px;margin-bottom:20px;\">\n" +
 				"                    <div>HÓA ĐƠN MUA HÀNG</div>\n" +
-				"                    <div style=\"font-size:18px;color:#6d6d72;font-weight:normal;font-style:italic\">(Linh Farm - Hotline: 0376.052.775)</div>\n" +
+				"                    <div style=\"font-size:18px;color:#6d6d72;font-weight:normal;font-style:italic\">(Hiệp Hòa Farm - Hotline: (+84) 0399 945 680)</div>\n" +
 				"                    </td>\n" +
 				"                </tr>\n" +
 				"                <tr>\n" +
